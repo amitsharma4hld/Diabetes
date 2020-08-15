@@ -26,7 +26,8 @@ class MonitorbloodGlucoseRepository (
 
     init {
         monitorbloodGlucose.observeForever {
-            saveMonitorbloodGlucose(it.get(1))
+            for (i in 1 until it.size)
+            saveMonitorbloodGlucose(it[i])
         }
         symptom.observeForever{
             saveSymptom(it.get(0))

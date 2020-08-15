@@ -15,7 +15,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/colorBackground"
-    android:padding="8dp"
     >
     <RelativeLayout
         android:id="@+id/rl_value"
@@ -28,6 +27,7 @@
         android:id="@+id/et_value"
         android:layout_width="55dip"
         android:layout_height="50dip"
+        android:padding="2dp"
         android:layout_centerVertical="true"
         app:cardCornerRadius="30dp"
         app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
@@ -38,10 +38,13 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:hint="@string/hash"
+            android:maxLength="3"
+            android:inputType="number"
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:background="@null"
+
             android:fontFamily="@font/avenir_next_bold"
             />
     </com.google.android.material.card.MaterialCardView>
@@ -85,6 +88,7 @@
                 android:layout_toEndOf="@+id/tv_time"
                 android:textColor="@color/colorTitleText"
                 android:layout_marginStart="16dp"
+                android:maxLines="1"
                 android:fontFamily="@font/avenir_next_bold"
                 />
             <TextView
@@ -93,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{monitorbloodGlucose.range}"
                 android:textSize="14sp"
+                android:maxLines="1"
                 android:textColor="@color/colorTitleText"
                 android:fontFamily="@font/avenir_next_regular"
                 android:layout_toEndOf="@+id/tv_range_static"
@@ -110,8 +115,8 @@
         android:layout_centerVertical="true"
         >
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="120dip"
-        android:layout_height="40dip"
+        android:layout_width="110dip"
+        android:layout_height="38dip"
         android:layout_gravity="center_horizontal"
         app:cardCornerRadius="30dp"
         android:id="@+id/done"
