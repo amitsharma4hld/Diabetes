@@ -11,20 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#F0F2F5"
+        android:background="@color/colorBackground"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/monitor_blood_glucose"
             android:gravity="center"
-            android:textSize="28sp"
-            android:fontFamily="@font/avenir_next_medium"
+            android:textSize="32sp"
+            android:fontFamily="@font/avenir_next_bold"
             android:id="@+id/username"
-            android:layout_marginTop="20dp"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="18dp"
             android:textStyle="bold"
-            android:textColor="#C39D8A"
+            android:textColor="@color/color_monitorblood_glucose_theme"
             />
         <TextView
             android:layout_width="match_parent"
@@ -34,24 +33,23 @@
             android:fontFamily="@font/avenir_next_regular"
             android:gravity="center"
             android:text="june 4, 2020"
-            android:textColor="@color/colorAccent"
-            android:textSize="14sp"
+            android:textColor="@color/colorTitleText"
+            android:textSize="16sp"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="0dp"
             android:fontFamily="@font/avenir_next_regular"
             android:gravity="center"
             android:text="@string/enter_blood_sugar_level"
-            android:textColor="@color/colorAccent"
-            android:textSize="26sp"
+            android:textColor="@color/colorTitleText"
+            android:textSize="32sp"
             />
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="18dp"
             android:layout_height="wrap_content">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewMonitorBloodGlucose"

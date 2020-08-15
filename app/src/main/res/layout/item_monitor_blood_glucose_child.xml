@@ -15,29 +15,31 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/colorBackground"
+    android:padding="8dp"
     >
     <RelativeLayout
         android:id="@+id/rl_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         >
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/et_value"
-        android:layout_width="60dip"
-        android:layout_height="55dip"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="55dip"
+        android:layout_height="50dip"
+        android:layout_centerVertical="true"
         app:cardCornerRadius="30dp"
-        app:cardBackgroundColor="#C39D8A"
-        android:layout_margin="2dp"
+        app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
         >
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:layout_gravity="center"
-            android:text="65"
-            android:textColor="#fff"
+            android:hint="@string/hash"
+            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:background="@null"
             android:fontFamily="@font/avenir_next_bold"
@@ -52,6 +54,7 @@
         android:layout_toEndOf="@+id/rl_value"
         android:layout_toStartOf="@+id/rl_done"
         android:layout_centerVertical="true"
+        android:padding="8dp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -112,7 +115,7 @@
         android:layout_gravity="center_horizontal"
         app:cardCornerRadius="30dp"
         android:id="@+id/done"
-        app:cardBackgroundColor="#C39D8A"
+        app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
         android:layout_margin="2dp">
         <TextView
             android:layout_width="match_parent"

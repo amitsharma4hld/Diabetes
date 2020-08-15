@@ -78,6 +78,14 @@ class DiabetesFragment : Fragment() {
                 )
             )
         }
+        tv_progress.setOnClickListener {
+            openFragment(
+                ProgressBloodGlucoseFragment.newInstance(
+                    "",
+                    ""
+                )
+            )
+        }
     }
 
     companion object {

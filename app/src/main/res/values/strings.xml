@@ -82,4 +82,7 @@
     <string name="comments">Comments</string>
     <string name="_1st_trimester_topic">1st Trimester Topic</string>
     <string name="dr_mcdonald">Dr. McDonald</string>
+    <string name="calculate">calculate</string>
+    <string name="blood_glucose_progress">Blood glucose progress</string>
+    <string name="hash">#</string>
 </resources>

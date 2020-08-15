@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorWhite">#FFF</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#4F8394</color>
@@ -11,5 +12,6 @@
     <color name="colorTabSelected">#D10C07</color>
     <color name="colorTabUnSelected">#FB2D28</color>
     <color name="colorObgyTheme">#EEA182</color>
+    <color name="color_monitorblood_glucose_theme">#C99C86</color>
 
 </resources>

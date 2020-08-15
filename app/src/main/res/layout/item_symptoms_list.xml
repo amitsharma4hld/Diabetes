@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
@@ -24,10 +25,12 @@
         android:fontFamily="@font/avenir_next_regular"
         android:textColorHint="@color/app_main_text_color"
         android:textSize="18sp"
+        android:buttonTint="@color/color_monitorblood_glucose_theme"
         android:layout_marginStart="8dp"
         android:gravity="start"
-        android:layout_gravity="start"
-        />
+        android:layout_gravity="start|center_vertical"
+        tools:targetApi="lollipop" />
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="200dip"
         android:layout_height="50dip"
