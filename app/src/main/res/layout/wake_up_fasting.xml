@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F0F2F5"
+        >
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wake Up Fasting"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:id="@+id/username"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:textColor="#C39D8A"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Your Blood Sugar Level"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="150dip"
+            android:layout_height="150dip"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="30dp"
+            android:id="@+id/totalnumber"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#C39D8A"
+            android:layout_margin="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="130dip"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="12"
+                    android:background="@null"
+                    android:textColor="#fff"
+                    android:textSize="40sp" />
+
+
+                <TextView
+                    android:layout_width="130dip"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Low"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Your Blood Sugar Goal"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="150dip"
+            android:layout_height="150dip"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="30dp"
+            android:id="@+id/bsgoal"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#C39D8A"
+            android:layout_margin="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="130dip"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="12"
+                    android:background="@null"
+                    android:textColor="#fff"
+                    android:textSize="40sp" />
+
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="150dip"
+                android:layout_height="50dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/done"
+
+                app:cardBackgroundColor="#C39D8A"
+                android:layout_margin="2dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+
+                    android:text="Done"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+</FrameLayout>

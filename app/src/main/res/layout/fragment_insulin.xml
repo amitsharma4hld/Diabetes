@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="52dp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/insulin_today"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:fontFamily="@font/avenir_next_regular"
+            android:id="@+id/username"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textColor="#C39D8A"
+            />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/insulin_required"
+        android:textColor="@color/colorAccent"
+        android:textSize="26sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/unit"
+        android:textColor="#C39D8A"
+        android:textSize="26sp"
+        />
+</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/insulin_type"
+            android:fontFamily="@font/avenir_next_regular"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:text="@string/read_acting_insulin"
+                android:textSize="24sp"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textColor="@color/colorAccent"
+                android:layout_height="wrap_content">
+
+            </RadioButton>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:text="@string/sorting_acting"
+                android:textSize="24sp"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textColor="@color/colorAccent"
+                android:layout_height="wrap_content">
+
+            </RadioButton>
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:text="@string/total_day_insulin_dose"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:text="@string/total_carbs"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/current_blood_glucose"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:text="@string/target_blood_glucose"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="150dip"
+                        android:layout_height="60dip"
+                        android:layout_gravity="center_horizontal"
+                        app:cardCornerRadius="30dp"
+                        android:id="@+id/Unit"
+                        app:cardBackgroundColor="#C39D8A"
+                        android:layout_margin="2dp">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/unit_unit"
+                            android:background="@null"
+                            android:textColor="#fff"
+                            android:textSize="20sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="150dip"
+                        android:layout_height="60dip"
+                        android:layout_gravity="center_horizontal"
+                        app:cardCornerRadius="30dp"
+                        android:id="@+id/gram"
+                        app:cardBackgroundColor="#C39D8A"
+                        android:layout_margin="2dp">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:fontFamily="@font/avenir_next_regular"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/gram"
+                            android:background="@null"
+                            android:textColor="#fff"
+                            android:textSize="20sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="150dip"
+                        android:layout_height="60dip"
+                        android:layout_gravity="center_horizontal"
+                        app:cardCornerRadius="30dp"
+                        android:id="@+id/mgdl"
+                        android:fontFamily="@font/avenir_next_regular"
+                        app:cardBackgroundColor="#C39D8A"
+                        android:layout_margin="2dp">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/avenir_next_regular"
+                            android:text="@string/mg_dl"
+                            android:background="@null"
+                            android:textColor="#fff"
+                            android:textSize="20sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    >
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="150dip"
+                        android:layout_height="60dip"
+                        android:layout_gravity="center_horizontal"
+                        app:cardCornerRadius="30dp"
+                        app:strokeColor="@color/app_main_text_color"
+                        app:strokeWidth="2dp"
+                        android:id="@+id/totalmg"
+                        app:cardBackgroundColor="#fff"
+                        android:layout_margin="2dp">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:layout_gravity="center_horizontal"
+                            android:text="80 mg/dl"
+                            android:background="@null"
+                            android:textColor="@color/app_main_text_color"
+                            android:textSize="20sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="150dip"
+                android:layout_height="50dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/Calculate"
+
+                app:cardBackgroundColor="#C39D8A"
+                android:layout_margin="2dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Calculate"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="150dip"
+                android:layout_height="50dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/done"
+                app:cardBackgroundColor="#C39D8A"
+                android:layout_margin="2dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/done_plus_five"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    </ScrollView>
+</FrameLayout>

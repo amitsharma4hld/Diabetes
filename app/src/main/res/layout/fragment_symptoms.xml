@@ -1,0 +1,73 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="52dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/your_symptoms_today"
+                android:gravity="center"
+                android:textSize="28sp"
+                android:fontFamily="@font/avenir_next_regular"
+                android:id="@+id/username"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/app_main_text_color"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:text="June 6, 2020"
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMonitorBloodGlucose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_symptoms_list"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:outlineAmbientShadowColor="@color/app_main_text_color"
+                android:outlineSpotShadowColor="@color/app_main_text_color"
+                tools:targetApi="p" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="150dip"
+                android:layout_height="60dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/done"
+                app:cardBackgroundColor="#C39D8A"
+                android:layout_marginBottom="52dp"
+
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/done_plus_five"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/counseling"
+                android:gravity="center"
+                android:textSize="34sp"
+                android:id="@+id/username"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:textColor="#F99E79"
+                android:fontFamily="@font/avenir_next_bold"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:text="1st Trimester"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textSize="22sp" />
+                <ImageButton
+                    android:id="@+id/ib_first_trimester"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_add_circle">
+
+                </ImageButton>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:text="2ndTrimester"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textSize="22sp" />
+                <ImageButton
+                    android:id="@+id/ib_second_trimester"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_add_circle">
+
+                </ImageButton>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:text="3rd Trimester"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textSize="22sp" />
+                <ImageButton
+                    android:id="@+id/ib_third_trimester"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_add_circle">
+
+                </ImageButton>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
+                    android:text="@string/postpartum"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textSize="22sp" />
+                <ImageButton
+                    android:id="@+id/ib_fourth_trimester"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_add_circle">
+
+                </ImageButton>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="bottom"
+        android:layout_marginBottom="92dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="150dip"
+            android:layout_height="42dip"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="30dp"
+            android:id="@+id/done"
+            app:cardBackgroundColor="#F99E79"
+            android:layout_margin="2dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:text="Done"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+
+</FrameLayout>
