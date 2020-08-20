@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.ObservationData
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.ui.SymptomsAdapter
 import kotlinx.android.synthetic.main.fragment_obgyn.*
@@ -43,7 +42,7 @@ class ObservationFragment : Fragment() {
 
     private fun showObservation(observations: List<SymptomsData>) {
         recyclerViewMonitorBloodGlucose.layoutManager = LinearLayoutManager(activity)
-        recyclerViewMonitorBloodGlucose.adapter = SymptomsAdapter(observations)
+        recyclerViewMonitorBloodGlucose.adapter = ObeservationAdapter(observations)
     }
 
     override fun onCreateView(

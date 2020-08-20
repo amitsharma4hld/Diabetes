@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.BreastFeedingSessionData
+import com.s.diabetesfeeding.data.DailyObservationData
 import com.s.diabetesfeeding.ui.home.InsulinFragment
 import kotlinx.android.synthetic.main.fragment_diabetes.*
 import kotlinx.android.synthetic.main.fragment_home_screen.tv_blood_glucose

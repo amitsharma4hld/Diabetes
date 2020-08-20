@@ -8,5 +8,4 @@ class ScoreboardData(
     val observe: String,
     val breastfeed: String,
     val total: String
-
 )

@@ -12,7 +12,6 @@ import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.temporal.ChronoUnit
 
 private val MINIMUM_INTERVAL = 6
 

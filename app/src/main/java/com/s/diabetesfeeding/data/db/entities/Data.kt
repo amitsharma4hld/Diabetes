@@ -14,7 +14,14 @@ data class Data(
     var type: String? = null,
     var profileImage: String? = null,
     var token: String? = null,
-    var msg: String? = null
+    var msg: String? = null,
+    var user_status: String? = null,
+    var weekOfPregnancy: Int? = null,
+    var doctorName: String? = null,
+    var appointment: String? = null,
+    var key: String? = null,
+    var user_registered: String? = null,
+    var deviceType: String? = null
     ){
     @PrimaryKey(autoGenerate = false)
     var uid:Int = CURRENT_USER_ID

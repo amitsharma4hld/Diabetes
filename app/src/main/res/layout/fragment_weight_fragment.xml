@@ -22,7 +22,7 @@
             android:textSize="32sp"
             android:id="@+id/username"
             android:fontFamily="@font/avenir_next_bold"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             android:textStyle="bold"
             android:textColor="@color/color_monitorblood_glucose_theme"
             />
@@ -31,7 +31,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

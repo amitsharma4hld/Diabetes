@@ -45,41 +45,22 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
             }
         })
 
-     /*   tv_signup.setOnClickListener {
-            mc_login.visibility = View.GONE
-            mc_username.visibility = View.VISIBLE
-            mc_confirm_password.visibility = View.VISIBLE
-            tv_forgetpass.visibility = View.GONE
-            tv_term_condition_line.visibility = View.VISIBLE
-            mc_carepro.visibility = View.GONE
-            mc_signup.visibility = View.VISIBLE
-
-        }
-
-        tv_login.setOnClickListener {
-            mc_login.visibility = View.VISIBLE
-            mc_username.visibility = View.INVISIBLE
-            mc_confirm_password.visibility = View.GONE
-            tv_forgetpass.visibility = View.VISIBLE
-            tv_term_condition_line.visibility = View.INVISIBLE
-            mc_carepro.visibility = View.VISIBLE
-            mc_signup.visibility = View.GONE
-        }*/
-
         tv_forgetpass.setOnClickListener {
             val itn = Intent(this@LoginActivity, ForgetPassActivity::class.java)
             startActivity(itn)
         }
-
     }
 
     override fun onStarted() {
         progress_bar.show()
     }
 
+    override fun onVerificationFailed(title: String, message: String) {
+        alertDialog(title,message)
+    }
     override fun onSuccess(data: Data) {
         progress_bar.hide()
-      /*  root_layout.snackbar("${data.display_name} is Logged in")
+      /* root_layout.snackbar("${data.display_name} is Logged in")
         val itn = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(itn)
         finish()*/
@@ -87,8 +68,8 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     @SuppressLint("ResourceAsColor")
     override fun onFailure(message: String) {
         root_layout.snackbar("$message")
-        mc_username.strokeColor =  Color.parseColor("#000000")
-        mc_username.strokeWidth = 10
+        //mc_username.strokeColor =  Color.parseColor("#000000")
+        //mc_username.strokeWidth = 10
         progress_bar.hide()
     }
 }

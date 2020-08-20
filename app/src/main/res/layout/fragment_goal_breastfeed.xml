@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F0F2F5"
+    android:padding="16dp"
+    tools:context=".ui.home.fragment.GoalBreastfeedFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Goal is to breastfeed"
+        android:fontFamily="@font/avenir_next_bold"
+        android:textSize="28sp"
+        android:id="@+id/tv_track"
+        android:textStyle="normal"
+        android:gravity="center"
+        android:textColor="#F3CF63"
+        android:layout_marginTop="16dp"
+        android:maxLines="2" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="June 6, 2020"
+        android:fontFamily="@font/avenir_next_bold"
+        android:textSize="18sp"
+        android:id="@+id/tv_date"
+        android:textStyle="normal"
+        android:gravity="center"
+        android:textColor="#4F8394"
+        android:maxLines="2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="match_parent">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="90dip"
+            android:layout_height="45dip"
+            app:cardCornerRadius="50dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            android:id="@+id/cv_time"
+            android:layout_marginRight="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/colorWhite"
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="10AM"/>
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            app:cardCornerRadius="50dp"
+            android:layout_alignParentRight="true"
+            app:cardBackgroundColor="@color/colorWhite"
+            android:id="@+id/question"
+            android:layout_marginRight="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/colorWhite"
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:src="@drawable/ic_question_breastfeed"/>
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="170dip"
+            android:layout_height="170dip"
+            app:cardCornerRadius="90dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/cv_start"
+            app:cardBackgroundColor="#F3CF63"
+            android:layout_margin="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_start_stop_done"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30sp"
+                    android:layout_gravity="center_vertical"
+                    android:textAllCaps="true"
+                    android:gravity="center"
+                    android:text="START"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Time 00:00"
+            android:fontFamily="@font/avenir_next_regular"
+            android:textSize="18sp"
+            android:id="@+id/timer"
+            android:layout_marginTop="10dp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:layout_below="@+id/cv_start"
+            android:textColor="#4F8394"
+            android:maxLines="2"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/mc_logout"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

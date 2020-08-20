@@ -29,7 +29,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.35"
+            android:layout_weight="0.32"
             app:cardCornerRadius="15dp"
             android:id="@+id/mc_login"
             app:strokeColor="#00ae99"
@@ -50,12 +50,13 @@
         android:id="@+id/tv_topic_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.55"
+        android:layout_weight="0.57"
         android:text="@string/hiv_and_other_routine_prenatal_test"
         android:textColor="@color/colorTitleText"
-        android:fontFamily="@font/avenir_next_regular"
+        android:fontFamily="@font/avenir_next_bold"
         android:layout_marginStart="8dp"
-        android:textSize="16sp"
+        android:layout_marginEnd="32dp"
+        android:textSize="14sp"
         android:maxLines="2"
         />
 </LinearLayout>
@@ -82,9 +83,9 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mc_username"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:layout_weight="0.9"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="18dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="32dp"
         android:textStyle="bold"

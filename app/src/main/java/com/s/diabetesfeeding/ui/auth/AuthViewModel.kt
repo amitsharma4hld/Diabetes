@@ -20,7 +20,8 @@ class AuthViewModel(
     var password: String? = null
     var confirmpassword: String? = null
     var username: String? = null
-
+    var userType: String? = "doctor"
+    var userDeviceType: String? = "Android"
     var authListener: AuthListener? = null
     fun getLoggedInUser() = repository.getData()
 
@@ -34,12 +35,19 @@ class AuthViewModel(
             Coroutines.main {
                 try {
                     val authResponse = repository.userLogin(email!!,password!!)
-                    authResponse.data?.let {
-                        authListener?.onSuccess(it)
-                        repository.saveData(it)
-                        return@main
+                    if(authResponse.status=="success"){
+                        authResponse.data?.let {
+                            if (it.user_status != "0"){
+                                authListener?.onSuccess(it)
+                                repository.saveData(it)
+                                return@main
+                            }else{
+                                authListener?.onFailure("Please verify the user and try again.")
+                            }
+                        }
+                    }else{
+                        authListener?.onFailure(authResponse.data?.msg!!)
                     }
-                    authListener?.onFailure(authResponse.message!!)
                 }catch (e:ApiException){
                     authListener?.onFailure(e.message!!)
                 }
@@ -67,13 +75,27 @@ class AuthViewModel(
             }
             Coroutines.main {
                 try {
-                    val authResponse = repository.userRegister(email!!,password!!,username!!,"doctor",password!!,"Android")
-                    authResponse.data?.let {
-                        authListener?.onSuccess(it)
-                        repository.saveData(it)
-                        return@main
+                    val authResponse = repository.userRegister(email!!,password!!,username!!,userType!!,password!!,userDeviceType!!)
+                    if(authResponse.status=="success"){
+                        authResponse.data?.let {
+                            if (it.user_status != "0"){
+                                authListener?.onSuccess(it)
+                                repository.saveData(it)
+                                return@main
+                            }else{
+                                if (authResponse.data?.msg.isNullOrBlank()){
+                                  /*  authListener?.onFailure("Register Successful." + "\n" +
+                                            "Please verify your mail and than login.")*/
+                                    authListener?.onVerificationFailed("Register Successful.","Please verify your mail and than login.")
+                                }else
+                                    authListener?.onFailure(authResponse.data?.msg!!)
+                                return@main
+                            }
+                        }
+                    }else{
+                        authListener?.onFailure(authResponse.data?.msg!!)
                     }
-                    authListener?.onFailure(authResponse.message!!)
+
                 }catch (e:ApiException){
                     authListener?.onFailure(e.message!!)
                 }

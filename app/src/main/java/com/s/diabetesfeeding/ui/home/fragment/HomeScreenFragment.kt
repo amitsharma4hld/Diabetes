@@ -7,15 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.Data
 import com.s.diabetesfeeding.databinding.FragmentHomeScreenBinding
+import com.s.diabetesfeeding.ui.MainActivity
+import com.s.diabetesfeeding.ui.auth.AuthViewModel
+import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.auth.LoginActivity
 import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.ui.home.InsulinFragment
+import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -31,10 +39,13 @@ private const val ARG_BG_COLOR = "arg_bg_color"
 class HomeScreenFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
     private lateinit var viewModel: HomeViewModel
+    private lateinit var authViewModel: AuthViewModel
     private var param1: String? = null
     private var param2: String? = null
     private val factory:HomeViewModelFactory by instance()
+    private val authfactory : AuthViewModelFactory by instance()
     var isOptionSelected = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -58,6 +69,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     ): View? {
         val binding : FragmentHomeScreenBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_home_screen,container,false)
         viewModel = ViewModelProvider(this,factory).get(HomeViewModel::class.java)
+        authViewModel = ViewModelProvider(this, authfactory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         return binding.root
@@ -97,6 +109,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             mc_all.visibility = View.VISIBLE
             mc_today.visibility = View.GONE
         }
+
         Diabetes.setOnClickListener {
             addFragment(
                 viewModel.user.value?.display_name?.let { it1 ->
@@ -107,12 +120,23 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 }
             )
         }
+
         OBGYN.setOnClickListener {
             addFragment(
                 viewModel.user.value?.display_name?.let { it1 ->
                     ObgynFragment.newInstance(
                         it1,
                         R.color.colorAccent
+                    )
+                }
+            )
+        }
+        breastfeeding.setOnClickListener {
+            addFragment(
+                viewModel.user.value?.display_name?.let { it1 ->
+                    BreastfeedingFragment.newInstance(
+                        it1,
+                        ""
                     )
                 }
             )
@@ -148,6 +172,35 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     R.color.colorAccent
                 )
             )
+        }
+        tv_logout.setOnClickListener {
+            authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { data ->
+                if (data != null){
+                    logoutUser(data)
+                }
+            })
+        }
+    }
+    private fun logoutUser(data: Data) {
+        context?.let {
+            AlertDialog.Builder(it).apply {
+                setTitle("Confirmation")
+                setMessage("Are you sure want to logout. This might delete unsaved progress.")
+                setPositiveButton("Yes") { _, _ ->
+                    Coroutines.io{
+                        AppDatabase(context).getUserDao().delete(data)
+                        activity?.let{
+                            val intent = Intent (it, MainActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            }
+                            it.startActivity(intent)
+                        }
+                    }
+                }
+                setNegativeButton("No") { _, _ ->
+
+                }
+            }.create().show()
         }
     }
     fun openFragment(fragment: Fragment?) {

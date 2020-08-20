@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.s.diabetesfeeding.data.db.entities.Converters
 import com.s.diabetesfeeding.data.db.entities.Data
 import com.s.diabetesfeeding.data.db.entities.MonitorbloodGlucose
 import com.s.diabetesfeeding.data.db.entities.Symptom
@@ -12,6 +14,8 @@ import com.s.diabetesfeeding.data.db.entities.Symptom
     entities = [Data::class,MonitorbloodGlucose::class,Symptom::class],
     version = 1
 )
+
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun getUserDao(): UserDao
     abstract fun getMonitorbloodGlucoseDao(): MonitorbloodGlucoseDao

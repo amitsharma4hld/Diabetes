@@ -85,4 +85,10 @@
     <string name="calculate">calculate</string>
     <string name="blood_glucose_progress">Blood glucose progress</string>
     <string name="hash">#</string>
+    <string name="what_can_you_do">What can you do</string>
+    <string name="daily_nobservations">Daily\nObservations</string>
+    <string name="daily_tracking">Daily Tracking</string>
+    <string name="record_breastfeeding_sessions_per_day">Record breastfeeding sessions per day</string>
+    <string name="daily_observations">Daily Observations</string>
+    <string name="sleep_hours">Sleep Hours</string>
 </resources>

@@ -1,12 +1,15 @@
 package com.s.diabetesfeeding.util
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
+import com.s.diabetesfeeding.ui.auth.LoginActivity
 
 fun Context.longToast(message:String){
     Toast.makeText(this,message,Toast.LENGTH_LONG).show()
@@ -34,4 +37,22 @@ fun View.snackbar(message: String) {
             snackbar.dismiss()
         }
     }.show()
+}
+
+fun Context.alertDialog(title:String,message: String){
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle(title)
+    builder.setMessage(message)
+   // builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+    builder.setPositiveButton("OK"){dialogInterface, which ->
+        Intent(this, LoginActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(it)
+        }
+    }
+
+    val alertDialog: AlertDialog = builder.create()
+    alertDialog.setCancelable(false)
+    alertDialog.show()
 }

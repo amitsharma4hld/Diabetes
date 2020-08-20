@@ -28,7 +28,9 @@ class SymptomsFragment : Fragment() {
         SymptomsData(7,"Blurry Vision",false),
         SymptomsData(8,"Weakness or Fatigue",false),
         SymptomsData(9,"Headche",false),
-        SymptomsData(10,"Irritable",false)
+        SymptomsData(10,"Irritable",false),
+        SymptomsData(11,"Other",false)
+
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +56,6 @@ class SymptomsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_symptoms, container, false)
     }
 
