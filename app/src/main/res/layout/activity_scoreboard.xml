@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.home.ScoreboardActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Scoreboard"
+        android:textColor="#4F8394"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:fontFamily="@font/avenir_next_bold"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#737272"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Your Total 225"
+        android:textColor="#4F8394"
+        android:layout_centerInParent="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Current Streak 225"
+        android:textColor="#4F8394"
+        android:layout_centerInParent="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Visit"
+            android:textColor="#4F8394"
+
+            android:layout_marginLeft="10dp"
+
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Record"
+            android:textColor="#4F8394"
+            android:layout_marginLeft="10dp"
+
+
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Observe"
+            android:textColor="#4F8394"
+            android:layout_marginLeft="10dp"
+
+
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Total"
+            android:textColor="#4F8394"
+            android:layout_marginLeft="10dp"
+
+
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scorehistory_list"/>
+
+
+
+</LinearLayout>
