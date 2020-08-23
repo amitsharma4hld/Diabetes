@@ -10,127 +10,177 @@
             type="com.s.diabetesfeeding.data.db.entities.MonitorbloodGlucose" />
         <import type="android.view.View"/>
     </data>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@color/colorBackground"
-    >
-    <RelativeLayout
-        android:id="@+id/rl_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        >
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/et_value"
-        android:layout_width="55dip"
-        android:layout_height="50dip"
-        android:padding="2dp"
-        android:layout_centerVertical="true"
-        app:cardCornerRadius="30dp"
-        app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:hint="@string/hash"
-            android:maxLength="3"
-            android:inputType="number"
-            android:textColorHint="@color/colorWhite"
-            android:textColor="@color/colorWhite"
-            android:textSize="24sp"
-            android:background="@null"
-
-            android:fontFamily="@font/avenir_next_bold"
-            />
-    </com.google.android.material.card.MaterialCardView>
-    </RelativeLayout>
     <LinearLayout
-        android:id="@+id/ll_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_toEndOf="@+id/rl_value"
-        android:layout_toStartOf="@+id/rl_done"
-        android:layout_centerVertical="true"
-        android:padding="8dp"
+        android:background="@color/colorBackground"
         >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{monitorbloodGlucose.title}"
-            android:textSize="18sp"
-            android:textColor="@color/colorTitleText"
-            android:fontFamily="@font/avenir_next_regular"
-            />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:id="@+id/rl_value"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="53dip"
+                android:layout_height="48dip"
+                android:padding="2dp"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="30dp"
+                app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
+                >
+                <EditText
+                    android:id="@+id/et_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:hint="@string/hash"
+                    android:maxLength="3"
+                    android:textColorHint="@color/colorWhite"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    android:fontFamily="@font/avenir_next_bold"
+                    />
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@+id/rl_value"
+            android:layout_toStartOf="@+id/rl_done"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
             >
             <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{monitorbloodGlucose.time}"
-                android:textSize="14sp"
+                android:text="Wake Up Fasting"
+                android:textSize="18sp"
                 android:textColor="@color/colorTitleText"
                 android:fontFamily="@font/avenir_next_regular"
                 />
-            <TextView
-                android:id="@+id/tv_range_static"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/range"
-                android:layout_toEndOf="@+id/tv_time"
-                android:textColor="@color/colorTitleText"
-                android:layout_marginStart="16dp"
-                android:maxLines="1"
-                android:fontFamily="@font/avenir_next_bold"
-                />
-            <TextView
-                android:id="@+id/tv_range_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{monitorbloodGlucose.range}"
-                android:textSize="14sp"
-                android:maxLines="1"
-                android:textColor="@color/colorTitleText"
-                android:fontFamily="@font/avenir_next_regular"
-                android:layout_toEndOf="@+id/tv_range_static"
-                android:layout_marginStart="4dp"
-                />
+                android:layout_marginTop="-6dp"
+                >
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="08:30 AM"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTitleText"
+                    android:fontFamily="@font/avenir_next_regular"
+                    />
+                <TextView
+                    android:id="@+id/tv_range_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/range"
+                    android:textSize="14sp"
+                    android:layout_toEndOf="@+id/tv_time"
+                    android:textColor="@color/colorTitleText"
+                    android:layout_marginStart="16dp"
+                    android:maxLines="1"
+                    android:fontFamily="@font/avenir_next_bold"
+                    />
+                <TextView
+                    android:id="@+id/tv_range_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="65-95"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorTitleText"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:layout_toEndOf="@+id/tv_range_static"
+                    android:layout_marginStart="4dp"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rl_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="100dip"
+                android:layout_height="38dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/mc_done"
+                app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/done_plus"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_or_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or"
+            android:textColor="@color/color_monitorblood_glucose_theme"
+            android:textSize="18sp"
+            android:fontFamily="@font/avenir_next_bold"
+            android:layout_centerHorizontal="true"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="100dip"
+                android:layout_height="38dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:layout_gravity="center"
+                    android:text="@string/done_plus"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+    </RelativeLayout>
 
     </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/rl_done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        >
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="110dip"
-        android:layout_height="38dip"
-        android:layout_gravity="center_horizontal"
-        app:cardCornerRadius="30dp"
-        android:id="@+id/done"
-        app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
-        android:layout_margin="2dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="@string/done_plus"
-            android:textColor="#fff"
-            android:textSize="20sp" />
-    </com.google.android.material.card.MaterialCardView>
-    </RelativeLayout>
-</RelativeLayout>
 </layout>

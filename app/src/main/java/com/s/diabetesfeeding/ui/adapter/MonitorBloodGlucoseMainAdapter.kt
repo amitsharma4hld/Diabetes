@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.SymptomsData
-import com.s.diabetesfeeding.data.db.entities.AllCategory
-import com.s.diabetesfeeding.data.db.entities.CategoryItem
-import com.s.diabetesfeeding.ui.SymptomsAdapter
+import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.CategoryWithItems
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_parent.view.*
-import kotlinx.android.synthetic.main.monitor_blood_glucose_fragment.*
 
-class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCategory:List<AllCategory>) :
+class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCategory:List<CategoryWithItems>) :
     RecyclerView.Adapter<MonitorBloodGlucoseMainAdapter.MonitorBloodGlucoseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonitorBloodGlucoseViewHolder {
@@ -28,9 +25,10 @@ class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCatego
 
     override fun onBindViewHolder(holder: MonitorBloodGlucoseViewHolder, position: Int) {
         val category = allCategory[position]
-        holder.view.view_rv_divider.visibility = View.VISIBLE
-
-        setChildItem(holder.itemRecycler!!, category.categoryItem)
+        if (position == allCategory.size-1){
+            holder.view.view_rv_divider.visibility = View.GONE
+        }
+        setChildItem(holder.itemRecycler!!, category.bloodGlucoseCategoryItems)
     }
 
     class MonitorBloodGlucoseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -40,7 +38,7 @@ class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCatego
         }
     }
 
-    private fun setChildItem(recyclerView: RecyclerView, categoryItem: List<CategoryItem>) {
+    private fun setChildItem(recyclerView: RecyclerView, categoryItem: List<BloodGlucoseCategoryItem>) {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter =  CategoryItemAdapter(categoryItem)
     }

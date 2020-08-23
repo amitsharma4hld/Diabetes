@@ -23,6 +23,9 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
     private var param1: String? = null
     private var param2: String? = null
     var isFirst = true
+    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
+        java.util.Date())
+
     val sessions = listOf(
         BreastFeedingSessionData(1,"6:00AM","00:48"),
         BreastFeedingSessionData(2,"8:00AM","00:45"),
@@ -60,6 +63,7 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        tv_today_date_breastfeed.text = currentDate
         arguments?.getString(BreastfeedingFragment.ARG_TITLE)?.let {
             username_breastfeeding?.text  = "Hello "+it +","
         }
@@ -161,13 +165,7 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         private const val ARG_PARAM2 = "param2"
     }
 
-    fun openFragment(fragment: Fragment?) {
-        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.replace(R.id.container, fragment!!)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
+
     fun addFragment(fragment: Fragment?) {
         val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -185,7 +183,6 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
                     GoalBreastfeedFragment.newInstance(
                         it1,
                         ""
-
                     )
                 }
             )
@@ -197,7 +194,6 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
                     DiaperChangeFragment.newInstance(
                         it1,
                         ""
-
                     )
                 }
             )

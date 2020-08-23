@@ -15,7 +15,8 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class SymptomsFragment : Fragment() {
-
+    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
+        java.util.Date())
     private var param1: String? = null
     private var param2: String? = null
     val symptoms = listOf(
@@ -43,6 +44,7 @@ class SymptomsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        tv_today_date_symptoms.text = currentDate
         showSymptoms(symptoms)
 
     }

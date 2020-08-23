@@ -59,6 +59,7 @@
 
         </RelativeLayout>
         <TextView
+            android:id="@+id/tv_today_date_breastfeed"
             android:layout_width="130dip"
             android:layout_height="40dp"
             android:gravity="center"

@@ -2,6 +2,7 @@ package com.s.diabetesfeeding.ui.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
-import com.s.diabetesfeeding.data.db.entities.Data
+import com.s.diabetesfeeding.data.db.entities.*
 import com.s.diabetesfeeding.databinding.FragmentHomeScreenBinding
 import com.s.diabetesfeeding.ui.MainActivity
 import com.s.diabetesfeeding.ui.auth.AuthViewModel
@@ -24,6 +25,7 @@ import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.ui.home.InsulinFragment
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.longToast
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -45,6 +47,10 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     private val factory:HomeViewModelFactory by instance()
     private val authfactory : AuthViewModelFactory by instance()
     var isOptionSelected = true
+    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
+        java.util.Date())
+    val allCategory: MutableList<MonitorBloodGlucoseCategory> = ArrayList()
+    val categoryItemList: MutableList<BloodGlucoseCategoryItem> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +83,25 @@ class HomeScreenFragment : Fragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        tv_today_date.text = currentDate
+        savedataAllCategory()
+        saveAllCategoryItems()
+        Coroutines.io {
+            context?.let {
+                if (AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategory().isNullOrEmpty()){
+                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllMonitorbloodGlucoseCat(allCategory)
+                    Log.d("AppDatabase : ","Category ${allCategory.size} added")
+                }
+            }
+        }
+        Coroutines.io {
+            context?.let {
+                if(AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategoryItems().isNullOrEmpty()){
+                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(categoryItemList)
+                    Log.d("AppDatabase : ","CategoryItems ${categoryItemList.size} added")
+                }
+            }
+        }
         mc_logout.setOnClickListener {
             activity?.let{
                 val intent = Intent (it, LoginActivity::class.java)
@@ -181,6 +206,33 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             })
         }
     }
+
+    private fun saveAllCategoryItems() {
+        categoryItemList.add(BloodGlucoseCategoryItem(0,1,"wake_up_fasting","65-95","08:30 AM","Wake Up Fasting","65"))
+
+        categoryItemList.add(BloodGlucoseCategoryItem(0,2,"before_breakfast","65-95","08:30 AM","Before Breakfast","65"))
+        categoryItemList.add(BloodGlucoseCategoryItem(0,2,"1_hr_after_breakfast","65-140","09:30 AM","1 Hour After Breakfast","68"))
+        categoryItemList.add(BloodGlucoseCategoryItem(0,2,"2_hr_after_breakfast","65-120","10:30 AM","2 Hour After Breakfast",""))
+
+        categoryItemList.add(BloodGlucoseCategoryItem(0,3,"before_lunch","65-95","12:30 PM","Before Lunch",""))
+        categoryItemList.add(BloodGlucoseCategoryItem(0,3,"1_hr_after_lunch","65-140","01:30 PM","1 Hour After Lunch",""))
+        categoryItemList.add(BloodGlucoseCategoryItem(0,3,"2_hr_after_lunch","65-120","02:30 PM","2 Hour After Lunch",""))
+
+        categoryItemList.add(BloodGlucoseCategoryItem(0,4,"before_dinner","65-95","06:30 PM","Before Diner",""))
+        categoryItemList.add(BloodGlucoseCategoryItem(0,4,"1_hr_after_dinner","65-140","07:30 PM","1 Hour After Diner",""))
+        categoryItemList.add(BloodGlucoseCategoryItem(0,4,"2_hr_after_dinner","65-120","08:30 PM","2 Hour After Diner",""))
+
+        categoryItemList.add(BloodGlucoseCategoryItem(0,5,"bedtime","65-95","10:30 PM","Bedtime","65"))
+    }
+
+    private fun savedataAllCategory() {
+        allCategory.add(MonitorBloodGlucoseCategory(1,"Wake Up"))
+        allCategory.add(MonitorBloodGlucoseCategory(2,"Breakfast"))
+        allCategory.add(MonitorBloodGlucoseCategory(3,"Lunch"))
+        allCategory.add(MonitorBloodGlucoseCategory(4,"Diner"))
+        allCategory.add(MonitorBloodGlucoseCategory(5,"Bedtime"))
+    }
+
     private fun logoutUser(data: Data) {
         context?.let {
             AlertDialog.Builder(it).apply {

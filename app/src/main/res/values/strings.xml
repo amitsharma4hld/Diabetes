@@ -91,4 +91,6 @@
     <string name="record_breastfeeding_sessions_per_day">Record breastfeeding sessions per day</string>
     <string name="daily_observations">Daily Observations</string>
     <string name="sleep_hours">Sleep Hours</string>
+    <string name="appointment">appointment</string>
+    <string name="today_at">Today at</string>
 </resources>

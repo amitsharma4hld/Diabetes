@@ -1,14 +1,16 @@
 package com.s.diabetesfeeding.ui.adapter
 
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.CategoryItem
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 
-class CategoryItemAdapter (private val categoryItem: List<CategoryItem>): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
+class CategoryItemAdapter (private val categoryItem: List<BloodGlucoseCategoryItem>): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
 
     class CategoryItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -24,11 +26,25 @@ class CategoryItemAdapter (private val categoryItem: List<CategoryItem>): Recycl
     override fun getItemCount()= categoryItem.size
 
     override fun onBindViewHolder(holder: CategoryItemViewHolder, position: Int) {
-        val categoryItem = categoryItem[position]
-        holder.view.et_value.setText(categoryItem.value)
-        holder.view.tv_title.text = categoryItem.title
-        holder.view.tv_time.text = categoryItem.time
-        holder.view.tv_range_value.text = categoryItem.range
+        val categoryItems = categoryItem[position]
+        if (position>=1){
+            holder.view.rl_done.visibility = View.GONE
+            holder.view.rl_or_done.visibility = View.VISIBLE
+        }
+        if (position == categoryItem.size-1){
+            holder.view.rl_or_done.visibility = View.GONE
+        }
+        if (categoryItems.value.isEmpty()){
+            holder.view.et_value.inputType = InputType.TYPE_CLASS_NUMBER
+            holder.view.et_value.setText("")
+        }else{
+            holder.view.et_value.inputType = InputType.TYPE_NULL
+
+            holder.view.et_value.setText(categoryItems.value)
+        }
+        holder.view.tv_title.text = categoryItems.title
+        holder.view.tv_time.text = categoryItems.time
+        holder.view.tv_range_value.text = categoryItems.range
         holder.view.rl_done.setOnClickListener {
 
         }

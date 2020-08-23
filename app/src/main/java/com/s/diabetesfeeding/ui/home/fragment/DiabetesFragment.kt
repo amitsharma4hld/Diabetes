@@ -22,7 +22,8 @@ class DiabetesFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
-
+    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
+        java.util.Date())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,6 +46,7 @@ class DiabetesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        tv_today_date_diabetes.text = currentDate
         arguments?.getString(DiabetesFragment.ARG_TITLE)?.let {
             username_diabetes?.text  = "Hello "+it +","
         }

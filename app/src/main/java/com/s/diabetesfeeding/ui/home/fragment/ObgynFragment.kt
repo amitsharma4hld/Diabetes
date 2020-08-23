@@ -15,7 +15,8 @@ class ObgynFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
+        java.util.Date())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,6 +35,7 @@ class ObgynFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        tv_today_date_obgyn.text = currentDate
         arguments?.getString(ObgynFragment.ARG_TITLE)?.let {
             username_obgy?.text  = "Hello "+it +","
         }
