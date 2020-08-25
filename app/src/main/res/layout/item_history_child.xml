@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="45dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="1dp"
+                app:cardBackgroundColor="#D8D8D8"
+                app:strokeColor="#686767"
+                app:strokeWidth="1dp"
+                android:layout_gravity="center"
+                >
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chart1"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/seekBar1" />
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                app:cardCornerRadius="90dp"
+                android:id="@+id/cv_start"
+                android:layout_gravity="center_vertical"
+                app:cardBackgroundColor="#F3CF63"
+                android:visibility="gone"
+               >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_start_stop_done"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_vertical"
+                        android:textAllCaps="true"
+                        android:gravity="center"
+                        android:fontFamily="@font/avenir_next_bold"
+                        android:text="Today"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>

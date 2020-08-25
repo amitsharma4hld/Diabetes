@@ -1,16 +1,19 @@
 package com.s.diabetesfeeding.ui.adapter
 
+import android.content.Context
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
-import com.s.diabetesfeeding.data.db.entities.CategoryItem
+import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 
-class CategoryItemAdapter (private val categoryItem: List<BloodGlucoseCategoryItem>): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
+class CategoryItemAdapter (private val context: Context,private val categoryItem: List<BloodGlucoseCategoryItem>): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
 
     class CategoryItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
@@ -39,14 +42,23 @@ class CategoryItemAdapter (private val categoryItem: List<BloodGlucoseCategoryIt
             holder.view.et_value.setText("")
         }else{
             holder.view.et_value.inputType = InputType.TYPE_NULL
-
             holder.view.et_value.setText(categoryItems.value)
         }
         holder.view.tv_title.text = categoryItems.title
         holder.view.tv_time.text = categoryItems.time
         holder.view.tv_range_value.text = categoryItems.range
         holder.view.rl_done.setOnClickListener {
+            categoryItems.value = holder.view.et_value.text.toString()
+            update(categoryItems)
+        }
+    }
 
+    fun update(categoryItems: BloodGlucoseCategoryItem) {
+        Coroutines.io {
+            context.let {
+                AppDatabase(it).getMonitorBloodGlucoseCatDao().updateBloodGlucoseCategoryItem(categoryItems)
+                Log.d("APPDATABASE : ","Update value is ${categoryItems.value}")
+            }
         }
     }
 

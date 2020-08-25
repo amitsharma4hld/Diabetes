@@ -2,21 +2,14 @@ package com.s.diabetesfeeding.ui.auth
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.Data
-import com.s.diabetesfeeding.data.network.ApiInterface
-import com.s.diabetesfeeding.data.network.NetworkConnectionInterceptor
-import com.s.diabetesfeeding.data.repositories.UserRepository
 import com.s.diabetesfeeding.databinding.ActivityLoginBinding
-import com.s.diabetesfeeding.ui.ForgetPassActivity
 import com.s.diabetesfeeding.ui.home.HomeActivity
 import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.activity_login.*

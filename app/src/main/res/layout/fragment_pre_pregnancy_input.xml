@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.fragment.obgyn.PrePregnancyInputFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:background="@color/colorBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:gravity="end"
+            android:padding="4dp"
+            android:layout_gravity="end"
+            android:textSize="32sp"
+            android:id="@+id/username"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginTop="32dp"
+            android:textColor="@color/colorTitleText"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/totalnumber"
+                app:cardBackgroundColor="@color/colorObgyTheme"
+                android:layout_margin="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/data_entry"
+                        android:fontFamily="@font/avenir_next_regular"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="32sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:gravity="center"
+                        android:layout_marginTop="6dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/one"
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            app:cardCornerRadius="30dp"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#fff"
+                            android:layout_margin="2dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="@null"
+                                android:layout_height="match_parent">
+                                <EditText
+                                    android:id="@+id/et_digit_one"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:layout_gravity="center"
+                                    android:textStyle="bold"
+                                    android:maxLines="1"
+                                    android:maxLength="1"
+                                    android:digits="123456789"
+                                    android:focusableInTouchMode="true"
+                                    android:importantForAutofill="no"
+                                    android:textAlignment="center"
+                                    android:inputType="number"
+                                    android:imeOptions="actionNext"
+                                    android:background="@null"
+                                    android:textColor="@color/colorObgyTheme"
+                                    android:textSize="40sp" />
+
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            app:cardCornerRadius="30dp"
+                            android:id="@+id/two"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#fff"
+                            android:layout_margin="4dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_height="match_parent">
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:layout_gravity="center"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:importantForAutofill="no"
+                                    android:inputType="number"
+                                    android:maxLines="1"
+                                    android:maxLength="1"
+                                    android:digits="123456789"
+                                    android:imeOptions="actionNext"
+                                    android:background="#fff"
+                                    android:textColor="@color/colorObgyTheme"
+                                    android:textSize="40sp" />
+
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            app:cardCornerRadius="30dp"
+                            android:id="@+id/three"
+                            android:layout_marginTop="20dp"
+                            app:cardBackgroundColor="#fff"
+                            android:layout_margin="2dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:background="#fff"
+                                android:layout_height="match_parent">
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:layout_gravity="center"
+                                    android:textStyle="bold"
+                                    android:textAlignment="center"
+                                    android:inputType="number"
+                                    android:maxLines="1"
+                                    android:maxLength="1"
+                                    android:importantForAutofill="no"
+                                    android:digits="123456789"
+                                    android:imeOptions="actionDone"
+                                    android:background="#fff"
+                                    android:textColor="@color/colorObgyTheme"
+                                    android:textSize="40sp" />
+
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="end"
+                        android:fontFamily="@font/avenir_next_regular"
+                        android:textColor="#fff"
+                        android:visibility="invisible"
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="150dip"
+                android:layout_height="50dip"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="30dp"
+                android:id="@+id/mcv_weight_done"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/totalnumber"
+                app:cardBackgroundColor="@color/colorObgyTheme"
+                android:layout_marginTop="32dp"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/done_plus_two"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

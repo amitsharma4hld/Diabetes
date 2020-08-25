@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.SymptomsData
-import com.s.diabetesfeeding.ui.SymptomsAdapter
 import kotlinx.android.synthetic.main.item_symptoms_list.view.*
 
 class ObeservationAdapter (val symptoms : List<SymptomsData>) : RecyclerView.Adapter<ObeservationAdapter.SymptomsViewHolder>(){

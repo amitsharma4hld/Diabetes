@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.fragment.HomeScreenFragment"
+    tools:context=".ui.home.fragment.obgyn.ObgynFragment"
     android:layout_marginBottom="52dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
@@ -268,6 +268,7 @@
                                     android:fontFamily="@font/avenir_next_regular"
                                     android:textSize="16sp" />
                                 <TextView
+                                    android:id="@+id/tv_week_obyn"
                                     android:layout_width="130dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -321,6 +322,7 @@
                                 android:gravity="center"
                                 android:layout_height="match_parent">
                                 <TextView
+                                    android:id="@+id/tv_doctorname_obgyn"
                                     android:layout_width="130dip"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -347,11 +349,12 @@
                                     android:gravity="center"
                                     android:layout_gravity="center"
                                     android:fontFamily="@font/avenir_next_regular"
-                                    android:text="Todat at"
+                                    android:text="Today at"
                                     android:textColor="#fff"
                                     android:textSize="16sp" />
 
                                 <TextView
+                                    android:id="@+id/tv_time_obgyn"
                                     android:layout_width="130dip"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"

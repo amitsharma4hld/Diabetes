@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.*
@@ -23,9 +25,10 @@ import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.auth.LoginActivity
 import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
-import com.s.diabetesfeeding.ui.home.InsulinFragment
+import com.s.diabetesfeeding.ui.home.fragment.breastfeeding.BreastfeedingFragment
+import com.s.diabetesfeeding.ui.home.fragment.diabetes.*
+import com.s.diabetesfeeding.ui.home.fragment.obgyn.ObgynFragment
 import com.s.diabetesfeeding.util.Coroutines
-import com.s.diabetesfeeding.util.longToast
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -102,102 +105,34 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 }
             }
         }
-        mc_logout.setOnClickListener {
+     /*   mc_logout.setOnClickListener {
             activity?.let{
                 val intent = Intent (it, LoginActivity::class.java)
                 it.startActivity(intent)
                 activity?.finish()
             }
-        }
-        tv_today.setOnClickListener {
-            mc_week.visibility = View.GONE
-            mc_month.visibility = View.GONE
-            mc_all.visibility = View.GONE
-            mc_today.visibility = View.VISIBLE
-        }
-
-        tv_week.setOnClickListener {
-            mc_week.visibility = View.VISIBLE
-            mc_month.visibility = View.GONE
-            mc_all.visibility = View.GONE
-            mc_today.visibility = View.GONE
-        }
-        tv_month.setOnClickListener {
-            mc_week.visibility = View.GONE
-            mc_month.visibility = View.VISIBLE
-            mc_all.visibility = View.GONE
-            mc_today.visibility = View.GONE
-        }
-        tv_all.setOnClickListener {
-            mc_week.visibility = View.GONE
-            mc_month.visibility = View.GONE
-            mc_all.visibility = View.VISIBLE
-            mc_today.visibility = View.GONE
-        }
+        }*/
 
         Diabetes.setOnClickListener {
-            addFragment(
-                viewModel.user.value?.display_name?.let { it1 ->
-                    DiabetesFragment.newInstance(
-                        it1,
-                        R.color.colorAccent
-                    )
-                }
-            )
+             viewModel.user.value?.let { it1 ->
+                 val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToDiabetesFragment(it1.display_name!!,it1.weekOfPregnancy!!,it1.doctorName!!,it1.appointment!!)
+                 Navigation.findNavController(it).navigate(action)
+             }
         }
 
         OBGYN.setOnClickListener {
-            addFragment(
-                viewModel.user.value?.display_name?.let { it1 ->
-                    ObgynFragment.newInstance(
-                        it1,
-                        R.color.colorAccent
-                    )
-                }
-            )
+            viewModel.user.value?.let { it1 ->
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToObgynFragment(it1.display_name!!,it1.weekOfPregnancy!!,it1.doctorName!!,it1.appointment!!)
+                Navigation.findNavController(it).navigate(action)
+            }
         }
         breastfeeding.setOnClickListener {
-            addFragment(
-                viewModel.user.value?.display_name?.let { it1 ->
-                    BreastfeedingFragment.newInstance(
-                        it1,
-                        ""
-                    )
-                }
-            )
+            viewModel.user.value?.let { it1 ->
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToBreastfeedingFragment(it1.display_name!!,it1.weekOfPregnancy!!,it1.doctorName!!,it1.appointment!!)
+                Navigation.findNavController(it).navigate(action)
+            }
         }
-        tv_blood_glucose.setOnClickListener {
-            addFragment(
-                MonitorBloodGlucoseFragment.newInstance(
-                    "",
-                    R.color.colorAccent
-                )
-            )
-        }
-        tv_insulin.setOnClickListener {
-            openFragment(
-                InsulinFragment.newInstance(
-                    "",
-                    R.color.colorAccent
-                )
-            )
-        }
-        tv_weight.setOnClickListener {
-            openFragment(
-                Weight_fragment.newInstance(
-                    "",
-                    R.color.colorAccent
-                )
-            )
-        }
-        tv_symptoms.setOnClickListener {
-            openFragment(
-                SymptomsFragment.newInstance(
-                    "",
-                    R.color.colorAccent
-                )
-            )
-        }
+
         tv_logout.setOnClickListener {
             authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { data ->
                 if (data != null){
@@ -250,24 +185,9 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     }
                 }
                 setNegativeButton("No") { _, _ ->
-
                 }
             }.create().show()
         }
-    }
-    fun openFragment(fragment: Fragment?) {
-        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.replace(R.id.container, fragment!!)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-    fun addFragment(fragment: Fragment?) {
-        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.add(R.id.container, fragment!!)
-        transaction.addToBackStack(HomeScreenFragment.toString())
-        transaction.commit()
     }
 
     companion object {

@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
+    tools:context=".ui.home.fragment.diabetes.InsulinFragment"
+
     >
     <ScrollView
         android:layout_width="match_parent"
@@ -315,7 +317,7 @@
                     android:textSize="20sp" />
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/done"
+                android:id="@+id/mcv_done"
                 android:layout_width="150dip"
                 android:layout_height="45dip"
                 android:layout_gravity="center_horizontal"

@@ -12,5 +12,5 @@ class BloodGlucoseCategoryItem(
     val range: String,
     val time: String,
     val title: String,
-    val value: String
+    var value: String
 )

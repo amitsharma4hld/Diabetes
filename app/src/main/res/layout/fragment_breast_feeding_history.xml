@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="52dp"
+    tools:context=".ui.home.fragment.breastfeeding.BreastFeedingHistoryFragment"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:background="@color/colorBackground"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/color_breastfeeding_theme"
+            android:layout_alignParentStart="true"
+            android:id="@+id/mcv_back"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Breastfeeding"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:fontFamily="@font/avenir_next_bold"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="14sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Today"
+            android:textColor="#4F8394"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_question_breastfeed"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F3CF63"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="S"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="M"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="T"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="W"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Th"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="F"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="S"
+            android:textColor="#4F8394"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F3CF63"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:listitem="@layout/item_history_parent"
+        android:id="@+id/historylist"/>
+</LinearLayout>
+    <include
+        layout="@layout/bottom_sheet_history"
+        />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

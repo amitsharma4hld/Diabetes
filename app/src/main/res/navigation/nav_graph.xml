@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeScreenFragment">
+
+    <fragment
+        android:id="@+id/homeScreenFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.HomeScreenFragment"
+        android:label="fragment_home_screen"
+        tools:layout="@layout/fragment_home_screen" >
+        <action
+            android:id="@+id/action_homeScreenFragment_to_obgynFragment"
+            app:destination="@id/obgynFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_breastfeedingFragment"
+            app:destination="@id/breastfeedingFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_diabetesFragment"
+            app:destination="@id/diabetesFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/insulinFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.diabetes.InsulinFragment"
+        android:label="fragment_insulin"
+        tools:layout="@layout/fragment_insulin" >
+        <action
+            android:id="@+id/action_insulinFragment_to_diabetesFragment"
+            app:destination="@id/diabetesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/diabetesFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.diabetes.DiabetesFragment"
+        android:label="fragment_diabetes"
+        tools:layout="@layout/fragment_diabetes" >
+        <action
+            android:id="@+id/action_diabetesFragment_to_monitorBloodGlucoseFragment"
+            app:destination="@id/monitorBloodGlucoseFragment" />
+        <action
+            android:id="@+id/action_diabetesFragment_to_insulinFragment"
+            app:destination="@id/insulinFragment" />
+        <action
+            android:id="@+id/action_diabetesFragment_to_weightFragment"
+            app:destination="@id/weightFragment" />
+        <action
+            android:id="@+id/action_diabetesFragment_to_symptomsFragment"
+            app:destination="@id/symptomsFragment" />
+        <action
+            android:id="@+id/action_diabetesFragment_to_progressBloodGlucoseFragment"
+            app:destination="@id/progressBloodGlucoseFragment" />
+        <action
+            android:id="@+id/action_diabetesFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Hello ," />
+        <argument
+            android:name="weekofpreg"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="doctorname"
+            app:argType="string"
+            android:defaultValue="Dr" />
+        <argument
+            android:name="time"
+            app:argType="string"
+            android:defaultValue="00" />
+    </fragment>
+    <fragment
+        android:id="@+id/obgynFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.ObgynFragment"
+        android:label="fragment_obgyn"
+        tools:layout="@layout/fragment_obgyn" >
+        <action
+            android:id="@+id/action_obgynFragment_to_observationFragment"
+            app:destination="@id/observationFragment" />
+        <action
+            android:id="@+id/action_obgynFragment_to_counselingFragment"
+            app:destination="@id/counselingFragment" />
+        <action
+            android:id="@+id/action_obgynFragment_to_prentalVisitFragment"
+            app:destination="@id/prentalVisitFragment" />
+        <action
+            android:id="@+id/action_obgynFragment_to_progressObgynFragment"
+            app:destination="@id/progressObgynFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Hello ," />
+        <argument
+            android:name="weekofpreg"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="doctorname"
+            app:argType="string"
+            android:defaultValue="Dr" />
+        <argument
+            android:name="time"
+            app:argType="string"
+            android:defaultValue="00" />
+        <action
+            android:id="@+id/action_obgynFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/breastfeedingFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.BreastfeedingFragment"
+        android:label="fragment_breastfeeding"
+        tools:layout="@layout/fragment_breastfeeding" >
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_diaperChangeFragment"
+            app:destination="@id/diaperChangeFragment" />
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_dailyObservationFragment"
+            app:destination="@id/dailyObservationFragment" />
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_babyWeightFragment"
+            app:destination="@id/babyWeightFragment" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Hello ," />
+        <argument
+            android:name="weekofpreg"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="doctorname"
+            app:argType="string"
+            android:defaultValue="Dr" />
+        <argument
+            android:name="time"
+            app:argType="string"
+            android:defaultValue="00" />
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_goalBreastfeedFragment"
+            app:destination="@id/goalBreastfeedFragment" />
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_breastFeedingHistoryFragment"
+            app:destination="@id/breastFeedingHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monitorBloodGlucoseFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.diabetes.MonitorBloodGlucoseFragment"
+        android:label="monitor_blood_glucose_fragment"
+        tools:layout="@layout/monitor_blood_glucose_fragment" >
+        <action
+            android:id="@+id/action_monitorBloodGlucoseFragment_to_diabetesFragment"
+            app:destination="@id/diabetesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weightFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.diabetes.WeightFragment"
+        android:label="fragment_weight"
+        tools:layout="@layout/fragment_weight" >
+        <action
+            android:id="@+id/action_weightFragment_to_diabetesFragment"
+            app:destination="@id/diabetesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/symptomsFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.diabetes.SymptomsFragment"
+        android:label="fragment_symptoms"
+        tools:layout="@layout/fragment_symptoms" >
+        <action
+            android:id="@+id/action_symptomsFragment_to_diabetesFragment"
+            app:destination="@id/diabetesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/progressBloodGlucoseFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.diabetes.ProgressBloodGlucoseFragment"
+        android:label="fragment_progress_blood_glucose"
+        tools:layout="@layout/fragment_progress_blood_glucose" >
+        <action
+            android:id="@+id/action_progressBloodGlucoseFragment_to_diabetesFragment"
+            app:destination="@id/diabetesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/observationFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.ObservationFragment"
+        android:label="fragment_observation"
+        tools:layout="@layout/fragment_observation" >
+        <action
+            android:id="@+id/action_observationFragment_to_obgynFragment"
+            app:destination="@id/obgynFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/counselingFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.CounselingFragment"
+        android:label="fragment_counseling"
+        tools:layout="@layout/fragment_counseling" >
+        <action
+            android:id="@+id/action_counselingFragment_to_trimesterFragment"
+            app:destination="@id/trimesterFragment" />
+        <action
+            android:id="@+id/action_counselingFragment_to_obgynFragment"
+            app:destination="@id/obgynFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trimesterFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.TrimesterFragment"
+        android:label="fragment_trimester"
+        tools:layout="@layout/fragment_trimester" >
+        <action
+            android:id="@+id/action_trimesterFragment_to_counselingFragment"
+            app:destination="@id/counselingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/prentalVisitFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrentalVisitFragment"
+        android:label="fragment_prental_visit"
+        tools:layout="@layout/fragment_prental_visit" >
+        <action
+            android:id="@+id/action_prentalVisitFragment_to_prePregnancyInputFragment"
+            app:destination="@id/prePregnancyInputFragment" />
+        <action
+            android:id="@+id/action_prentalVisitFragment_to_obgynFragment"
+            app:destination="@id/obgynFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/progressObgynFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.ProgressObgynFragment"
+        android:label="fragment_progress_obgyn"
+        tools:layout="@layout/fragment_progress_obgyn" >
+        <action
+            android:id="@+id/action_progressObgynFragment_to_obgynFragment"
+            app:destination="@id/obgynFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/diaperChangeFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.DiaperChangeFragment"
+        android:label="fragment_diaper_change"
+        tools:layout="@layout/fragment_diaper_change" >
+        <action
+            android:id="@+id/action_diaperChangeFragment_to_breastfeedingFragment2"
+            app:destination="@id/breastfeedingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyObservationFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.DailyObservationFragment"
+        android:label="fragment_daily_observation"
+        tools:layout="@layout/fragment_daily_observation" >
+        <action
+            android:id="@+id/action_dailyObservationFragment_to_breastfeedingFragment"
+            app:destination="@id/breastfeedingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/babyWeightFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.BabyWeightFragment"
+        android:label="fragment_baby_weight"
+        tools:layout="@layout/fragment_baby_weight" >
+        <action
+            android:id="@+id/action_babyWeightFragment_to_breastfeedingFragment"
+            app:destination="@id/breastfeedingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.s.diabetesfeeding.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/prePregnancyInputFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrePregnancyInputFragment"
+        android:label="fragment_pre_pregnancy_input"
+        tools:layout="@layout/fragment_pre_pregnancy_input" >
+        <action
+            android:id="@+id/action_prePregnancyInputFragment_to_prentalVisitFragment"
+            app:destination="@id/prentalVisitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/goalBreastfeedFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.GoalBreastfeedFragment"
+        android:label="fragment_goal_breastfeed"
+        tools:layout="@layout/fragment_goal_breastfeed" >
+        <action
+            android:id="@+id/action_goalBreastfeedFragment_to_breastfeedingFragment"
+            app:destination="@id/breastfeedingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/breastFeedingHistoryFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.BreastFeedingHistoryFragment"
+        android:label="fragment_breast_feeding_history"
+        tools:layout="@layout/fragment_breast_feeding_history" >
+        <action
+            android:id="@+id/action_breastFeedingHistoryFragment_to_breastfeedingFragment"
+            app:destination="@id/breastfeedingFragment" />
+    </fragment>
+</navigation>

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.fragment.BreastfeedingFragment"
+    tools:context=".ui.home.fragment.breastfeeding.BreastfeedingFragment"
     android:layout_marginBottom="52dp"
     android:padding="16dp"
     android:background="@color/colorBackground"
@@ -131,7 +131,7 @@
                 android:textColor="@color/colorAccent"
                 android:layout_marginTop="6dp"
                 android:textSize="14sp"
-                android:fontFamily="@font/avenir_next_bold"
+                android:fontFamily="@font/avenir_next_regular"
                 android:gravity="center"
                 android:lineSpacingMultiplier="0.9"
                 android:maxLines="2"
@@ -303,21 +303,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/rv_breastfeeding_sessions"
             tools:listitem="@layout/item_breastfeeding_sessions_list"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginTop="8dp"
             />
 
         <RelativeLayout
+            android:id="@+id/rl_show_calender"
             android:layout_width="wrap_content"
             android:layout_marginTop="90dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_height="wrap_content">
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="60dp"
                 android:id="@+id/cv_history"
-                app:cardBackgroundColor="#F3CF63"
+                app:cardBackgroundColor="@color/color_breastfeeding_theme"
                 android:layout_margin="2dp">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -328,10 +329,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18dp"
-                        android:padding="10dp"
-                        android:textColor="@color/colorAccent"
-                        android:text="Show my History"/>
+                        android:textSize="20sp"
+                        android:padding="2dp"
+                        android:fontFamily="@font/avenir_next_bold"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/show_my_tracking_history"/>
 
                 </LinearLayout>
 

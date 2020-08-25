@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginBottom="32dp"
+    android:id="@+id/ly_bottom_sheet"
+    android:background="@color/colorWhite"
+    android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="100dp"
+        android:layout_height="6dp"
+        app:cardBackgroundColor="@color/colorGrayTextHint"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="6dp"
+        >
+
+    </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tracked on June 8, 2020"
+        android:textColor="#4F8394"
+        android:id="@+id/day_name"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:fontFamily="@font/avenir_next_bold"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="22sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        >
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="15dp"
+            android:layout_height="40dp"
+            android:id="@+id/tag"
+            app:cardBackgroundColor="#F3CF63"
+            android:layout_alignParentLeft="true"
+            >
+        </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/tv_title_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/breastfeeding"
+            android:layout_toEndOf="@+id/tag"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:textColor="#F7D249"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/avenir_next_bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="2 Times"
+            android:layout_toRightOf="@+id/tv_title_one"
+            android:textColor="#4F8394"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/avenir_next_regular"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        >
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="15dp"
+            android:layout_height="40dp"
+            android:id="@+id/tag1"
+            app:cardBackgroundColor="@color/color_breastfeeding_theme"
+            android:layout_alignParentLeft="true"
+            >
+
+        </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/tv_title_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Baby's Stool"
+            android:layout_toEndOf="@+id/tag1"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:textColor="#F7D249"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/avenir_next_bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="2 Times"
+            android:layout_toRightOf="@+id/tv_title_two"
+            android:textColor="#4F8394"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/avenir_next_regular"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="22sp" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        >
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="15dp"
+            android:layout_height="40dp"
+            android:id="@+id/tag2"
+            app:cardBackgroundColor="#FBEEC9"
+            android:layout_alignParentLeft="true"
+            >
+
+        </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/tv_title_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Baby's wet Diapers"
+            android:layout_toEndOf="@+id/tag2"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp"
+            android:textColor="#F7D249"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/avenir_next_bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="3 Times"
+            android:layout_toRightOf="@+id/tv_title_three"
+            android:textColor="#4F8394"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/avenir_next_regular"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="22sp" />
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -40,6 +40,6 @@ class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCatego
 
     private fun setChildItem(recyclerView: RecyclerView, categoryItem: List<BloodGlucoseCategoryItem>) {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter =  CategoryItemAdapter(categoryItem)
+        recyclerView.adapter =  CategoryItemAdapter(context,categoryItem)
     }
 }

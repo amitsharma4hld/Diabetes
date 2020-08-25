@@ -31,5 +31,9 @@ interface MonitorBloodGlucoseCatDao {
 
     @Transaction
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")
-    fun getItemsAndCategory(): List<CategoryWithItems>
+    suspend fun getItemsAndCategory(): List<CategoryWithItems>
+
+    @Update
+    suspend fun updateBloodGlucoseCategoryItem(bloodGlucoseCategoryItem: BloodGlucoseCategoryItem)
+
 }

@@ -12,7 +12,7 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
-    tools:context=".ui.ForgetPassActivity"
+    tools:context=".ui.auth.ForgetPassActivity"
     android:padding="32dp"
     >
 

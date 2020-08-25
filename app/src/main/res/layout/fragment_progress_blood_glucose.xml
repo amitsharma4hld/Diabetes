@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".ui.home.fragment.ProgressBloodGlucoseFragment">
+    tools:context=".ui.home.fragment.diabetes.ProgressBloodGlucoseFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
                 android:textColor="@color/color_monitorblood_glucose_theme"
                 />
             <TextView
+                android:id="@+id/tv_date_of_week"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -55,7 +56,7 @@
                 android:layout_height="45dip"
                 android:layout_gravity="center_horizontal"
                 app:cardCornerRadius="30dp"
-                android:id="@+id/done"
+                android:id="@+id/mcv_progress_done"
                 app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
                 android:layout_marginBottom="52dp"
                 android:layout_marginTop="32dp"

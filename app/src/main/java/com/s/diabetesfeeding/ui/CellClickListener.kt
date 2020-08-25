@@ -1,5 +1,7 @@
 package com.s.diabetesfeeding.ui
 
+import android.view.View
+
 interface CellClickListener {
-    fun onCellClickListener()
+    fun onCellClickListener(view:View)
 }

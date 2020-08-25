@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    tools:context=".ui.home.fragment.obgyn.ObservationFragment"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,7 +58,7 @@
             android:layout_height="50dip"
             android:layout_gravity="center_horizontal|bottom"
             app:cardCornerRadius="30dp"
-            android:id="@+id/done"
+            android:id="@+id/mcv_observation_done"
             app:cardBackgroundColor="@color/colorObgyTheme"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"

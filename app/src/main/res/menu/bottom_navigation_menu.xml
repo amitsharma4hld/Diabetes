@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/action_diabetesFragment_to_homeScreenFragment"
         android:icon="@drawable/ic_home"
         android:title="Home" />
     <item
@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_scoreboard"
         android:title="Score Board" />
     <item
-        android:id="@+id/navigation_profile"
+        android:id="@+id/action_homeScreenFragment_to_profileFragment"
         android:icon="@drawable/ic_profile"
         android:title="Profile" />
 </menu>

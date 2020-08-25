@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_marginTop="8dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Aug"
+        android:id="@+id/month_name"
+        android:textColor="#4F8394"
+        android:textStyle="bold"
+        android:fontFamily="@font/avenir_next_bold"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_history_child"
+        android:id="@+id/showgraphlist"
+        android:layout_marginTop="8dp"
+        />
+
+</LinearLayout>

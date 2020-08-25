@@ -93,4 +93,6 @@
     <string name="sleep_hours">Sleep Hours</string>
     <string name="appointment">appointment</string>
     <string name="today_at">Today at</string>
+    <string name="data_entry">Data Entry</string>
+    <string name="show_my_tracking_history">Show My Tracking History</string>
 </resources>

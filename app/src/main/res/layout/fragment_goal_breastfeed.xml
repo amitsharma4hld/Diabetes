@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="#F0F2F5"
     android:padding="16dp"
-    tools:context=".ui.home.fragment.GoalBreastfeedFragment">
+    tools:context=".ui.home.fragment.breastfeeding.GoalBreastfeedFragment">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,15 +53,15 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:fontFamily="@font/avenir_next_regular"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:text="10AM"/>
-
+                    />
 
             </LinearLayout>
 

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/colorBackground"
     android:padding="16dp"
-    tools:context=".ui.home.fragment.DiaperChangeFragment">
+    tools:context=".ui.home.fragment.breastfeeding.DiaperChangeFragment">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +60,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
@@ -67,7 +68,7 @@
                     android:fontFamily="@font/avenir_next_regular"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:text="10AM"/>
+                   />
 
 
             </LinearLayout>
@@ -113,15 +114,13 @@
                 android:layout_height="200dp">
 
                     <ImageView
-                        android:id="@+id/poop"
+                        android:id="@+id/iv_poop"
                         android:layout_width="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_poop_unfill"
                         android:layout_height="wrap_content">
-
-
                     </ImageView>
 
                 <TextView
@@ -135,7 +134,7 @@
                     android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_below="@+id/poop"
+                    android:layout_below="@+id/iv_poop"
                     android:textColor="#4F8394"
                     android:maxLines="2"
 
@@ -148,7 +147,7 @@
                 android:layout_alignParentEnd="true">
 
                     <ImageView
-                        android:id="@+id/pee"
+                        android:id="@+id/iv_pee"
                         android:layout_width="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center"
@@ -169,7 +168,7 @@
                     android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_below="@+id/pee"
+                    android:layout_below="@+id/iv_pee"
                     android:textColor="#4F8394"
                     android:maxLines="2"
                     />

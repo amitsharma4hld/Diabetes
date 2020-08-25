@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    tools:context=".ui.home.fragment.diabetes.SymptomsFragment"
     >
     <ScrollView
         android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                 android:layout_height="45dip"
                 android:layout_gravity="center_horizontal"
                 app:cardCornerRadius="30dp"
-                android:id="@+id/done"
+                android:id="@+id/mcv_symptoms_done"
                 app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
                 android:layout_marginBottom="32dp"
                 android:layout_marginTop="32dp"

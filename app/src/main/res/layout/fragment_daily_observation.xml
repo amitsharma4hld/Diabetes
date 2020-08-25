@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     android:layout_height="match_parent"
     android:layout_marginBottom="52dp"
-    tools:context=".ui.home.fragment.DailyObservationFragment">
+    tools:context=".ui.home.fragment.breastfeeding.DailyObservationFragment">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
