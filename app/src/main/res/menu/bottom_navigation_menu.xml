@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_progress"
         android:title="Progress" />
     <item
-        android:id="@+id/navigation_scoreborad"
+        android:id="@+id/action_homeScreenFragment_to_scoreBoardFragment"
         android:icon="@drawable/ic_scoreboard"
         android:title="Score Board" />
     <item

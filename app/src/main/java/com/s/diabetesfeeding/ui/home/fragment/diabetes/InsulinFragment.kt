@@ -5,20 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.util.longToast
+import com.s.diabetesfeeding.util.shortToast
 import kotlinx.android.synthetic.main.fragment_insulin.*
 
 
 class InsulinFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+
+     // carbohydrate-to-insulin ratio (CIR)
+    // Insulin Sensitivity Factor (ISF)
+    var cir: Double = 0.0
+    var isf: Double = 0.0
+    val CIR_DEFAULT = 450
+    var ISF_DEFAULT: Int = 0
+    var tddInputValue : Double = 0.0
+    var unitCalculated : Double = 0.0
+    // val percentage = bytesReceived * 100 / fizeSize
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -34,20 +42,49 @@ class InsulinFragment : Fragment() {
         mcv_done.setOnClickListener {
             requireActivity().onBackPressed()
         }
+
+      //  isf = getISF(tddInputValue)
+        getSelectedInsulinType()
+        mcv_calculate.setOnClickListener{
+            if (!et_tdd.text.isNullOrEmpty() || !et_total_carb.text.isNullOrEmpty() || !et_current_blood_glucose.text.isNullOrEmpty())
+            {
+                tddInputValue = et_tdd.text.toString().toDouble()
+                cir = getCIR(tddInputValue)
+                val totalCarb = et_total_carb.text.toString().toDouble()
+                unitCalculated = totalCarb/cir
+                tv_display_unit.text = unitCalculated.toString() + " Unit"
+            }else{
+                requireActivity().longToast("All the details required")
+            }
+
+        }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(title: String, bgColorId: Int) =
-            InsulinFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_TITLE, title)
-                    putInt(ARG_BG_COLOR, bgColorId)
-                }
+
+
+    private fun getISF(tddInputValue: Double): Double {
+        isf = ISF_DEFAULT / tddInputValue
+        return isf
+    }
+
+    fun getCIR(tddInputValue:Double):Double{
+        cir = CIR_DEFAULT / tddInputValue
+        return cir
+    }
+
+    private fun getSelectedInsulinType() {
+        val id: Int = radio_group.checkedRadioButtonId
+        // val tddInputValue = et_tdd.text.toString().toDouble()
+        if (id!=-1){
+            val radio: RadioButton = requireActivity().findViewById(id)
+            if (radio.text == "Read acting insulin"){
+                ISF_DEFAULT = 1700
+            }else{
+                ISF_DEFAULT = 1500
             }
-        private const val ARG_PARAM1 = "param1"
-        private const val ARG_PARAM2 = "param2"
-        private const val ARG_TITLE = "arg_title"
-        private const val ARG_BG_COLOR = "arg_bg_color"
+            requireActivity().shortToast(radio.text as String)
+        }else{
+            requireActivity().shortToast("Please select insulin type")
+        }
     }
 }

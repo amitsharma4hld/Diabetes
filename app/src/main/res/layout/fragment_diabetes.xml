@@ -407,7 +407,7 @@
 
                             <TextView
                                 android:id="@+id/tv_blood_glucose"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center"
@@ -431,7 +431,7 @@
 
                             <TextView
                                 android:id="@+id/tv_insulin"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center"
@@ -455,7 +455,7 @@
 
                             <TextView
                                 android:id="@+id/tv_weight"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center"
@@ -479,7 +479,7 @@
 
                             <TextView
                                 android:id="@+id/tv_symptoms"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center"
@@ -503,7 +503,7 @@
 
                             <TextView
                                 android:id="@+id/tv_progress"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_gravity="center"

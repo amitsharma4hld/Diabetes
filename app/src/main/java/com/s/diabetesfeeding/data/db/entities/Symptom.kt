@@ -9,7 +9,8 @@ data class Symptom(
     val icon: String,
     val id: String,
     val title: String,
-    val type: String
+    val type: String,
+    val isChecked: Boolean
 ){
     @PrimaryKey(autoGenerate = true)
     var uid:Int = CURRENT_USER_ID

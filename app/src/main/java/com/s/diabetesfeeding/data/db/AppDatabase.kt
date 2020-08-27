@@ -5,10 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.entities.*
 
 @Database(
-    entities = [Data::class,MonitorbloodGlucose::class,Symptom::class,MonitorBloodGlucoseCategory::class,BloodGlucoseCategoryItem::class],
+    entities = [
+        Data::class,
+        HomeMenus::class,
+        HomeSubMenus::class,
+        ScoreTable::class,
+        MonitorbloodGlucose::class,
+        Symptom::class,
+        MonitorBloodGlucoseCategory::class,
+        SymptomsData::class,
+        BloodGlucoseCategoryItem::class],
     version = 1
 )
 
@@ -17,6 +27,9 @@ abstract class AppDatabase : RoomDatabase(){
     abstract fun getUserDao(): UserDao
     abstract fun getMonitorbloodGlucoseDao(): MonitorbloodGlucoseDao
     abstract fun getMonitorBloodGlucoseCatDao():MonitorBloodGlucoseCatDao
+    abstract fun getSymptomsDao(): SymptomDao
+    abstract fun getHomeMenusDao(): HomeMenusDao
+    //abstract fun getScoresWithCategory(): HomeMenusDao
 
     companion object {
         @Volatile

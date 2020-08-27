@@ -1,12 +1,12 @@
-package com.s.diabetesfeeding.data
+package com.s.diabetesfeeding.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class SymptomsData (
+data class HomeMenus(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val Symptom: String,
-    var isChecked: Boolean
+    val menuName: String
+
 )

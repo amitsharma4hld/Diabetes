@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_scoreBoardFragment"
+            app:destination="@id/scoreBoardFragment" />
     </fragment>
     <fragment
         android:id="@+id/insulinFragment"
@@ -298,5 +301,14 @@
         <action
             android:id="@+id/action_breastFeedingHistoryFragment_to_breastfeedingFragment"
             app:destination="@id/breastfeedingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreBoardFragment"
+        android:name="com.s.diabetesfeeding.ui.scoreboard.ScoreBoardFragment"
+        android:label="fragment_score_board"
+        tools:layout="@layout/fragment_score_board" >
+        <action
+            android:id="@+id/action_scoreBoardFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
     </fragment>
 </navigation>

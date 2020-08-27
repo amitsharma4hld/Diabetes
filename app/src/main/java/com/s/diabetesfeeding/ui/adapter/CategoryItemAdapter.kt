@@ -26,7 +26,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
         )
     }
 
-    override fun getItemCount()= categoryItem.size
+    override fun getItemCount() = categoryItem.size
 
     override fun onBindViewHolder(holder: CategoryItemViewHolder, position: Int) {
         val categoryItems = categoryItem[position]

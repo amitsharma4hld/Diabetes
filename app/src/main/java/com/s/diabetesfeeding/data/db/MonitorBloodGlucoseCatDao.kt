@@ -8,26 +8,18 @@ import com.s.diabetesfeeding.data.db.entities.MonitorbloodGlucose
 
 @Dao
 interface MonitorBloodGlucoseCatDao {
-    @Insert
-    suspend fun addCategory(monitorBloodGlucoseCategory: MonitorBloodGlucoseCategory)
-
-    @Insert
-    suspend fun addBloodGlucoseCategoryItem(bloodGlucoseCategoryItem: BloodGlucoseCategoryItem)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAllMonitorbloodGlucoseCat(monitorBloodGlucoseCategory: List<MonitorBloodGlucoseCategory>)
+    suspend fun saveAllMonitorbloodGlucoseCat(monitorBloodGlucoseCategory: List<MonitorBloodGlucoseCategory>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAllBloodGlucoseCategoryItem(bloodGlucoseCategoryItem: List<BloodGlucoseCategoryItem>)
+    suspend fun saveAllBloodGlucoseCategoryItem(bloodGlucoseCategoryItem: List<BloodGlucoseCategoryItem>)
 
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")
     suspend fun getAllCategory() : List<MonitorBloodGlucoseCategory>
 
     @Query("SELECT * FROM BloodGlucoseCategoryItem")
     suspend fun getAllCategoryItems() : List<BloodGlucoseCategoryItem>
-
-    @Insert
-    suspend fun addAllCategory(vararg monitorBloodGlucoseCategory: MonitorBloodGlucoseCategory)
 
     @Transaction
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")

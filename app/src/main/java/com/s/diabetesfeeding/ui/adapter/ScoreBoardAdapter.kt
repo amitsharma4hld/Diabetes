@@ -22,12 +22,6 @@ class ScoreBoardAdapter(val scores : List<ScoreboardData>): RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
         val score = scores[position]
-        holder.view.tv_date.text = score.date
-        holder.view.tv_visit.text = score.visit
-        holder.view.tv_record.text = score.record
-        holder.view.tv_observe.text = score.observe
-        holder.view.tv_breastfeed.text = score.breastfeed
-        holder.view.tv_total.text = score.total
 
     }
 
