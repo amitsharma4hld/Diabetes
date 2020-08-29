@@ -37,6 +37,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
         if (position == categoryItem.size-1){
             holder.view.rl_or_done.visibility = View.GONE
         }
+
         if (categoryItems.value.isEmpty()){
             holder.view.et_value.inputType = InputType.TYPE_CLASS_NUMBER
             holder.view.et_value.setText("")
@@ -44,9 +45,16 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
             holder.view.et_value.inputType = InputType.TYPE_NULL
             holder.view.et_value.setText(categoryItems.value)
         }
+        if (position>=1){
+            if(categoryItem[1].value.isNotEmpty() || categoryItem[2].value.isNotEmpty()){
+                holder.view.et_value.inputType = InputType.TYPE_NULL
+                Log.d("Value alredy :","Recived")
+            }
+        }
         holder.view.tv_title.text = categoryItems.title
         holder.view.tv_time.text = categoryItems.time
         holder.view.tv_range_value.text = categoryItems.range
+
         holder.view.rl_done.setOnClickListener {
             categoryItems.value = holder.view.et_value.text.toString()
             update(categoryItems)

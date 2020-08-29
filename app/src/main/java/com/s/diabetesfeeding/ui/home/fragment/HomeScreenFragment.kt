@@ -77,19 +77,19 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         HomeMenus(0, "Breastfeeding")
     )
     val subMenuList = listOf(
-        HomeSubMenus(0, "Blood Glucose", 1),
-        HomeSubMenus(0, "Insulin", 1),
-        HomeSubMenus(0, "Weight", 1),
-        HomeSubMenus(0, "Symptoms", 1),
-        HomeSubMenus(0, "Progress", 1),
-        HomeSubMenus(0, "Observations of Myself", 2),
-        HomeSubMenus(0, "Counseling", 2),
-        HomeSubMenus(0, "Prenatal Visit", 2),
-        HomeSubMenus(0, "Progress", 2),
-        HomeSubMenus(0, "BreastFeeding", 3),
-        HomeSubMenus(0, "Diaper Change", 3),
-        HomeSubMenus(0, "Daily Observation", 3),
-        HomeSubMenus(0, "Baby Weight", 3)
+        HomeSubMenus(0, "Blood Glucose", 1,2),
+        HomeSubMenus(0, "Insulin", 1,2),
+        HomeSubMenus(0, "Weight", 1,2),
+        HomeSubMenus(0, "Symptoms", 1,3),
+        HomeSubMenus(0, "Progress", 1,3),
+        HomeSubMenus(0, "Observations of Myself", 2,3),
+        HomeSubMenus(0, "Counseling", 2,2),
+        HomeSubMenus(0, "Prenatal Visit", 2,1),
+        HomeSubMenus(0, "Progress", 2,3),
+        HomeSubMenus(0, "BreastFeeding", 3,2),
+        HomeSubMenus(0, "Diaper Change", 3,2),
+        HomeSubMenus(0, "Daily Observation", 3,3),
+        HomeSubMenus(0, "Baby Weight", 3,2)
     )
 
 
@@ -101,14 +101,14 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+       /* val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
             if (isOptionSelected){
                 ll_options.visibility = View.VISIBLE
                 diabetes_options.visibility = View.GONE
                 isOptionSelected = false
             }
-        }
+        }*/
     }
 
     override fun onCreateView(
@@ -135,9 +135,9 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         saveAllCategoryItems()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            context?.let {
+           /* context?.let {
                 AppDatabase(it).getHomeMenusDao().getScoreWithCategory().get(0).ScoreTable.get(0).score
-            }
+            }*/
             context?.let {
                 if (AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategory().isNullOrEmpty()){
                     AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllMonitorbloodGlucoseCat(
@@ -174,15 +174,15 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 }
             }
 
-            context?.let {
+            /*context?.let {
                 val current_date = OffsetDateTime.now()
-                    for (i in 1..5) {
+                    for (i in 1..13) {
                     AppDatabase(it).getHomeMenusDao().saveScores(
                         ScoreTable(
                             0,
                             0,
                             i,
-                            1,
+                            2,
                             current_date
                         )
                     )}
@@ -192,7 +192,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                             AppDatabase(it).getHomeMenusDao().getAllScores().size
                         } added"
                     )
-            }
+            }*/
         }
 
         Diabetes.setOnClickListener {

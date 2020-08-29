@@ -8,5 +8,6 @@ class HomeSubMenus (
     @PrimaryKey(autoGenerate = true)
     val  id : Int,
     val subMenuName : String,
-    val homeMenuId : Int
-)
+    val homeMenuId : Int,
+    val score_type_id: Int
+    )
