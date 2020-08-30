@@ -15,6 +15,8 @@ import com.s.diabetesfeeding.data.db.entities.*
         HomeSubMenus::class,
         ScoreTable::class,
         MonitorbloodGlucose::class,
+        InsulinToday::class,
+        WeightToday::class,
         Symptom::class,
         MonitorBloodGlucoseCategory::class,
         SymptomsData::class,
@@ -47,6 +49,9 @@ abstract class AppDatabase : RoomDatabase(){
                 AppDatabase::class.java,
                 "DiabetesDatabase.db"
             ).build()
+    }
+
+    override fun clearAllTables() {
     }
 
 }

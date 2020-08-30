@@ -7,24 +7,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.InsulinToday
+import com.s.diabetesfeeding.data.db.entities.WeightToday
+import com.s.diabetesfeeding.util.longToast
+import com.s.diabetesfeeding.util.roundOffDecimal
+import com.s.diabetesfeeding.util.snackbar
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_insulin.*
 import kotlinx.android.synthetic.main.fragment_weight.*
+import kotlinx.coroutines.launch
+import org.threeten.bp.OffsetDateTime
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class WeightFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var isWeightCalculated = false
+    private var weightCalculated :String? = null
+    private val weightScore: Int = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -32,8 +40,43 @@ class WeightFragment : Fragment() {
         et_digit_one.requestFocus()
         // show the keyboard if has focus
         showSoftKeyboard(et_digit_one)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            context?.let {
+                if (AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight().isNotEmpty()){
+                    for (i in AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight().indices){
+                        val date = AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight()[i].date
+                        val dateToString = date.toString().split("T")
+                        var currentDate = getCurrentDateInString()
+                        if (currentDate.equals(dateToString[0])) {
+                            isWeightCalculated = true
+                            displayWeight(AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight()[i].weight.toString()!!)
+                            return@let
+                        }
+                    }
+                }
+            }
+        }
+
         mcv_weight_done.setOnClickListener {
-            requireActivity().onBackPressed()
+            val view:View = it
+            if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()){
+                weightCalculated = et_digit_one.text.toString() + et_digit_two.text.toString()+et_digit_three.text.toString()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    context?.let {
+                        val currentDate = OffsetDateTime.now()
+                        if (!isWeightCalculated){
+                            AppDatabase(it).getMonitorBloodGlucoseCatDao()
+                                .saveTodaysWeight(WeightToday(0, weightCalculated!!, weightScore, currentDate))
+                            requireActivity().onBackPressed()
+                        }else{
+                            view.snackbar("Already Saved For Today")
+                        }
+                    }
+                }
+            }else{
+                it.snackbar("All field are required")
+            }
         }
     }
     private fun showSoftKeyboard(view: View) {
@@ -53,17 +96,16 @@ class WeightFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_weight, container, false)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: Int) =
-            WeightFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-        private const val ARG_PARAM1 = "param1"
-        private const val ARG_PARAM2 = "param2"
-        private const val ARG_TITLE = "arg_title"
-        private const val ARG_BG_COLOR = "arg_bg_color"
+    private fun getCurrentDateInString():String{
+        val currentDate: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return currentDate
     }
+
+    fun displayWeight(weight:String){
+        val numbers = weight.map { it.toString().toInt() }
+        et_digit_one.setText(numbers[0].toString())
+        et_digit_two.setText(numbers[1].toString())
+        et_digit_three.setText(numbers[2].toString())
+    }
+
 }

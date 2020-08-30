@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.ui.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.text.InputType
 import android.util.Log
@@ -12,6 +13,7 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
+
 
 class CategoryItemAdapter (private val context: Context,private val categoryItem: List<BloodGlucoseCategoryItem>): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
 
@@ -48,7 +50,11 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
         if (position>=1){
             if(categoryItem[1].value.isNotEmpty() || categoryItem[2].value.isNotEmpty()){
                 holder.view.et_value.inputType = InputType.TYPE_NULL
-                Log.d("Value alredy :","Recived")
+               if (categoryItem[1].value.isNotEmpty()){
+                   holder.view.et_value.setText(categoryItems.value)
+               }else{
+                   holder.view.et_value.setText(" ")
+               }
             }
         }
         holder.view.tv_title.text = categoryItems.title
@@ -56,9 +62,18 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
         holder.view.tv_range_value.text = categoryItems.range
 
         holder.view.rl_done.setOnClickListener {
-            categoryItems.value = holder.view.et_value.text.toString()
-            update(categoryItems)
+                categoryItems.value = holder.view.et_value.text.toString()
+                categoryItems.score = 1
+                update(categoryItems)
+            (context as Activity).onBackPressed()
         }
+        holder.view.rl_second_done.setOnClickListener {
+            categoryItems.value = holder.view.et_value.text.toString()
+            categoryItems.score = 1
+            update(categoryItems)
+            (context as Activity).onBackPressed()
+        }
+
     }
 
     fun update(categoryItems: BloodGlucoseCategoryItem) {

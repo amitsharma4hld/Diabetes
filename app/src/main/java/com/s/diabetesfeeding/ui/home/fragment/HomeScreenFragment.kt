@@ -93,14 +93,12 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     )
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
        /* val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
             if (isOptionSelected){
@@ -108,7 +106,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 diabetes_options.visibility = View.GONE
                 isOptionSelected = false
             }
-        }*/
+        } */
     }
 
     override fun onCreateView(
@@ -174,7 +172,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 }
             }
 
-            /*context?.let {
+            context?.let {
                 val current_date = OffsetDateTime.now()
                     for (i in 1..13) {
                     AppDatabase(it).getHomeMenusDao().saveScores(
@@ -192,7 +190,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                             AppDatabase(it).getHomeMenusDao().getAllScores().size
                         } added"
                     )
-            }*/
+            }
         }
 
         Diabetes.setOnClickListener {
@@ -248,7 +246,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-95",
                 "08:30 AM",
                 "Wake Up Fasting",
-                "65"
+                "65",
+                0
             )
         )
 
@@ -260,7 +259,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-95",
                 "08:30 AM",
                 "Before Breakfast",
-                "65"
+                "65",
+                0
             )
         )
         categoryItemList.add(
@@ -271,7 +271,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-140",
                 "09:30 AM",
                 "1 Hour After Breakfast",
-                "68"
+                "68",
+                0
             )
         )
         categoryItemList.add(
@@ -282,7 +283,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-120",
                 "10:30 AM",
                 "2 Hour After Breakfast",
-                ""
+                "",
+                0
             )
         )
 
@@ -294,7 +296,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-95",
                 "12:30 PM",
                 "Before Lunch",
-                ""
+                "",
+                0
             )
         )
         categoryItemList.add(
@@ -305,7 +308,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-140",
                 "01:30 PM",
                 "1 Hour After Lunch",
-                ""
+                "",
+                0
             )
         )
         categoryItemList.add(
@@ -316,7 +320,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-120",
                 "02:30 PM",
                 "2 Hour After Lunch",
-                ""
+                "",
+                0
             )
         )
 
@@ -328,7 +333,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-95",
                 "06:30 PM",
                 "Before Diner",
-                ""
+                "",
+                0
             )
         )
         categoryItemList.add(
@@ -339,7 +345,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-140",
                 "07:30 PM",
                 "1 Hour After Diner",
-                ""
+                "",
+                0
             )
         )
         categoryItemList.add(
@@ -350,7 +357,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-120",
                 "08:30 PM",
                 "2 Hour After Diner",
-                ""
+                "",
+                0
             )
         )
 
@@ -362,7 +370,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 "65-95",
                 "10:30 PM",
                 "Bedtime",
-                "65"
+                "65",
+                0
             )
         )
     }
@@ -382,7 +391,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 setMessage("Are you sure want to logout. This might delete unsaved progress.")
                 setPositiveButton("Yes") { _, _ ->
                     Coroutines.io{
-                        AppDatabase(context).getUserDao().delete(data)
+                       // AppDatabase(context).getUserDao().delete(data)
+                        AppDatabase(it).clearAllTables()
                         activity?.let{
                             val intent = Intent(it, MainActivity::class.java).also {
                                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

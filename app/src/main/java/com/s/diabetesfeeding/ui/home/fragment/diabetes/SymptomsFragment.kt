@@ -28,7 +28,6 @@ class SymptomsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,7 +41,6 @@ class SymptomsFragment : Fragment() {
            requireActivity().alertDialog("title","message")
         }
 
-        // TODO: Move this to model class with Live Data
         viewLifecycleOwner.lifecycleScope.launch {
             symptomsList =  AppDatabase(requireActivity().applicationContext).getSymptomsDao().getSymptom()
             showSymptoms(symptomsList)

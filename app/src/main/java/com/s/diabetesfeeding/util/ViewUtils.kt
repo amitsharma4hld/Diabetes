@@ -10,12 +10,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.s.diabetesfeeding.ui.auth.LoginActivity
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 fun Context.longToast(message:String){
     Toast.makeText(this,message,Toast.LENGTH_LONG).show()
 }
 fun Context.shortToast(message:String){
     Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+}
+fun Context.roundOffDecimal(number: Double): Double? {
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.CEILING
+    return df.format(number).toDouble()
 }
 
 fun setFullScreen(window: Window){

@@ -52,13 +52,11 @@ class ScoreBoardFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: Move this to model class with Live Data
+
         viewLifecycleOwner.lifecycleScope.launch {
             ScoresWithCategory =  AppDatabase(requireActivity().applicationContext).getHomeMenusDao().getScoreWithCategory()
-
             requireActivity().longToast(ScoresWithCategory[0].ScoreTable.size.toString())
         }
-
         showScores(scores)
     }
     private fun showScores(scores: List<ScoreboardData>) {
@@ -66,6 +64,7 @@ class ScoreBoardFragment : Fragment() {
         recyclerViewScores.adapter =
             ScoreBoardAdapter(scores)
     }
+
     companion object {
         @JvmStatic
         fun newInstance(title: String, bgColorId: Int) =
