@@ -95,19 +95,19 @@
         <argument
             android:name="name"
             app:argType="string"
-            android:defaultValue="Hello ," />
+            app:nullable="true" />
         <argument
             android:name="weekofpreg"
             app:argType="integer"
-            android:defaultValue="0" />
+            />
         <argument
             android:name="doctorname"
             app:argType="string"
-            android:defaultValue="Dr" />
+            app:nullable="true" />
         <argument
             android:name="time"
             app:argType="string"
-            android:defaultValue="00" />
+            app:nullable="true" />
         <action
             android:id="@+id/action_obgynFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment" />
@@ -218,18 +218,7 @@
             android:id="@+id/action_trimesterFragment_to_counselingFragment"
             app:destination="@id/counselingFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/prentalVisitFragment"
-        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrentalVisitFragment"
-        android:label="fragment_prental_visit"
-        tools:layout="@layout/fragment_prental_visit" >
-        <action
-            android:id="@+id/action_prentalVisitFragment_to_prePregnancyInputFragment"
-            app:destination="@id/prePregnancyInputFragment" />
-        <action
-            android:id="@+id/action_prentalVisitFragment_to_obgynFragment"
-            app:destination="@id/obgynFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/progressObgynFragment"
         android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.ProgressObgynFragment"
@@ -247,6 +236,11 @@
         <action
             android:id="@+id/action_diaperChangeFragment_to_breastfeedingFragment2"
             app:destination="@id/breastfeedingFragment" />
+        <argument
+            android:name="BabyPoopData"
+            app:argType="com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyPoopData"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/dailyObservationFragment"
@@ -276,6 +270,18 @@
             app:destination="@id/homeScreenFragment" />
     </fragment>
     <fragment
+        android:id="@+id/prentalVisitFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrentalVisitFragment"
+        android:label="fragment_prental_visit"
+        tools:layout="@layout/fragment_prental_visit" >
+        <action
+            android:id="@+id/action_prentalVisitFragment_to_obgynFragment"
+            app:destination="@id/obgynFragment" />
+        <action
+            android:id="@+id/action_prentalVisitFragment_to_prePregnancyInputFragment"
+            app:destination="@id/prePregnancyInputFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/prePregnancyInputFragment"
         android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrePregnancyInputFragment"
         android:label="fragment_pre_pregnancy_input"
@@ -283,6 +289,12 @@
         <action
             android:id="@+id/action_prePregnancyInputFragment_to_prentalVisitFragment"
             app:destination="@id/prentalVisitFragment" />
+        <argument
+            android:name="PrentalVisitRecord"
+            app:argType="com.s.diabetesfeeding.data.db.entities.obgynentities.PrentalVisitRecord"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
     </fragment>
     <fragment
         android:id="@+id/goalBreastfeedFragment"
@@ -292,6 +304,11 @@
         <action
             android:id="@+id/action_goalBreastfeedFragment_to_breastfeedingFragment"
             app:destination="@id/breastfeedingFragment" />
+        <argument
+            android:name="BreastFeedingSession"
+            app:argType="com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/breastFeedingHistoryFragment"

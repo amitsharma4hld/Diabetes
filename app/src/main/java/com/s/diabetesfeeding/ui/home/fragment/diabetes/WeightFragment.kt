@@ -50,7 +50,7 @@ class WeightFragment : Fragment() {
                         var currentDate = getCurrentDateInString()
                         if (currentDate.equals(dateToString[0])) {
                             isWeightCalculated = true
-                            displayWeight(AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight()[i].weight.toString()!!)
+                            displayWeight(AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight()[i].weight!!)
                             return@let
                         }
                     }

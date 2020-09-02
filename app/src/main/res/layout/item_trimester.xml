@@ -15,7 +15,7 @@
         android:weightSum="1"
         >
     <CheckBox
-        android:id="@+id/cb_symptom"
+        android:id="@+id/cb_trimester"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
@@ -29,7 +29,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.32"
+            android:layout_weight="0.34"
             app:cardCornerRadius="15dp"
             android:id="@+id/mc_login"
             app:strokeColor="#00ae99"
@@ -37,20 +37,23 @@
             app:cardForegroundColor="@android:color/transparent"
             >
             <TextView
+                android:id="@+id/tv_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/avenir_next_regular"
                 android:gravity="center"
-                android:text="@string/date"
+                android:hint="@string/date"
+                android:padding="2dp"
+                android:maxLines="1"
                 android:layout_marginStart="2dp"
                 android:textColor="@color/colorGrayTextHint"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </com.google.android.material.card.MaterialCardView>
     <TextView
         android:id="@+id/tv_topic_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.57"
+        android:layout_weight="0.55"
         android:text="@string/hiv_and_other_routine_prenatal_test"
         android:textColor="@color/colorTitleText"
         android:fontFamily="@font/avenir_next_bold"
@@ -93,7 +96,7 @@
         app:cardForegroundColor="@android:color/transparent"
         >
         <EditText
-            android:id="@+id/et_username"
+            android:id="@+id/et_coment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"

@@ -5,21 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.BreastFeedingSessionData
 import com.s.diabetesfeeding.data.db.entities.*
 import com.s.diabetesfeeding.ui.CellClickListener
 import com.s.diabetesfeeding.ui.adapter.BreastFeedHistoryMainAdapter
-import com.s.diabetesfeeding.ui.adapter.MonitorBloodGlucoseMainAdapter
 import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.bottom_sheet_history.*
 import kotlinx.android.synthetic.main.fragment_breast_feeding_history.*
-import kotlinx.android.synthetic.main.monitor_blood_glucose_fragment.*
-import java.time.Month
 import java.util.*
 
 

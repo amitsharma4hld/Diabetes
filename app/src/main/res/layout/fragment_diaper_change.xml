@@ -187,6 +187,7 @@
                 android:layout_width="140dip"
                 android:layout_height="50dip"
                 app:cardCornerRadius="40dp"
+                android:id="@+id/mcv_diaper_done"
                 app:cardBackgroundColor="#F3CF63"
                 android:visibility="gone"
                 android:layout_margin="2dp">

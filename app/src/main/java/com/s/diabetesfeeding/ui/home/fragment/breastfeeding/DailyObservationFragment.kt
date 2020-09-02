@@ -1,32 +1,24 @@
 package com.s.diabetesfeeding.ui.home.fragment.breastfeeding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.DailyObservationData
+import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
 import com.s.diabetesfeeding.ui.adapter.DailyObservationsAdapter
-import com.s.diabetesfeeding.ui.home.fragment.HomeScreenFragment
+import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.fragment_daily_observation.*
+import kotlinx.coroutines.launch
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-val observations = listOf(
-    DailyObservationData(1,"Sleep Hours","8"),
-    DailyObservationData(2,"Rate your fatigue","4"),
-    DailyObservationData(3,"Glass of water per day","7"),
-    DailyObservationData(4,"Meals per day","3"),
-    DailyObservationData(5,"Helps with chores","Yes"),
-    DailyObservationData(6,"Glass of alcohol per day?","0"),
-    DailyObservationData(7,"Smoking","No"),
-    DailyObservationData(8,"Rate your stress","4")
-)
+var observationList: List<ObservationBreastFeed> = ArrayList()
 
 class DailyObservationFragment : Fragment() {
 
@@ -45,19 +37,24 @@ class DailyObservationFragment : Fragment() {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        showObservations(observations)
+        viewLifecycleOwner.lifecycleScope.launch {
+            observationList =  AppDatabase(requireActivity().applicationContext).getBreastFeedingDao().getAllObservation()
+            showObservations(observationList)
+        }
         mcv_done.setOnClickListener {
            requireActivity().onBackPressed()
         }
     }
 
-    private fun showObservations(observations: List<DailyObservationData>) {
+    private fun showObservations(observations: List<ObservationBreastFeed>) {
         rv_dailyObservation.layoutManager = LinearLayoutManager(activity)
         rv_dailyObservation.adapter =
             DailyObservationsAdapter(
+                requireContext(),
                 observations
             )
     }
+
+
 
 }

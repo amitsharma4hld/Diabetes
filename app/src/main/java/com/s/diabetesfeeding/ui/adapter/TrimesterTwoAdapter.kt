@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
+import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataTwo
 import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.item_trimester.view.*
 import org.threeten.bp.OffsetDateTime
@@ -19,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TrimesterAdapter(val context: Context, val trimesterTopics : List<TrimesterDataOne>) : RecyclerView.Adapter<TrimesterAdapter.TrimesterViewHolder>(){
+class TrimesterTwoAdapter(val context: Context, val trimesterTopics : List<TrimesterDataTwo>) : RecyclerView.Adapter<TrimesterTwoAdapter.TrimesterViewHolder>(){
 
     var day = 0
     var month: Int = 0
@@ -79,10 +80,10 @@ class TrimesterAdapter(val context: Context, val trimesterTopics : List<Trimeste
 
     class TrimesterViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
-    fun update(dataOne: TrimesterDataOne) {
+    fun update(dataOne: TrimesterDataTwo) {
         Coroutines.io {
             context.let {
-                AppDatabase(it).getObgynDao().updateTrimesterDataOne(dataOne)
+                AppDatabase(it).getObgynDao().updateTrimesterDataTwo(dataOne)
                 Log.d("APPDATABASE : ","Update value is ${dataOne.isChecked}")
             }
         }

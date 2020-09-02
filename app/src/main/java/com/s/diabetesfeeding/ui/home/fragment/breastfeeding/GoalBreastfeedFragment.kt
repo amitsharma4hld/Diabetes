@@ -1,23 +1,29 @@
 package com.s.diabetesfeeding.ui.home.fragment.breastfeeding
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
+import android.widget.Chronometer
+import androidx.fragment.app.Fragment
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.ui.home.fragment.HomeScreenFragment
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
+import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.fragment_goal_breastfeed.*
+import java.util.concurrent.TimeUnit
 
 
 class GoalBreastfeedFragment : Fragment() {
+    var breastFeedingSessionData : BreastFeedingSessionData? = null
 
     val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
         java.util.Date())
-    val currentTime: String = java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault()).format(
+    val currentTime: String = java.text.SimpleDateFormat("h:mma", java.util.Locale.getDefault()).format(
         java.util.Date())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,17 +31,36 @@ class GoalBreastfeedFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var titleName: String =""
+        arguments?.let {
+            breastFeedingSessionData = GoalBreastfeedFragmentArgs.fromBundle(it).breastFeedingSession
+        }
         tv_date.text = currentDate
         tv_time.text = currentTime
+
+        val meter = requireActivity().findViewById<Chronometer>(R.id.tv_timer)
+        meter.format = "%s"
+        meter.base = SystemClock.elapsedRealtime()
+        var timmer:String = ""
+
         cv_start.setOnClickListener {
             if (tv_start_stop_done.text == "START"){
                 tv_start_stop_done.text = "STOP"
+                // ISSUE : Start while initializing
+                    meter.start()
             }else if (tv_start_stop_done.text == "STOP"){
                 tv_start_stop_done.text = "DONE +5"
+                meter.stop()
+                val elapsedMillis = (SystemClock.elapsedRealtime() - meter.base)
+              timmer =   String.format("%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
+                    TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
+                )
 
             }else if (tv_start_stop_done.text == "DONE +5"){
-                requireActivity().onBackPressed()
+                breastFeedingSessionData?.breastfeedingTime = currentTime
+                breastFeedingSessionData?.breastfeedingTimerCount = timmer
+                update(breastFeedingSessionData!!)
             }
         }
     }
@@ -48,6 +73,14 @@ class GoalBreastfeedFragment : Fragment() {
     }
 
 
-
+    fun update(breastFeedingSessionData: BreastFeedingSessionData) {
+        Coroutines.io {
+            context.let {
+                AppDatabase(requireContext()).getBreastFeedingDao().updateBreastFeedSesssion(breastFeedingSessionData)
+                Log.d("APPDATABASE : ","Updated id is ${breastFeedingSessionData.id}")
+                requireActivity().onBackPressed()
+            }
+        }
+    }
 
 }

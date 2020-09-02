@@ -33,7 +33,7 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
                     android:gravity="center"
-                    android:text="6:00 AM\n00:48"
+                    android:textAllCaps="true"
                     android:visibility="gone"
                     />
 

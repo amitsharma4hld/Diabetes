@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.BreastFeedingSessionData
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
+import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyPoopData
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
 import com.s.diabetesfeeding.ui.adapter.BreastFeedingSessionAdapter
 import com.s.diabetesfeeding.ui.CellClickListener
-import com.s.diabetesfeeding.ui.home.fragment.*
+import com.s.diabetesfeeding.ui.adapter.DiaperChangeSessionAdapter
 import com.s.diabetesfeeding.ui.home.fragment.diabetes.DiabetesFragmentArgs
-import com.s.diabetesfeeding.ui.home.fragment.obgyn.ObgynFragmentDirections
 import com.s.diabetesfeeding.util.SpaceGridDecoration
 import kotlinx.android.synthetic.main.fragment_breastfeeding.*
-import kotlinx.android.synthetic.main.fragment_diabetes.*
-import kotlinx.android.synthetic.main.fragment_obgyn.*
+import kotlinx.coroutines.launch
 
 
 class BreastfeedingFragment : Fragment(), CellClickListener {
@@ -27,34 +28,120 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
     val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
         java.util.Date())
 
-    val sessions = listOf(
-        BreastFeedingSessionData(1,"6:00AM","00:48"),
-        BreastFeedingSessionData(2,"8:00AM","00:45"),
-        BreastFeedingSessionData(3,"",""),
-        BreastFeedingSessionData(4,"",""),
-        BreastFeedingSessionData(5,"",""),
-        BreastFeedingSessionData(6,"",""),
-        BreastFeedingSessionData(7,"",""),
-        BreastFeedingSessionData(8,"",""),
-        BreastFeedingSessionData(9,"",""),
-        BreastFeedingSessionData(10,"",""),
-        BreastFeedingSessionData(11,"",""),
-        BreastFeedingSessionData(12,"","")
+    var sessions = listOf(
+        BreastFeedingSessionData(
+            "6:00AM",
+            "00:48"
+        ),
+        BreastFeedingSessionData(
+            "8:00AM",
+            "00:45"
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        ),
+        BreastFeedingSessionData(
+            "",
+            ""
+        )
     )
-    val sessions2 = listOf(
-        BreastFeedingSessionData(1,"6:00AM","poop pee"),
-        BreastFeedingSessionData(2,"8:00AM","poop"),
-        BreastFeedingSessionData(3,"",""),
-        BreastFeedingSessionData(4,"",""),
-        BreastFeedingSessionData(5,"",""),
-        BreastFeedingSessionData(6,"",""),
-        BreastFeedingSessionData(7,"",""),
-        BreastFeedingSessionData(8,"",""),
-        BreastFeedingSessionData(9,"",""),
-        BreastFeedingSessionData(10,"",""),
-        BreastFeedingSessionData(11,"",""),
-        BreastFeedingSessionData(12,"","")
+    var sessions2 = listOf(
+        BabyPoopData(
+            "6:00AM",
+            true,
+            false
+        ),
+        BabyPoopData(
+            "8:00AM",
+            false,
+            true
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        ),
+        BabyPoopData(
+            "",
+            false,
+            false
+        )
     )
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -64,10 +151,20 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         arguments?.let {
             username_breastfeeding?.text = "Hello "+ DiabetesFragmentArgs.fromBundle(it).name +","
         }
+        val observationList = listOf(
+            ObservationBreastFeed(0,"Sleep Hours","7",false,""),
+            ObservationBreastFeed(0,"Rate your fatigue","4",false,""),
+            ObservationBreastFeed(0,"Glass of water per day","8",false,""),
+            ObservationBreastFeed(0,"Meals per day","4",false,""),
+            ObservationBreastFeed(0,"Helps with chores","Yes",true,""),
+            ObservationBreastFeed(0,"Glass of alcohol per day?","0",false,""),
+            ObservationBreastFeed(0,"Smoking","No",true,""),
+            ObservationBreastFeed(0,"Rate your stress","4",false,"")
+        )
+
         val typefaceRegular = ResourcesCompat.getFont(requireContext(), R.font.avenir_next_regular)
         val typefaceBold = ResourcesCompat.getFont(requireContext(), R.font.avenir_next_bold)
 
-        showSessions(sessions)
         rl_breast_feeding.setOnClickListener {
             isFirst = true
             rl_show_calender.visibility = View.GONE
@@ -89,7 +186,7 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
             tv_baby_wight.typeface = typefaceRegular
             tv_selected_title.text = "Record diaper changes per day"
             rv_breastfeeding_sessions.visibility = View.VISIBLE
-            showSessionsSecond(sessions2)
+            showDiaperChangeSessions(sessions2)
 
         }
         rl_daily_observation.setOnClickListener {
@@ -117,6 +214,43 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
             Navigation.findNavController(it).navigate(action)
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            context?.let {
+                if (AppDatabase(it).getBreastFeedingDao().getAllObservation().isNullOrEmpty()) {
+                    AppDatabase(it).getBreastFeedingDao().saveAllObservation(observationList)
+                }
+            }
+            context?.let {
+                if (AppDatabase(it).getBreastFeedingDao().getAllBreastFeedSession().isNullOrEmpty()) {
+                    AppDatabase(it).getBreastFeedingDao().saveAllBreastFeedSession(sessions)
+                }
+            }
+            context?.let {
+                if (AppDatabase(it).getBreastFeedingDao().getAllBreastFeedSession().isNotEmpty()){
+                    sessions = AppDatabase(it).getBreastFeedingDao().getAllBreastFeedSession()
+                    showSessions(sessions)
+                }
+            }
+            context?.let {
+                if (AppDatabase(it).getBreastFeedingDao().getAllDiaperChangeSession().isNotEmpty()){
+                    sessions2 = AppDatabase(it).getBreastFeedingDao().getAllDiaperChangeSession()
+                    showDiaperChangeSessions(sessions2)
+                }
+            }
+        }
+
+    }
+
+    private fun showDiaperChangeSessions(sessions: List<BabyPoopData>) {
+        rv_breastfeeding_sessions.removeAllViews()
+        rv_breastfeeding_sessions.layoutManager = null
+        rv_breastfeeding_sessions.layoutManager = GridLayoutManager(activity, 4)
+        //rv_breastfeeding_sessions!!.addItemDecoration(SpaceGridDecoration(4, 8, false))
+        rv_breastfeeding_sessions.adapter =
+            DiaperChangeSessionAdapter(
+                sessions,
+                this
+            )
     }
 
     private fun showSessions(sessions: List<BreastFeedingSessionData>) {
@@ -150,15 +284,5 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
     }
 
     override fun onCellClickListener(view: View) {
-        if (isFirst){
-            val action = BreastfeedingFragmentDirections.actionBreastfeedingFragmentToGoalBreastfeedFragment()
-            Navigation.findNavController(view).navigate(action)
-            // GoalBreastfeedFragment
-        }else{
-            val action = BreastfeedingFragmentDirections.actionBreastfeedingFragmentToDiaperChangeFragment()
-            Navigation.findNavController(view).navigate(action)
-            //  DiaperChangeFragment
-
-        }
     }
 }

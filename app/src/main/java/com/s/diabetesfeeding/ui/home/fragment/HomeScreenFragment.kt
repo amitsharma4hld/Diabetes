@@ -18,6 +18,7 @@ import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.*
+import com.s.diabetesfeeding.data.db.entities.obgynentities.Observation
 import com.s.diabetesfeeding.databinding.FragmentHomeScreenBinding
 import com.s.diabetesfeeding.ui.MainActivity
 import com.s.diabetesfeeding.ui.auth.AuthViewModel
@@ -58,7 +59,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     val categoryItemList: MutableList<BloodGlucoseCategoryItem> = ArrayList()
 
     val symptoms = listOf(
-        SymptomsData(1, "Shaky", true),
+        SymptomsData(1, "Shaky", false),
         SymptomsData(2, "Fast heartbeat", false),
         SymptomsData(3, "Sweating", false),
         SymptomsData(4, "Dizzy", false),
@@ -69,6 +70,14 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         SymptomsData(9, "Headche", false),
         SymptomsData(10, "Irritable", false),
         SymptomsData(11, "Other", false)
+    )
+    val observationList = listOf(
+        Observation(0,"Vaginal Bleeding",false),
+        Observation(0,"Leakage of fluid",false),
+        Observation(0,"Fetal movement",false),
+        Observation(0,"Contraction",false),
+        Observation(0,"Nausea and/or Vomiting",false),
+        Observation(0,"Other",false)
     )
 
     val homeMenusList = listOf(
@@ -133,21 +142,14 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         saveAllCategoryItems()
 
         viewLifecycleOwner.lifecycleScope.launch {
-           /* context?.let {
-                AppDatabase(it).getHomeMenusDao().getScoreWithCategory().get(0).ScoreTable.get(0).score
-            }*/
             context?.let {
                 if (AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategory().isNullOrEmpty()){
-                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllMonitorbloodGlucoseCat(
-                        allCategory
-                    )
+                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllMonitorbloodGlucoseCat(allCategory)
                 }
             }
             context?.let {
                 if(AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategoryItems().isNullOrEmpty()){
-                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(
-                        categoryItemList
-                    )
+                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(categoryItemList)
                 }
             }
             context?.let {
@@ -163,44 +165,37 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             context?.let {
                 if (AppDatabase(it).getHomeMenusDao().getAllSubMenu().isNullOrEmpty()){
                     AppDatabase(it).getHomeMenusDao().saveAllSubMenus(subMenuList)
-                    Log.d(
-                        "AppDatabase : ",
-                        "HomeSubMenu Saved ${
-                            AppDatabase(it).getHomeMenusDao().getAllSubMenu().size
-                        } added"
-                    )
                 }
             }
 
             context?.let {
+              if ( AppDatabase(it).getObgynDao().getAllObservation().isNullOrEmpty()) {
+                    AppDatabase(it).getObgynDao().saveAllObservation(observationList)
+                  Log.d("AppDatabase : ",
+                      "observationList Saved ${AppDatabase(it).getObgynDao().getAllObservation().size} added"
+                  )
+              }
+            }
+
+          /*  context?.let {
                 val current_date = OffsetDateTime.now()
                     for (i in 1..13) {
                     AppDatabase(it).getHomeMenusDao().saveScores(
-                        ScoreTable(
-                            0,
-                            0,
-                            i,
-                            2,
-                            current_date
-                        )
+                        ScoreTable(0, 0, i, 2, current_date)
                     )}
                     Log.d(
-                        "AppDatabase : ",
-                        "Scores Saved ${
-                            AppDatabase(it).getHomeMenusDao().getAllScores().size
-                        } added"
+                        "AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added"
                     )
-            }
+            }*/
         }
 
         Diabetes.setOnClickListener {
              viewModel.user.value?.let { it1 ->
-                 val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToDiabetesFragment(
-                     it1.display_name!!,
-                     it1.weekOfPregnancy!!,
-                     it1.doctorName!!,
-                     it1.appointment!!
-                 )
+                 val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToDiabetesFragment()
+                     .setDoctorname(it1.doctorName.toString())
+                     .setName(it1.display_name.toString())
+                     .setTime(it1.appointment.toString())
+                     .setWeekofpreg(it1.weekOfPregnancy!!)
                  Navigation.findNavController(it).navigate(action)
              }
         }
@@ -218,12 +213,11 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         }
         breastfeeding.setOnClickListener {
             viewModel.user.value?.let { it1 ->
-                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToBreastfeedingFragment(
-                    it1.display_name!!,
-                    it1.weekOfPregnancy!!,
-                    it1.doctorName!!,
-                    it1.appointment!!
-                )
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToBreastfeedingFragment()
+                    .setDoctorname(it1.doctorName.toString())
+                    .setName(it1.display_name.toString())
+                    .setTime(it1.appointment.toString())
+                    .setWeekofpreg(it1.weekOfPregnancy!!)
                 Navigation.findNavController(it).navigate(action)
             }
         }

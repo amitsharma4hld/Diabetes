@@ -5,8 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.entities.*
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyPoopData
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyWeight
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
+import com.s.diabetesfeeding.data.db.entities.obgynentities.*
 
 @Database(
     entities = [
@@ -20,7 +25,18 @@ import com.s.diabetesfeeding.data.db.entities.*
         Symptom::class,
         MonitorBloodGlucoseCategory::class,
         SymptomsData::class,
-        BloodGlucoseCategoryItem::class],
+        BloodGlucoseCategoryItem::class,
+        Observation::class,
+        TrimesterDataOne::class,
+        TrimesterDataTwo::class,
+        TrimesterDataThree::class,
+        PostPartumData::class,
+        PrentalVisitRecord::class,
+        BabyWeight::class,
+        ObservationBreastFeed::class,
+        BreastFeedingSessionData::class,
+        BabyPoopData::class
+    ],
     version = 1
 )
 
@@ -31,6 +47,8 @@ abstract class AppDatabase : RoomDatabase(){
     abstract fun getMonitorBloodGlucoseCatDao():MonitorBloodGlucoseCatDao
     abstract fun getSymptomsDao(): SymptomDao
     abstract fun getHomeMenusDao(): HomeMenusDao
+    abstract fun getObgynDao(): ObgynDao
+    abstract fun getBreastFeedingDao(): BreastFeedingDao
     //abstract fun getScoresWithCategory(): HomeMenusDao
 
     companion object {

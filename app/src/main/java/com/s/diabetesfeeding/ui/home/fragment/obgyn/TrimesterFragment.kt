@@ -5,31 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.TrimesterData
+import com.s.diabetesfeeding.data.SymptomsData
+import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.obgynentities.PostPartumData
+import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
+import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataThree
+import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataTwo
+import com.s.diabetesfeeding.ui.adapter.PostpartumAdapter
 import com.s.diabetesfeeding.ui.adapter.TrimesterAdapter
+import com.s.diabetesfeeding.ui.adapter.TrimesterThreeAdapter
+import com.s.diabetesfeeding.ui.adapter.TrimesterTwoAdapter
 import kotlinx.android.synthetic.main.fragment_trimester.*
-
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import kotlinx.coroutines.launch
 
 
 class TrimesterFragment : Fragment() {
 
     private var param1: String? = null
     private var param2: String? = null
-
-    val trimesterTopics = listOf(
-        TrimesterData(1,"HIV and Other Routine Parental Test","comments","Date",true),
-        TrimesterData(2,"Risk Factors Identified by Parental History","comments","Date",true),
-        TrimesterData(3,"Anticipated Course of Parental Care","comments","Date",true),
-        TrimesterData(4,"Nutrition and Weight Gain Counseling","comments","Date",true),
-        TrimesterData(5,"HIV and Other Routine Parental Test","comments","Date",true),
-        TrimesterData(6,"Anticipated Course of Parental Care","comments","Date",true),
-        TrimesterData(7,"Risk Factors Identified by Parental History","comments","Date",true)
-    )
+    var trimesterOneList: List<TrimesterDataOne> = ArrayList()
+    var trimesterTwoList: List<TrimesterDataTwo> = ArrayList()
+    var trimesterThreeList: List<TrimesterDataThree> = ArrayList()
+    var trimesterPostpartumList: List<PostPartumData> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +52,54 @@ class TrimesterFragment : Fragment() {
         arguments?.getString(ARG_PARAM1)?.let {
             tv_title?.text  = it
         }
-        showTrimesterTopics(trimesterTopics)
+        if (tv_title.text == "1st Trimester Topic"){
+            viewLifecycleOwner.lifecycleScope.launch {
+                trimesterOneList =  AppDatabase(requireActivity().applicationContext).getObgynDao().getAllTrimesterOne()
+                showTrimesterOneTopics(trimesterOneList)
+            }
+        }
+        if (tv_title.text == "2nd Trimester Topic"){
+            viewLifecycleOwner.lifecycleScope.launch {
+                trimesterTwoList = AppDatabase(requireActivity().applicationContext).getObgynDao().getAllTrimesterTwo()
+                showTrimesterTwoTopics(trimesterTwoList)
+            }
+        }
+        if (tv_title.text == "3rd Trimester Topic"){
+            viewLifecycleOwner.lifecycleScope.launch {
+                trimesterThreeList = AppDatabase(requireActivity().applicationContext).getObgynDao().getAllTrimesterThree()
+                showTrimesterThreeTopics(trimesterThreeList)
+            }
+        }
+        if (tv_title.text == "Postpartum Topic"){
+            viewLifecycleOwner.lifecycleScope.launch {
+                trimesterPostpartumList = AppDatabase(requireActivity().applicationContext).getObgynDao().getAllPostPartumData()
+                showPostpartumTopics(trimesterPostpartumList)
+            }
+        }
+
+        mcv_trimester_done.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
     }
 
-    private fun showTrimesterTopics(trimesterTopics: List<TrimesterData>) {
+    private fun showTrimesterOneTopics(trimesterTopics: List<TrimesterDataOne>) {
         rv_trimester_topic.layoutManager = LinearLayoutManager(activity)
-        rv_trimester_topic.adapter =
-            TrimesterAdapter(trimesterTopics)
+        rv_trimester_topic.adapter = TrimesterAdapter(requireContext(),trimesterTopics)
     }
+    private fun showTrimesterTwoTopics(trimesterTopics: List<TrimesterDataTwo>) {
+        rv_trimester_topic.layoutManager = LinearLayoutManager(activity)
+        rv_trimester_topic.adapter = TrimesterTwoAdapter(requireContext(),trimesterTopics)
+    }
+    private fun showTrimesterThreeTopics(trimesterTopics: List<TrimesterDataThree>) {
+        rv_trimester_topic.layoutManager = LinearLayoutManager(activity)
+        rv_trimester_topic.adapter = TrimesterThreeAdapter(requireContext(),trimesterTopics)
+    }
+    private fun showPostpartumTopics(trimesterTopics: List<PostPartumData>) {
+        rv_trimester_topic.layoutManager = LinearLayoutManager(activity)
+        rv_trimester_topic.adapter = PostpartumAdapter(requireContext(),trimesterTopics)
+    }
+
 
     companion object {
         @JvmStatic

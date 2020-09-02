@@ -61,6 +61,7 @@
                     android:fontFamily="@font/avenir_next_regular"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
+                    android:textAllCaps="true"
                     />
 
             </LinearLayout>
@@ -125,22 +126,40 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Time 00:00"
-            android:fontFamily="@font/avenir_next_regular"
-            android:textSize="18sp"
-            android:id="@+id/timer"
-            android:layout_marginTop="10dp"
-            android:textStyle="normal"
-            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_below="@+id/cv_start"
-            android:textColor="#4F8394"
-            android:maxLines="2"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/mc_logout"
-            />
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Time "
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="18sp"
+                android:id="@+id/tv_total_time"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:textColor="#4F8394"
+                android:maxLines="1"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/mc_logout"
+                />
+
+            <Chronometer
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="18sp"
+                android:id="@+id/tv_timer"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:textColor="#4F8394"
+                />
+        </LinearLayout>
 
     </RelativeLayout>
 

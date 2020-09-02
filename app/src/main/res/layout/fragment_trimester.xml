@@ -14,7 +14,6 @@
     android:scrollbars="none"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    android:nestedScrollingEnabled="false"
     android:layout_marginBottom="54dp"
     tools:targetApi="lollipop">
 <LinearLayout
@@ -54,8 +53,6 @@
         android:id="@+id/rv_trimester_topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="10"
-        android:nestedScrollingEnabled="false"
         tools:listitem="@layout/item_trimester"
         android:layout_marginTop="22dp"
         />
@@ -64,7 +61,7 @@
         android:layout_height="42dip"
         android:layout_gravity="center_horizontal"
         app:cardCornerRadius="30dp"
-        android:id="@+id/done"
+        android:id="@+id/mcv_trimester_done"
         app:cardBackgroundColor="@color/colorObgyTheme"
         android:layout_marginBottom="52dp"
         android:layout_marginTop="8dp"

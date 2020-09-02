@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -24,6 +25,8 @@ fun Context.roundOffDecimal(number: Double): Double? {
     df.roundingMode = RoundingMode.CEILING
     return df.format(number).toDouble()
 }
+
+
 
 fun setFullScreen(window: Window){
     window.setFlags(
@@ -62,4 +65,14 @@ fun Context.alertDialog(title:String,message: String){
     val alertDialog: AlertDialog = builder.create()
     alertDialog.setCancelable(false)
     alertDialog.show()
+}
+
+fun View.showSoftKeyboard(view: View) {
+    if (view.requestFocus()) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        // here is one more tricky issue
+        // imm.showSoftInputMethod doesn't work well
+        // and imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0) doesn't work well for all cases too
+        imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    }
 }
