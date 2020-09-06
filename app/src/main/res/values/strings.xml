@@ -95,4 +95,8 @@
     <string name="today_at">Today at</string>
     <string name="data_entry">Data Entry</string>
     <string name="show_my_tracking_history">Show My Tracking History</string>
+    <string name="insulin_scoreboard">Insulin</string>
+    <string name="breast">Breast</string>
+    <string name="supplement">Supplement</string>
+    <string name="baby_weight">Baby Weight</string>
 </resources>

@@ -9,7 +9,7 @@ class TrimesterDataTwo (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
-    val comment: String,
+    var comment: String,
     var date: String,
     var isChecked: Boolean
 )

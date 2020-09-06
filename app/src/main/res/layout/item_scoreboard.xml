@@ -15,10 +15,13 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="8">
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/ll_collapsing_arrow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -26,66 +29,1193 @@
                 android:id="@+id/iv_down"
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="10 june, 2020"
-                android:layout_toRightOf="@+id/iv_down"
-                android:textColor="#4F8394"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:textSize="14sp"/>
+                android:gravity="start"
+                android:text="Date"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_bold"
+                android:layout_marginStart="2dp"
+                android:maxLines="1"
+                android:textSize="16sp"/>
 
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_visit_total_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:gravity="center"
-            android:text="10"
-            android:textColor="#4F8394"
-            android:layout_marginLeft="10dp"
-            android:textSize="14sp"/>
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"/>
         <TextView
+            android:id="@+id/tv_record_total_vale"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:gravity="center"
-            android:text="52"
-            android:textColor="#4F8394"
-            android:layout_marginLeft="10dp"
-            android:textSize="14sp"/>
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"/>
         <TextView
+            android:id="@+id/tv_observe_total_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:gravity="center"
-            android:text="5"
-            android:textColor="#4F8394"
-            android:layout_marginLeft="10dp"
-            android:textSize="14sp"/>
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"/>
         <TextView
+            android:id="@+id/tv_total_score_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
-            android:text="10"
-            android:textColor="#4F8394"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_bold"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_scores_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/diabetes"
+            android:textColor="@color/app_main_text_color"
+            android:fontFamily="@font/avenir_next_bold"
+            android:layout_marginStart="2dp"
             android:textSize="14sp"/>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scorehistory_by_date"
-        tools:listitem="@layout/item_scoreboard_child"
-        />
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/blood_glucose"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
 
 
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_blood_glucose_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_blood_glucose_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_blood_glucose_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/insulin_scoreboard"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_insulin_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_insulin_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_insulin_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/weight"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_weight_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_weight_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_weight_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/symptoms"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_symptoms_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_symptoms_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_symptoms_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/progress"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_progress_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_progress_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_progress_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/obgyn"
+            android:textColor="@color/colorObgyTheme"
+            android:fontFamily="@font/avenir_next_bold"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="2dp"
+                android:text="@string/observations_of_myself"
+                android:maxLines="1"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_observation_myslef_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_observation_myslef_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_observation_myslef_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="2dp"
+                android:text="@string/counseling"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_counseling_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_counseling_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_counseling_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/prenatal_visit"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_prenatal_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_prenatal_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_prenatal_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/progress"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_obgyn_progress_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_obgyn_progress_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_obgyn_progress_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/breastfeeding"
+            android:textColor="@color/color_breastfeeding_theme"
+            android:fontFamily="@font/avenir_next_bold"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="2dp"
+                android:text="@string/breast"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_breast_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_breast_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_breast_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="2dp"
+                android:text="@string/supplement"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_supplement_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_supplement_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_supplement_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="2dp"
+                android:text="Diaper Change"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_diaper_change_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_diaper_change_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_diaper_change_observe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:fontFamily="@font/avenir_next_regular"
+                android:gravity="start"
+                android:text="@string/daily_observations"
+                android:textColor="@color/colorTitleText"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_daily_observations_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_daily_observations_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_daily_observations_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_daily_observations_null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginStart="2dp"
+                android:text="@string/baby_weight"
+                android:textColor="@color/colorTitleText"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textSize="14sp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_baby_wight_visit_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_baby_wight_record_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_baby_wight_observe_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textColor="@color/colorTitleText"
+            android:fontFamily="@font/avenir_next_regular"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"/>
+
+
+    </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -85,6 +85,11 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         HomeMenus(0, "OBGYN"),
         HomeMenus(0, "Breastfeeding")
     )
+    val scoreTypeList = listOf(
+        ScoreType(0,"Visit"),
+        ScoreType(0,"Record"),
+        ScoreType(0,"Observe")
+    )
     val subMenuList = listOf(
         HomeSubMenus(0, "Blood Glucose", 1,2),
         HomeSubMenus(0, "Insulin", 1,2),
@@ -148,6 +153,14 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 }
             }
             context?.let {
+                if ( AppDatabase(it).getHomeMenusDao().getAllScoreType().isNullOrEmpty()) {
+                    AppDatabase(it).getHomeMenusDao().saveAllScoreType(scoreTypeList)
+                    Log.d("AppDatabase : ",
+                        "ScoreTyp Saved ${AppDatabase(it).getHomeMenusDao().getAllScoreType().size} added"
+                    )
+                }
+            }
+            context?.let {
                 if(AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategoryItems().isNullOrEmpty()){
                     AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(categoryItemList)
                 }
@@ -177,7 +190,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
               }
             }
 
-          /*  context?.let {
+         /*   context?.let {
                 val current_date = OffsetDateTime.now()
                     for (i in 1..13) {
                     AppDatabase(it).getHomeMenusDao().saveScores(

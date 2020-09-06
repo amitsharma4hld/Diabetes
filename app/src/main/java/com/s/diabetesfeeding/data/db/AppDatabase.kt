@@ -35,7 +35,9 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.*
         BabyWeight::class,
         ObservationBreastFeed::class,
         BreastFeedingSessionData::class,
-        BabyPoopData::class
+        BabyPoopData::class,
+        ScoreType::class,
+        ScoreWithCategoryCrossRef::class
     ],
     version = 1
 )
@@ -49,7 +51,7 @@ abstract class AppDatabase : RoomDatabase(){
     abstract fun getHomeMenusDao(): HomeMenusDao
     abstract fun getObgynDao(): ObgynDao
     abstract fun getBreastFeedingDao(): BreastFeedingDao
-    //abstract fun getScoresWithCategory(): HomeMenusDao
+    // abstract fun getScoresWithCategory(): HomeMenusDao
 
     companion object {
         @Volatile

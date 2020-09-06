@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.ScoreboardData
 import com.s.diabetesfeeding.data.db.AppDatabase
-import com.s.diabetesfeeding.data.db.entities.CategoryWithItems
-import com.s.diabetesfeeding.data.db.entities.ScoreWithCategory
+import com.s.diabetesfeeding.data.db.entities.DistinctDateTimeList
+import com.s.diabetesfeeding.data.db.entities.FilterScoreTable
+import com.s.diabetesfeeding.data.db.entities.ScoreBoardFinalData
+import com.s.diabetesfeeding.data.db.entities.ScoreHashMapData
 import com.s.diabetesfeeding.ui.adapter.ScoreBoardAdapter
-import com.s.diabetesfeeding.util.longToast
 import kotlinx.android.synthetic.main.fragment_score_board.*
 import kotlinx.coroutines.launch
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -27,19 +29,19 @@ val scores = listOf(
     ScoreboardData(5,"jun 22, 2020","6","14","30","20","70"),
     ScoreboardData(6,"jun 23, 2020","5","10","30","20","65")
 )
-var ScoresWithCategory: List<ScoreWithCategory> = ArrayList()
+var ScoresWithCategory: List<FilterScoreTable> = ArrayList()
+var DistinctDateTimeList: List<DistinctDateTimeList> = ArrayList()
+val listDate: MutableList<String> = ArrayList()
+var distinctDate: List<String> = ArrayList()
+//var ScoreHashMapDataList: MutableList<ScoreHashMapData> = ArrayList()
+val scoreHashMap:HashMap<String,MutableList<ScoreHashMapData>> = HashMap()
 
 
 class ScoreBoardFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -54,29 +56,51 @@ class ScoreBoardFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            ScoresWithCategory =  AppDatabase(requireActivity().applicationContext).getHomeMenusDao().getScoreWithCategory()
-            requireActivity().longToast(ScoresWithCategory[0].ScoreTable.size.toString())
+            context.let {
+                ScoresWithCategory =  AppDatabase(it!!).getHomeMenusDao().getFilterScoreTable()
+            }
+            context.also {
+                DistinctDateTimeList =  AppDatabase(it!!).getHomeMenusDao().getDistinctDateTime()
+                listDate.clear()
+                distinctDate = emptyList()
+                for (i in DistinctDateTimeList.indices) {
+                    val date = AppDatabase(it).getHomeMenusDao().getDistinctDateTime()[i].date_time
+                    val dateToString = date.toString().split("T")
+                    listDate.add(dateToString[0])
+                }
+                distinctDate = listDate.distinct()
+            }
+            context.also {
+                val arraylist=ArrayList<ScoreBoardFinalData>()
+                for (i in distinctDate.indices){
+                    val ScoreHashMapDataList: MutableList<ScoreHashMapData> = ArrayList()
+                    for (j in ScoresWithCategory.indices){
+                        if (distinctDate[i] == splitDateTime(ScoresWithCategory[j].date_time.toString())){
+                       val data = ScoreHashMapData(ScoresWithCategory[j].homeMenuId,ScoresWithCategory[j].menuName,ScoresWithCategory[j].sub_menuId,
+                                ScoresWithCategory[j].subMenuName,ScoresWithCategory[j].score_type_id,ScoresWithCategory[j].score_type,
+                                ScoresWithCategory[j].date_time,distinctDate[i],ScoresWithCategory[j].score)
+
+                              ScoreHashMapDataList.add(data)
+                        }
+                    }
+                    arraylist.add(ScoreBoardFinalData(i,false,ScoreHashMapDataList))
+                    showScores(arraylist)
+                    //scoreHashMap[distinctDate[i]] = ScoreHashMapDataList
+                }
+            }
         }
-        showScores(scores)
+        // showScores(scores)
     }
-    private fun showScores(scores: List<ScoreboardData>) {
+    private fun showScores(scores: ArrayList<ScoreBoardFinalData>) {
         recyclerViewScores.layoutManager = LinearLayoutManager(activity)
         recyclerViewScores.adapter =
             ScoreBoardAdapter(scores)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(title: String, bgColorId: Int) =
-            ScoreBoardFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_TITLE, title)
-                    putInt(ARG_BG_COLOR, bgColorId)
-                }
-            }
-        private const val ARG_PARAM1 = "param1"
-        private const val ARG_PARAM2 = "param2"
-        private const val ARG_TITLE = "arg_title"
-        private const val ARG_BG_COLOR = "arg_bg_color"
+    fun splitDateTime(date:String): String {
+        val dateToString = date.split("T")
+        return dateToString[0]
     }
+
+
 }

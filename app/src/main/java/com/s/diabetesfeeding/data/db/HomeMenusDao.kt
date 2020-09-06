@@ -29,10 +29,22 @@ interface HomeMenusDao {
     @Transaction
     @Query("SELECT * FROM HomeSubMenus")
     suspend fun getScoreWithCategory(): List<ScoreWithCategory>
+
     @Transaction
     @Query("SELECT * FROM ScoreTable WHERE sub_menuId=:subId")
     suspend fun getScoreByCategory(subId:Int):List<ScoreTable>
-  /*  @Query("SELECT DISTINCT date_time from ScoreTable")
-    suspend fun getDistinctDateTime():List<OffsetDateTime>*/
 
+    @Query("SELECT date_time from ScoreTable")
+    suspend fun getDistinctDateTime():List<DistinctDateTimeList>
+
+    // ScoreType Dao
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveAllScoreType(scoreType: List<ScoreType>)
+    @Transaction
+    @Query("SELECT * FROM ScoreType")
+    suspend fun getAllScoreType(): List<ScoreType>
+
+    // Custom scoreboard data
+    @Query("select DISTINCT homeMenuId,menuName,sub_menuId,subMenuName,score,score_type,score_type_id,date_time  from ScoreTable st LEFT  JOIN HomeSubMenus HSM on HSM.id=ST.sub_menuid INNER  JOIN HomeMenus HM on HM.id=HSM.homeMenuId INNER  JOIN ScoreType STY on STY.id=HSM.score_type_id")
+    suspend fun getFilterScoreTable():List<FilterScoreTable>
 }

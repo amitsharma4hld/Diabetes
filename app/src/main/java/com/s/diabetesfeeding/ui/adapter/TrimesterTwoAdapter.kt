@@ -64,9 +64,11 @@ class TrimesterTwoAdapter(val context: Context, val trimesterTopics : List<Trime
         holder.view.cb_trimester.setOnClickListener(View.OnClickListener {
             if (holder.view.cb_trimester.isChecked) {
                 topics.isChecked=true
+                topics.comment = holder.view.et_coment.text.toString()
                 update(topics)
             } else {
                 topics.isChecked=false
+                topics.comment = holder.view.et_coment.text.toString()
                 update(topics)
             }
         })
