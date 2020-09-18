@@ -71,7 +71,7 @@ class ProgressBloodGlucoseFragment : Fragment() {
                 //graphPoints[i].post { graphPoints[i].layoutParams.height = dpToPx(progressWithCategory[0].progressBloodGlucose[i].value.toInt()) }
                 graphPoints[i].layoutParams.height = dpToPx(progressWithCategory[0].progressBloodGlucose[i].value.toInt())
             }
-        }, 9000)
+        }, 2000)
 
 
         viewLifecycleOwner.lifecycleScope.launch {
