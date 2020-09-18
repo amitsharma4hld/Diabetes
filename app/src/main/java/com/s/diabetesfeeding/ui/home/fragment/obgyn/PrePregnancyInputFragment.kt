@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.ui.home.fragment.obgyn
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.obgynentities.PrentalVisitRecord
 import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.*
@@ -20,12 +22,13 @@ import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.et_digit_two
 import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.mcv_weight_done
 import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.username
 import kotlinx.android.synthetic.main.fragment_weight.*
+import org.threeten.bp.OffsetDateTime
 
 
 class PrePregnancyInputFragment : Fragment() {
 
     var prentalVisitRecord : PrentalVisitRecord? = null
-
+    val prentalInputScore:Int = 5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -52,6 +55,7 @@ class PrePregnancyInputFragment : Fragment() {
         mcv_weight_done.setOnClickListener {
             prentalVisitRecord?.value = et_digit_one.text.toString() + et_digit_two.text.toString()+et_digit_three.text.toString()
             update(prentalVisitRecord!!)
+            updateScore()
         }
         et_digit_one.requestFocus()
         // show the keyboard if has focus
@@ -76,8 +80,18 @@ class PrePregnancyInputFragment : Fragment() {
             context.let {
                 AppDatabase(requireContext()).getObgynDao().updatePrentalVisitRecord(prentalVisitRecord)
                 Log.d("APPDATABASE : ","Update value is ${prentalVisitRecord.value}")
-                requireActivity().onBackPressed()
+                //requireActivity().onBackPressed()
             }
+        }
+    }
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 9, prentalInputScore, currentDate))
+                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
+            }
+            (context as Activity).onBackPressed()
         }
     }
 

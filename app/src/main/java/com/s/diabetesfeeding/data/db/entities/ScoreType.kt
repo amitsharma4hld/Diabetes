@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 class ScoreType (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val score_type:String
 )

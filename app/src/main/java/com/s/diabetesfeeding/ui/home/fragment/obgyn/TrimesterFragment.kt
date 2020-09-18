@@ -1,6 +1,8 @@
 package com.s.diabetesfeeding.ui.home.fragment.obgyn
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.obgynentities.PostPartumData
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataThree
@@ -18,8 +21,13 @@ import com.s.diabetesfeeding.ui.adapter.PostpartumAdapter
 import com.s.diabetesfeeding.ui.adapter.TrimesterAdapter
 import com.s.diabetesfeeding.ui.adapter.TrimesterThreeAdapter
 import com.s.diabetesfeeding.ui.adapter.TrimesterTwoAdapter
+import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getCurrentDateInString
+import com.s.diabetesfeeding.util.shortToast
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.fragment_trimester.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.OffsetDateTime
 
 
 class TrimesterFragment : Fragment() {
@@ -30,6 +38,9 @@ class TrimesterFragment : Fragment() {
     var trimesterTwoList: List<TrimesterDataTwo> = ArrayList()
     var trimesterThreeList: List<TrimesterDataThree> = ArrayList()
     var trimesterPostpartumList: List<PostPartumData> = ArrayList()
+    val CounselingScore:Int = 10
+    var isCounselingScore:Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,11 +89,40 @@ class TrimesterFragment : Fragment() {
         }
 
         mcv_trimester_done.setOnClickListener {
-            requireActivity().onBackPressed()
+            if (!isCounselingScore){
+                updateScore()
+                requireActivity().shortToast("Score Updated")
+            }else{
+                view?.snackbar("Already Saved For Today")
+                requireActivity().onBackPressed()
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            context?.let {
+                if (AppDatabase(it).getHomeMenusDao().getScoreByCategory(7).isNotEmpty()){
+                    for (i in AppDatabase(it).getHomeMenusDao().getScoreByCategory(7).indices){
+                        val totalScore: Int = AppDatabase(it).getHomeMenusDao().getScoreByCategory(7).map { it.score }.sum()
+                        if (totalScore>=30) {
+                            isCounselingScore = true
+                            return@let
+                        }
+                    }
+                }
+            }
         }
 
     }
-
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 7, CounselingScore, currentDate))
+                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
+            }
+            (context as Activity).onBackPressed()
+        }
+    }
     private fun showTrimesterOneTopics(trimesterTopics: List<TrimesterDataOne>) {
         rv_trimester_topic.layoutManager = LinearLayoutManager(activity)
         rv_trimester_topic.adapter = TrimesterAdapter(requireContext(),trimesterTopics)

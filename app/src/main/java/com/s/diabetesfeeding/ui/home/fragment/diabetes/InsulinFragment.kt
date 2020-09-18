@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.ui.home.fragment.diabetes
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.InsulinToday
-import com.s.diabetesfeeding.util.longToast
-import com.s.diabetesfeeding.util.roundOffDecimal
-import com.s.diabetesfeeding.util.shortToast
-import com.s.diabetesfeeding.util.snackbar
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
+import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.fragment_insulin.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.OffsetDateTime
@@ -74,15 +74,15 @@ class InsulinFragment : Fragment() {
                     if (!isInsulinCalculated){
                         AppDatabase(it).getMonitorBloodGlucoseCatDao()
                             .saveTodaysInsulin(InsulinToday(0, unitCalculated, InsulinScore, current_date))
-                        requireActivity().onBackPressed()
-
+                        updateScore()
+                        it.shortToast("Score Updated")
                     }else{
                         view.snackbar("Already Saved For Today")
+                        requireActivity().onBackPressed()
                     }
                 }
             }
         }
-
       //  isf = getISF(tddInputValue)
         getSelectedInsulinType()
         mcv_calculate.setOnClickListener{
@@ -99,7 +99,16 @@ class InsulinFragment : Fragment() {
 
         }
     }
-
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 2, InsulinScore, currentDate))
+                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
+            }
+            (context as Activity).onBackPressed()
+        }
+    }
     fun displayUnit(unit:Double){
         tv_display_unit.text = requireActivity().roundOffDecimal(unit).toString() + " Unit"
     }

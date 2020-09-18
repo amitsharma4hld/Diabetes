@@ -10,6 +10,8 @@ buildscript {
         version_lifecycle_livedata = '2.2.0'
         groupie_version = '2.3.0'
         nav_version = "2.3.0"
+        version_google_fit_api = "19.0.0"
+        version_google_auth = "18.1.0"
     }
 
     repositories {

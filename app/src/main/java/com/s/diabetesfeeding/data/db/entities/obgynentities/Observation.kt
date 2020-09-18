@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 class Observation (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val title: String,
     var isChecked: Boolean

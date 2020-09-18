@@ -14,6 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.fitness.Fitness
+import com.google.android.gms.fitness.FitnessOptions
+import com.google.android.gms.fitness.data.DataType
+import com.google.android.gms.fitness.data.Field
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
@@ -57,6 +62,10 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     )
     val allCategory: MutableList<MonitorBloodGlucoseCategory> = ArrayList()
     val categoryItemList: MutableList<BloodGlucoseCategoryItem> = ArrayList()
+    private val fitnessOptions = FitnessOptions.builder()
+        .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+        .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
+        .build()
 
     val symptoms = listOf(
         SymptomsData(1, "Shaky", false),
@@ -72,38 +81,39 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         SymptomsData(11, "Other", false)
     )
     val observationList = listOf(
-        Observation(0,"Vaginal Bleeding",false),
-        Observation(0,"Leakage of fluid",false),
-        Observation(0,"Fetal movement",false),
-        Observation(0,"Contraction",false),
-        Observation(0,"Nausea and/or Vomiting",false),
-        Observation(0,"Other",false)
+        Observation(1,"Vaginal Bleeding",false),
+        Observation(2,"Leakage of fluid",false),
+        Observation(3,"Fetal movement",false),
+        Observation(4,"Contraction",false),
+        Observation(5,"Nausea and/or Vomiting",false),
+        Observation(6,"Other",false)
     )
 
     val homeMenusList = listOf(
-        HomeMenus(0, "Diabetes"),
-        HomeMenus(0, "OBGYN"),
-        HomeMenus(0, "Breastfeeding")
+        HomeMenus(1, "Diabetes"),
+        HomeMenus(2, "OBGYN"),
+        HomeMenus(3, "Breastfeeding")
     )
     val scoreTypeList = listOf(
-        ScoreType(0,"Visit"),
-        ScoreType(0,"Record"),
-        ScoreType(0,"Observe")
+        ScoreType(1,"Visit"),
+        ScoreType(2,"Record"),
+        ScoreType(3,"Observe")
     )
     val subMenuList = listOf(
-        HomeSubMenus(0, "Blood Glucose", 1,2),
-        HomeSubMenus(0, "Insulin", 1,2),
-        HomeSubMenus(0, "Weight", 1,2),
-        HomeSubMenus(0, "Symptoms", 1,3),
-        HomeSubMenus(0, "Progress", 1,3),
-        HomeSubMenus(0, "Observations of Myself", 2,3),
-        HomeSubMenus(0, "Counseling", 2,2),
-        HomeSubMenus(0, "Prenatal Visit", 2,1),
-        HomeSubMenus(0, "Progress", 2,3),
-        HomeSubMenus(0, "BreastFeeding", 3,2),
-        HomeSubMenus(0, "Diaper Change", 3,2),
-        HomeSubMenus(0, "Daily Observation", 3,3),
-        HomeSubMenus(0, "Baby Weight", 3,2)
+        HomeSubMenus(1, "Blood Glucose", 1,2),
+        HomeSubMenus(2, "Insulin", 1,2),
+        HomeSubMenus(3, "Weight", 1,2),
+        HomeSubMenus(4, "Symptoms", 1,3),
+        HomeSubMenus(5, "Progress", 1,3),
+        HomeSubMenus(6, "Observations of Myself", 2,3),
+        HomeSubMenus(7, "Counseling", 2,2),
+        HomeSubMenus(8, "Prenatal Visit", 2,1),
+        HomeSubMenus(9, "Progress", 2,3),
+        HomeSubMenus(10, "BreastFeeding", 3,2),
+        HomeSubMenus(11, "Supplement", 3,2),
+        HomeSubMenus(12, "Diaper Change", 3,2),
+        HomeSubMenus(13, "Daily Observation", 3,3),
+        HomeSubMenus(14, "Baby Weight", 3,2)
     )
 
 
@@ -143,9 +153,11 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         tv_today_date.text = currentDate
+        tv_steps_count.text = "0 steps today"
+
         savedataAllCategory()
         saveAllCategoryItems()
-
+        readData()
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
                 if (AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategory().isNullOrEmpty()){
@@ -243,142 +255,175 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             })
         }
     }
+    private fun getGoogleAccount() = GoogleSignIn.getAccountForExtension(requireActivity(), fitnessOptions)
+
+    /**
+     * Reads the current daily step total, computed from midnight of the current day on the device's
+     * current timezone.
+     */
+    private fun readData() {
+        Fitness.getHistoryClient(requireActivity(), getGoogleAccount())
+            .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
+            .addOnSuccessListener { dataSet ->
+                val total = when {
+                    dataSet.isEmpty -> 0
+                    else -> dataSet.dataPoints.first().getValue(Field.FIELD_STEPS).asInt()
+                }
+                tv_steps_count?.text =  getString(R.string.step_count_display, total)
+                Log.i("TAG", "Total steps: $total")
+            }
+            .addOnFailureListener { e ->
+
+                Log.w("TAG", "There was a problem getting the step count.", e)
+            }
+    }
 
     private fun saveAllCategoryItems() {
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                1,
                 1,
                 "wake_up_fasting",
                 "65-95",
                 "08:30 AM",
                 "Wake Up Fasting",
-                "65",
-                0
+                "",
+                0,
+                false
             )
         )
 
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                2,
                 2,
                 "before_breakfast",
                 "65-95",
                 "08:30 AM",
                 "Before Breakfast",
-                "65",
-                0
+                "",
+                0,
+                false
             )
         )
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                3,
                 2,
                 "1_hr_after_breakfast",
                 "65-140",
                 "09:30 AM",
                 "1 Hour After Breakfast",
-                "68",
-                0
+                "",
+                0,
+                false
             )
         )
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                4,
                 2,
                 "2_hr_after_breakfast",
                 "65-120",
                 "10:30 AM",
                 "2 Hour After Breakfast",
                 "",
-                0
+                0,
+                false
             )
         )
 
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                5,
                 3,
                 "before_lunch",
                 "65-95",
                 "12:30 PM",
                 "Before Lunch",
                 "",
-                0
+                0,
+                false
             )
         )
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                6,
                 3,
                 "1_hr_after_lunch",
                 "65-140",
                 "01:30 PM",
                 "1 Hour After Lunch",
                 "",
-                0
+                0,
+                false
             )
         )
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                7,
                 3,
                 "2_hr_after_lunch",
                 "65-120",
                 "02:30 PM",
                 "2 Hour After Lunch",
                 "",
-                0
+                0,
+                false
             )
         )
 
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                8,
                 4,
                 "before_dinner",
                 "65-95",
                 "06:30 PM",
                 "Before Diner",
                 "",
-                0
+                0,
+                false
             )
         )
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                9,
                 4,
                 "1_hr_after_dinner",
                 "65-140",
                 "07:30 PM",
                 "1 Hour After Diner",
                 "",
-                0
+                0,
+                false
             )
         )
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                10,
                 4,
                 "2_hr_after_dinner",
                 "65-120",
                 "08:30 PM",
                 "2 Hour After Diner",
                 "",
-                0
+                0,
+                false
             )
         )
 
         categoryItemList.add(
             BloodGlucoseCategoryItem(
-                0,
+                11,
                 5,
                 "bedtime",
                 "65-95",
                 "10:30 PM",
                 "Bedtime",
-                "65",
-                0
+                "",
+                0,
+                false
             )
         )
     }

@@ -1,7 +1,9 @@
 package com.s.diabetesfeeding.ui.home.fragment.diabetes
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.InsulinToday
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.WeightToday
-import com.s.diabetesfeeding.util.longToast
-import com.s.diabetesfeeding.util.roundOffDecimal
-import com.s.diabetesfeeding.util.snackbar
+import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_insulin.*
 import kotlinx.android.synthetic.main.fragment_weight.*
@@ -58,7 +59,7 @@ class WeightFragment : Fragment() {
             }
         }
 
-        mcv_weight_done.setOnClickListener {
+        mcv_weight_done.setOnClickListener { it ->
             val view:View = it
             if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()){
                 weightCalculated = et_digit_one.text.toString() + et_digit_two.text.toString()+et_digit_three.text.toString()
@@ -68,15 +69,27 @@ class WeightFragment : Fragment() {
                         if (!isWeightCalculated){
                             AppDatabase(it).getMonitorBloodGlucoseCatDao()
                                 .saveTodaysWeight(WeightToday(0, weightCalculated!!, weightScore, currentDate))
-                            requireActivity().onBackPressed()
+                            updateScore()
+                            requireActivity().shortToast("Score Updated")
                         }else{
                             view.snackbar("Already Saved For Today")
+                            requireActivity().onBackPressed()
                         }
                     }
                 }
             }else{
                 it.snackbar("All field are required")
             }
+        }
+    }
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 3, weightScore, currentDate))
+                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
+            }
+            (context as Activity).onBackPressed()
         }
     }
     private fun showSoftKeyboard(view: View) {

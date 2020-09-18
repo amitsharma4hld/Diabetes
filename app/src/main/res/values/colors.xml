@@ -16,5 +16,9 @@
     <color name="color_monitorblood_glucose_theme">#C99C86</color>
     <color name="color_describe">#DDD</color>
     <color name="color_breastfeeding_theme">#F7D249</color>
-
+    <color name="color_diabetes_theme">#C99C86</color>
+    <color name="color_graph_bg">#F8F2F0</color>
+    <color name="color_graph_lunch">#00F62D</color>
+    <color name="color_graph_diner">#2B37EC</color>
+    <color name="color_graph_bedtime">#4C8B9D</color>
 </resources>

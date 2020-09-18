@@ -9,6 +9,7 @@ import com.s.diabetesfeeding.data.preferences.PreferenceProvider
 import com.s.diabetesfeeding.data.repositories.MonitorbloodGlucoseRepository
 import com.s.diabetesfeeding.data.repositories.UserRepository
 import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
+import com.s.diabetesfeeding.ui.auth.ForgotPassModelFactory
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
 import org.kodein.di.Kodein
@@ -31,6 +32,7 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from singleton { UserRepository(instance(), instance()) }
         bind() from singleton { MonitorbloodGlucoseRepository(instance(), instance(),instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
+        bind() from provider { ForgotPassModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
         bind() from provider{ MonitorBloodGlucoseViewModelFactory(instance())}
 

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    >
+<data>
+        <variable
+            name="viewmodel"
+            type="com.s.diabetesfeeding.ui.auth.ForgotPassModel" />
+        <import type="android.view.View"/>
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        tools:context=".ui.auth.ForgetPassActivity">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -12,7 +26,6 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
-    tools:context=".ui.auth.ForgetPassActivity"
     android:padding="32dp"
     >
 
@@ -94,6 +107,7 @@
             app:cardCornerRadius="20dp"
             android:layout_gravity="center"
             android:id="@+id/bt_continue"
+            android:onClick="@{viewmodel::onContinueButtonClick}"
             app:cardForegroundColor="@android:color/transparent"
             app:strokeColor="#00ae99"
             android:layout_marginBottom="52dp"
@@ -109,7 +123,13 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="16sp" />
         </com.google.android.material.card.MaterialCardView>
-
+    <ProgressBar
+        android:id="@+id/progress_bar_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
     </RelativeLayout>
 </ScrollView>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

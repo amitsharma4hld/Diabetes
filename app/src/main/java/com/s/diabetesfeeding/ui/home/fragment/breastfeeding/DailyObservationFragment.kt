@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.ui.home.fragment.breastfeeding
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,17 +12,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
 import com.s.diabetesfeeding.ui.adapter.DailyObservationsAdapter
 import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.fragment_daily_observation.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.OffsetDateTime
 
 
 var observationList: List<ObservationBreastFeed> = ArrayList()
 
 class DailyObservationFragment : Fragment() {
 
+        val dailyObsevartion:Int = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,8 @@ class DailyObservationFragment : Fragment() {
             showObservations(observationList)
         }
         mcv_done.setOnClickListener {
-           requireActivity().onBackPressed()
+            updateScore()
+           //requireActivity().onBackPressed()
         }
     }
 
@@ -53,6 +58,17 @@ class DailyObservationFragment : Fragment() {
                 requireContext(),
                 observations
             )
+    }
+
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 13, dailyObsevartion, currentDate))
+                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
+            }
+            (context as Activity).onBackPressed()
+        }
     }
 
 

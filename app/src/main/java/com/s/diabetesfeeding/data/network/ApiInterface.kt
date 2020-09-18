@@ -30,6 +30,13 @@ interface ApiInterface {
         @Field("deviceType") deviceType: String
     ) : Response<AuthResponse>
 
+    @FormUrlEncoded
+    @PUT("Forgot Password")
+    suspend fun forgotPass(
+        @Field("username") email: String,
+        @Field("password") password: String
+    ) : Response<AuthResponse>
+
     @GET("get-fields")
     suspend fun getMonitorbloodGlucose() :Response<MonitorbloodGlucoseResponse>
 

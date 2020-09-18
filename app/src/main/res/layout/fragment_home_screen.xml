@@ -517,7 +517,6 @@
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:fontFamily="@font/avenir_next_bold"
-                        android:text="4,500 steps today"
                         android:textColor="@color/colorAccent"
                         android:textSize="18sp"
                         android:layout_marginTop="16dp"

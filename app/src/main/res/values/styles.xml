@@ -6,5 +6,22 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="Log" parent="AppTheme">
+        <item name="android:typeface">monospace</item>
+
+        <item name="android:padding">8dp</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
+
+    <style name="progressBarDiabetes" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/color_diabetes_theme</item>
+    </style>
+    <style name="progressBarObgyn" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/colorObgyTheme</item>
+    </style>
+    <style name="progressBarBreastFeeding" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/color_breastfeeding_theme</item>
+    </style>
 
 </resources>

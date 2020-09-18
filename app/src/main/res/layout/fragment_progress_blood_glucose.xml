@@ -42,15 +42,87 @@
                 android:textSize="18sp"
                 android:fontFamily="@font/avenir_next_regular"
                 />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewMonitorBloodGlucose"
+
+            <include layout="@layout/progress_wakeup"/>
+
+            <TextView
+                android:id="@+id/tv_wakeup_fasting_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:outlineAmbientShadowColor="@color/app_main_text_color"
-                android:outlineSpotShadowColor="@color/app_main_text_color"
-                tools:targetApi="p" />
+                android:gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/wake_up_fasting"
+                android:textColor="@color/color_diabetes_theme"
+                android:textSize="20sp"
+                android:fontFamily="@font/avenir_next_regular"
+                />
+
+            <include layout="@layout/progress_breakfast"/>
+
+            <TextView
+                android:id="@+id/tv_breakfast_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/breakfast"
+                android:textColor="@color/colorTabSelected"
+                android:textSize="20sp"
+                android:fontFamily="@font/avenir_next_regular"
+                />
+
+            <include layout="@layout/progress_lunch"/>
+
+            <TextView
+                android:id="@+id/tv_lunch_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lunch"
+                android:textColor="@color/color_graph_lunch"
+                android:textSize="20sp"
+                android:fontFamily="@font/avenir_next_regular"
+                />
+
+            <include layout="@layout/progress_diner"/>
+
+            <TextView
+                android:id="@+id/tv_diner_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/dinner"
+                android:textColor="@color/color_graph_diner"
+                android:textSize="20sp"
+                android:fontFamily="@font/avenir_next_regular"
+                />
+
+            <include layout="@layout/progress_bedtime"/>
+
+            <TextView
+                android:id="@+id/tv_bedtime_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/bedtime"
+                android:textColor="@color/color_graph_bedtime"
+                android:textSize="20sp"
+                android:fontFamily="@font/avenir_next_regular"
+                />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="150dip"
                 android:layout_height="45dip"

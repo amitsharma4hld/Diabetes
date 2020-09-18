@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 class BloodGlucoseCategoryItem(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val catItemId: Int,
     val itemsCatId: Int,
     val id: String,
@@ -13,5 +13,6 @@ class BloodGlucoseCategoryItem(
     val time: String,
     val title: String,
     var value: String,
-    var score: Int
+    var score: Int,
+    var isBlank: Boolean
 )

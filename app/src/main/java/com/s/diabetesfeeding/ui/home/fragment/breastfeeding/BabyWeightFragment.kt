@@ -1,6 +1,8 @@
 package com.s.diabetesfeeding.ui.home.fragment.breastfeeding
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.WeightToday
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyWeight
+import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.showSoftKeyboard
 import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.fragment_baby_weight.*
@@ -64,7 +68,8 @@ class BabyWeightFragment : Fragment() {
                         if (!isWeightCalculated){
                             AppDatabase(it).getBreastFeedingDao()
                                 .saveBabyWeight(BabyWeight(0, weightCalculated!!, weightScore, currentDate))
-                            requireActivity().onBackPressed()
+                            updateScore()
+                            //requireActivity().onBackPressed()
                         }else{
                             view.snackbar("Already Saved For Today")
                         }
@@ -94,5 +99,15 @@ class BabyWeightFragment : Fragment() {
         et_digit_one.setText(numbers[0].toString())
         et_digit_two.setText(numbers[1].toString())
         et_digit_three.setText(numbers[2].toString())
+    }
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 14, weightScore, currentDate))
+                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
+            }
+            (context as Activity).onBackPressed()
+        }
     }
 }

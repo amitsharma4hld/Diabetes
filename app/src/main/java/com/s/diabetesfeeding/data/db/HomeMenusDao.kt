@@ -2,7 +2,7 @@ package com.s.diabetesfeeding.data.db
 
 import androidx.room.*
 import com.s.diabetesfeeding.data.db.entities.*
-import java.time.OffsetDateTime
+
 
 @Dao
 interface HomeMenusDao {
@@ -26,9 +26,9 @@ interface HomeMenusDao {
     @Transaction
     @Query("SELECT * FROM ScoreTable")
     suspend fun getAllScores(): List<ScoreTable>
-    @Transaction
+ /*   @Transaction
     @Query("SELECT * FROM HomeSubMenus")
-    suspend fun getScoreWithCategory(): List<ScoreWithCategory>
+    suspend fun getScoreWithCategory(): List<ScoreWithCategory>*/
 
     @Transaction
     @Query("SELECT * FROM ScoreTable WHERE sub_menuId=:subId")

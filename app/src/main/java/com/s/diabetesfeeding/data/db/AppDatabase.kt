@@ -37,7 +37,9 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.*
         BreastFeedingSessionData::class,
         BabyPoopData::class,
         ScoreType::class,
-        ScoreWithCategoryCrossRef::class
+        ProgressBloodGlucose::class
+                //ScoreWithCategoryCrossRef::class
+
     ],
     version = 1
 )
@@ -45,7 +47,7 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.*
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun getUserDao(): UserDao
-    abstract fun getMonitorbloodGlucoseDao(): MonitorbloodGlucoseDao
+    abstract fun getMonitorbloodGlucoseDao(): MonitorbloodGlucoseDao // repo
     abstract fun getMonitorBloodGlucoseCatDao():MonitorBloodGlucoseCatDao
     abstract fun getSymptomsDao(): SymptomDao
     abstract fun getHomeMenusDao(): HomeMenusDao
@@ -72,6 +74,8 @@ abstract class AppDatabase : RoomDatabase(){
     }
 
     override fun clearAllTables() {
+
     }
+
 
 }

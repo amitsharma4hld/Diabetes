@@ -16,6 +16,9 @@ class UserRepository(
         return apiRequest { api.userLogin(email, password) }
         //return ApiInterface().userLogin(email,password)
     }
+    suspend fun forgotPass(email: String, password: String) : AuthResponse {
+        return apiRequest { api.forgotPass(email,password) }
+    }
     suspend fun userRegister(
         email: String,
         password: String,

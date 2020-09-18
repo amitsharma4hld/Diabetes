@@ -19,6 +19,8 @@ interface MonitorBloodGlucoseCatDao {
     @Transaction
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")
     suspend fun getItemsAndCategory(): List<CategoryWithItems>
+/*    @Query("DELETE FROM BloodGlucoseCategoryItem Where value")
+    suspend fun deleteTodaysMonitorGlucoseData()*/
 
     // Today's Insulin
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -32,6 +34,12 @@ interface MonitorBloodGlucoseCatDao {
     @Query("SELECT * FROM WeightToday")
     suspend fun getTodaysWeight():List<WeightToday>
 
+    // Monitor Blood Glucose Progress Data
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveProgressBloodGlucoseData(progressBloodGlucose: ProgressBloodGlucose)
+    @Transaction
+    @Query("SELECT * FROM MonitorBloodGlucoseCategory")
+    suspend fun getProgressDataWithCategory(): List<ProgressDataWithCategory>
 
 
 }

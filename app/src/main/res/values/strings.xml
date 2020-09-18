@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diabetes Feeding</string>
+    <string name="app_name">Diabetes\nFeeding</string>
     <string name="login">login</string>
     <string name="login_big">Login</string>
     <string name="signup">Signup</string>
@@ -63,7 +63,7 @@
     <string name="your_symptoms_today">Your Symptoms today</string>
     <string name="sweating">Sweating</string>
     <string name="scoreboard">Scoreboard</string>
-    <string name="your_total_days">Your Total <b>315 Days</b></string>
+    <string name="your_total_score">Your Total</string>
     <string name="current_streat_days">Current Streat <b> 5 Days</b></string>
     <string name="profile">Profile</string>
     <string name="enter">Enter</string>
@@ -99,4 +99,20 @@
     <string name="breast">Breast</string>
     <string name="supplement">Supplement</string>
     <string name="baby_weight">Baby Weight</string>
+    <string name="visit">Visit</string>
+    <string name="record">Record</string>
+    <string name="observe">Observe</string>
+    <string name="total">Total</string>
+    <string name="current_streat">Current Streat</string>
+    <string name="settings">Settings</string>
+    <string name="ok">OK</string>
+    <string name="permission_rationale">Location data is used as part of the Google Fit API</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for step count.</string>
+    <string name="read_step_data">Read step data</string>
+    <string name="step_count_display">%1$d steps today</string>
+    <string name="breakfast">BreakFast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="bedtime">Bedtime</string>
+
 </resources>
