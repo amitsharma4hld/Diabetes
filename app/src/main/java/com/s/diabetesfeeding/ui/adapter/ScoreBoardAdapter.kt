@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.ScoreBoardFinalData
 import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
-import kotlinx.android.synthetic.main.fragment_breastfeeding.view.*
 import kotlinx.android.synthetic.main.item_scoreboard.view.*
 
 class ScoreBoardAdapter(context:Context,val scores: ArrayList<ScoreBoardFinalData>): RecyclerView.Adapter<ScoreBoardAdapter.ScoreViewHolder>() {
@@ -51,7 +50,7 @@ class ScoreBoardAdapter(context:Context,val scores: ArrayList<ScoreBoardFinalDat
 
         // Total Score Menu Titles
         if (score.scoreDataList.isNotEmpty()){
-            holder.view.tv_date.text = holder.view.context.getDateFromOffsetDateTime(score.scoreDataList[0].date_time)
+            holder.view.tv_date.text = getDateFromOffsetDateTime(score.scoreDataList[0].date_time)
         }
         holder.view.tv_total_score_value.text = totalScore.toString()
         holder.view.tv_visit_total_value.text = totalVisitScore.toString()

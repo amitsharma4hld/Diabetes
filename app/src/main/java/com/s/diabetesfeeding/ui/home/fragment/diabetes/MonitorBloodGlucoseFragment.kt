@@ -55,7 +55,7 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
         tv_today_date_monitor_glucose.text=currentDate
         viewModel = ViewModelProvider(this,factory).get(MonitorBloodGlucoseViewModel::class.java)
         //buildUI()
-        // TODO: Move this to model class with Live Data
+
         viewLifecycleOwner.lifecycleScope.launch {
             CategoryWithItems =  AppDatabase(requireActivity().applicationContext).getMonitorBloodGlucoseCatDao().getItemsAndCategory()
             showMonitorBloodGlucoseMain(CategoryWithItems)

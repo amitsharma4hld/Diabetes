@@ -7,7 +7,8 @@ data class ProgressDataWithCategory (
     @Embedded val monitorBloodGlucoseCategory: MonitorBloodGlucoseCategory,
     @Relation(
         parentColumn = "catId", // ownerid
-        entityColumn = "itemsCatId" // dogsOwnerId
+        entityColumn = "itemsCatId",
+        entity = ProgressBloodGlucose::class
     )
     val progressBloodGlucose: List<ProgressBloodGlucose>
 )

@@ -16,6 +16,7 @@ import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.ProgressBloodGlucose
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getDayFromOffsetDateTime
 import com.s.diabetesfeeding.util.shortToast
 import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
@@ -148,7 +149,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
 
     }
 
-    fun updateData(categoryItems: BloodGlucoseCategoryItem) {
+    private fun updateData(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {
             context.let {
                 AppDatabase(it).getMonitorBloodGlucoseCatDao().updateBloodGlucoseCategoryItem(categoryItems)
@@ -156,12 +157,12 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
         }
         //notifyDataSetChanged()
     }
-    fun updateProgressData(categoryItems: BloodGlucoseCategoryItem) {
+    private fun updateProgressData(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {
             context.let {
-                val current_date = OffsetDateTime.now().plusDays(5)
+                val currentDate = OffsetDateTime.now()
                 val progressData =  ProgressBloodGlucose(0,categoryItems.itemsCatId,categoryItems.range,categoryItems.time,categoryItems.title,
-                    categoryItems.value,current_date)
+                    categoryItems.value,currentDate, getDayFromOffsetDateTime(currentDate))
                 AppDatabase(it).getMonitorBloodGlucoseCatDao().saveProgressBloodGlucoseData(progressData)
                 Log.d("APPDATABASE : ","progressData value is ${progressData.dateTime}")
             }
@@ -171,8 +172,8 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
     fun updateScore(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {
             context?.let {
-                val current_date = OffsetDateTime.now().plusDays(5)
-                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 1, categoryItems.score, current_date))
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 1, categoryItems.score, currentDate))
             }
             (context as Activity).onBackPressed()
         }

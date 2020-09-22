@@ -1,7 +1,9 @@
 package com.s.diabetesfeeding.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.s.diabetesfeeding.data.db.entities.*
+import org.threeten.bp.OffsetDateTime
 
 @Dao
 interface MonitorBloodGlucoseCatDao {
@@ -39,7 +41,14 @@ interface MonitorBloodGlucoseCatDao {
     suspend fun saveProgressBloodGlucoseData(progressBloodGlucose: ProgressBloodGlucose)
     @Transaction
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")
-    suspend fun getProgressDataWithCategory(): List<ProgressDataWithCategory>
+    fun getProgressDataWithCategory(): LiveData<List<ProgressDataWithCategory>>
 
+    @Query("SELECT *  FROM ProgressBloodGlucose  WHERE itemsCatId=:id AND dateTime BETWEEN :from AND :to")
+    fun getProgressDataBetweenDates(id:Int,from: OffsetDateTime, to: OffsetDateTime): List<ProgressBloodGlucose>
+
+/*   // Custom scoreboard data
+    @Query("select DISTINCT *  from ScoreTable st LEFT  JOIN HomeSubMenus HSM on HSM.id=ST.sub_menuid INNER  JOIN HomeMenus HM on HM.id=HSM.homeMenuId INNER  JOIN ScoreType STY on STY.id=HSM.score_type_id")
+    suspend fun getFilterScoreTable():List<FilterScoreTable>
+*/
 
 }

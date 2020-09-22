@@ -12,6 +12,8 @@ import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.auth.ForgotPassModelFactory
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
+import com.s.diabetesfeeding.ui.home.fragment.diabetes.ProgressBloodGlucoseModelFactory
+import com.s.diabetesfeeding.ui.home.fragment.diabetes.ProgressBloodGlucoseRepository
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -35,6 +37,8 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider { ForgotPassModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
         bind() from provider{ MonitorBloodGlucoseViewModelFactory(instance())}
+        bind() from provider{ ProgressBloodGlucoseModelFactory(instance())}
+        bind() from provider{ ProgressBloodGlucoseRepository(instance())}
 
     }
 

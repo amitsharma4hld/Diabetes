@@ -13,5 +13,6 @@ class ProgressBloodGlucose (
     val time: String,
     val title: String,
     val value:String,
-    val dateTime: OffsetDateTime
+    val dateTime: OffsetDateTime,
+    val day: String
 )

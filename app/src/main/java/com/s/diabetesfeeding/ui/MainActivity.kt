@@ -74,18 +74,15 @@ class MainActivity : AppCompatActivity(), AuthListener, KodeinAware {
     }
 
     override fun onStarted() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSuccess(data: Data) {
-        TODO("Not yet implemented")
     }
 
     override fun onFailure(message: String) {
-        TODO("Not yet implemented")
     }
 
     override fun onVerificationFailed(title: String, message: String) {
-        TODO("Not yet implemented")
     }
 }
