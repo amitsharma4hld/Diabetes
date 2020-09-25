@@ -484,7 +484,7 @@
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:fontFamily="@font/avenir_next_regular"
-                            android:text="@string/progress"
+                            android:text="@string/progress_obgyn"
                             android:textColor="#fff"
                             android:textSize="28sp"
                             android:layout_marginTop="12dp"

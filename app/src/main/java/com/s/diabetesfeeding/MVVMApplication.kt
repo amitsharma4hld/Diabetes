@@ -22,6 +22,10 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
+val prefs: PreferenceProvider by lazy {
+    MVVMApplication.prefs!!
+}
+
 class MVVMApplication : Application(), KodeinAware {
 
     override val kodein = Kodein.lazy {
@@ -40,6 +44,13 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider{ ProgressBloodGlucoseModelFactory(instance())}
         bind() from provider{ ProgressBloodGlucoseRepository(instance())}
 
+    }
+    companion object {
+        var prefs: PreferenceProvider? = null
+    }
+    override fun onCreate() {
+        prefs = PreferenceProvider(applicationContext)
+        super.onCreate()
     }
 
 }

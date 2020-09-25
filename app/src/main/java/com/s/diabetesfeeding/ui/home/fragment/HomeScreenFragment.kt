@@ -1,12 +1,15 @@
 package com.s.diabetesfeeding.ui.home.fragment
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import android.view.Window
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,7 +27,10 @@ import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.*
 import com.s.diabetesfeeding.data.db.entities.obgynentities.Observation
+import com.s.diabetesfeeding.data.local.TempLocalData
+import com.s.diabetesfeeding.data.preferences.PreferenceProvider
 import com.s.diabetesfeeding.databinding.FragmentHomeScreenBinding
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.MainActivity
 import com.s.diabetesfeeding.ui.auth.AuthViewModel
 import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
@@ -37,7 +43,9 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.threeten.bp.OffsetDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import java.text.DateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -54,7 +62,12 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     private val factory:HomeViewModelFactory by instance()
     private val authfactory : AuthViewModelFactory by instance()
     var isOptionSelected = true
-    val currentDate: String = java.text.SimpleDateFormat(
+    var day = 0
+    var month: Int = 0
+    var year: Int = 0
+    private lateinit var calendar:Calendar
+
+    var currentDate: String = java.text.SimpleDateFormat(
         "MMM dd, yyyy",
         java.util.Locale.getDefault()
     ).format(
@@ -119,10 +132,12 @@ class HomeScreenFragment : Fragment(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
        /* val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
             if (isOptionSelected){
@@ -152,7 +167,38 @@ class HomeScreenFragment : Fragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (!prefs.getSavedIsLoggedIn()) {
+            showDialog("ccss")
+        }
+        prefs.saveIsLoggedIn(true)
+
         tv_today_date.text = currentDate
+        tv_today_date.setOnClickListener {
+            calendar = Calendar.getInstance()
+            day = calendar.get(Calendar.DAY_OF_MONTH)
+            month = calendar.get(Calendar.MONTH)
+            year = calendar.get(Calendar.YEAR)
+
+            val mDateSetListener =
+                DatePickerDialog.OnDateSetListener { it, year, monthOfYear, day ->
+                    val selectedDate = formatDate(year, monthOfYear, day)
+                    tv_today_date.text = selectedDate
+
+                    val month = monthOfYear + 1
+                    val dayWithZero = if (day < 10) "0$day" else day.toString()
+                    val monthWithZero = if (month < 10) "0$month" else month.toString()
+                    val date: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T00:00:10.356+05:30"
+
+                    val parseDateTime =  OffsetDateTime.parse(date)
+                    prefs.saveformattedDate(selectedDate)
+                    prefs.saveOffsetDateTime(date)
+
+                }
+            val datePickerDialog = DatePickerDialog(requireContext(),mDateSetListener, year, month,day)
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis() + 1000
+            datePickerDialog.show()
+
+        }
         tv_steps_count.text = "0 steps today"
 
         savedataAllCategory()
@@ -202,16 +248,6 @@ class HomeScreenFragment : Fragment(), KodeinAware {
               }
             }
 
-         /*   context?.let {
-                val current_date = OffsetDateTime.now()
-                    for (i in 1..13) {
-                    AppDatabase(it).getHomeMenusDao().saveScores(
-                        ScoreTable(0, 0, i, 2, current_date)
-                    )}
-                    Log.d(
-                        "AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added"
-                    )
-            }*/
         }
 
         Diabetes.setOnClickListener {
@@ -459,6 +495,13 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         }
     }
 
+    private fun formatDate(year:Int, month:Int, day:Int):String{
+        calendar.set(year, month, day, 0, 0, 0)
+        val chosenDate = calendar.time
+        val df = DateFormat.getDateInstance(DateFormat.MEDIUM)
+        return df.format(chosenDate)
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(title: String, bgColorId: Int) =
@@ -468,6 +511,21 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     putInt(ARG_BG_COLOR, bgColorId)
                 }
             }
+    }
+
+
+        private fun showDialog(title: String) {
+            val dialog = Dialog(requireActivity())
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.custom_dialog)
+            val body = dialog.findViewById(R.id.tv_quotes) as TextView
+            //body.text = title
+            val mBtn = dialog.findViewById(R.id.tv_close_button) as TextView
+            mBtn.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
     }
 
 }

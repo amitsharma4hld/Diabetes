@@ -56,7 +56,7 @@ class TrimesterAdapter(val context: Context, val trimesterTopics : List<Trimeste
                     topics.date = selectedDate
                 }
             val datePickerDialog = DatePickerDialog(context,mDateSetListener, year, month,day)
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             datePickerDialog.show()
 
         }

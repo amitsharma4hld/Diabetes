@@ -10,18 +10,19 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.ProgressBloodGlucose
-import com.s.diabetesfeeding.data.db.entities.ProgressDataWithCategory
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.databinding.FragmentProgressBloodGlucoseBinding
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import com.s.diabetesfeeding.util.shortToast
 import com.s.diabetesfeeding.util.snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_progress_blood_glucose.*
 import kotlinx.android.synthetic.main.progress_bedtime.*
 import kotlinx.android.synthetic.main.progress_breakfast.*
@@ -29,13 +30,6 @@ import kotlinx.android.synthetic.main.progress_diner.*
 import kotlinx.android.synthetic.main.progress_lunch.*
 import kotlinx.android.synthetic.main.progress_lunch.friday_two_view12
 import kotlinx.android.synthetic.main.progress_wakeup.*
-import kotlinx.android.synthetic.main.progress_wakeup.V11
-import kotlinx.android.synthetic.main.progress_wakeup.V12
-import kotlinx.android.synthetic.main.progress_wakeup.V13
-import kotlinx.android.synthetic.main.progress_wakeup.V14
-import kotlinx.android.synthetic.main.progress_wakeup.V15
-import kotlinx.android.synthetic.main.progress_wakeup.V16
-import kotlinx.android.synthetic.main.progress_wakeup.V17
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -53,23 +47,16 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
 
     private val progressScore:Int = 5
     private var isProgressScored = false
-    val currentDate: String = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date())
+    val currentDateAuto: String = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date())
     private var viewModelJob = Job()
-    private val pointsValue = IntArray(7)
-    private val breakFastPointsValue = IntArray(21)
-    private val lunchPointsValue = IntArray(21)
-    private val dinnerPointsValue = IntArray(21)
-    private val bedTimePointsValue = IntArray(7)
     private var progressBloodGlucose:List<ProgressBloodGlucose> = ArrayList()
     private var progressBloodGlucoseBreakFast:List<ProgressBloodGlucose> = ArrayList()
     private var progressBloodGlucoseLunch:List<ProgressBloodGlucose> = ArrayList()
     private var progressBloodGlucoseDinner:List<ProgressBloodGlucose> = ArrayList()
     private var progressBloodGlucoseBedTime:List<ProgressBloodGlucose> = ArrayList()
-
-
-
     private lateinit var wordViewModel: ProgressBloodGlucoseModel
-
+    lateinit var currentDate:OffsetDateTime
+    lateinit var sevendaysDate:OffsetDateTime
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,8 +85,6 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setAllProgressUI()
-
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
                 if (AppDatabase(it).getHomeMenusDao().getScoreByCategory(5).isNotEmpty()){
@@ -125,11 +110,33 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                 requireActivity().onBackPressed()
             }
         }
-        tv_date_of_week.text= "Week of $currentDate"
 
-        tv_date_of_week.setOnClickListener {
-            val currentDate = OffsetDateTime.parse("2020-09-19T16:47:39.824+05:30")
-            val sevendaysDate = OffsetDateTime.parse("2020-09-20T16:46:57.369+05:30")
+        tb_previous_date.setOnClickListener {
+            currentDate = currentDate.minusDays(1)
+            sevendaysDate = currentDate.minusDays(7)
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_date_of_week.text= getString(R.string.week_of,value)
+            setAllProgressUI()
+        }
+        tb_next_date.setOnClickListener {
+            currentDate = currentDate.plusDays(1)
+            sevendaysDate = currentDate.minusDays(7)
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_date_of_week.text= getString(R.string.week_of,value)
+            setAllProgressUI()
+        }
+        if(!prefs.getOffsetDateTime().isNullOrEmpty()){
+            currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            sevendaysDate = currentDate.minusDays(7)
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_date_of_week.text= getString(R.string.week_of,value)
+            setAllProgressUI()
+        }else{
+            currentDate =  OffsetDateTime.now()
+            sevendaysDate = currentDate.minusDays(7)
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_date_of_week.text= getString(R.string.week_of,value)
+            setAllProgressUI()
         }
     }
 
@@ -138,11 +145,8 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
         Coroutines.io {
             // Wakup
             context?.let {
-                pb_graph.visibility = View.VISIBLE
-                val currentDate = OffsetDateTime.parse("2020-09-19T16:47:39.824+05:30")
-                val sevendaysDate = OffsetDateTime.parse("2020-09-20T16:46:57.369+05:30")
-                progressBloodGlucose = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(1,currentDate,sevendaysDate)
-
+                progressBloodGlucose = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(1,sevendaysDate,currentDate)
+                val pointsValue = IntArray(7)
                 for (i in progressBloodGlucose.indices){
                     if (progressBloodGlucose[i].day=="Sunday")
                         pointsValue[0] = progressBloodGlucose[i].value.toInt()
@@ -162,7 +166,6 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
 
 
                 requireActivity().runOnUiThread(Runnable {
-                    pb_graph.visibility = View.GONE
                     val params: RelativeLayout.LayoutParams = V11.layoutParams as RelativeLayout.LayoutParams
                     params.height = 200
                     V11.layoutParams = params
@@ -179,11 +182,8 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
         Coroutines.io {
             // BreakFast
             context?.let {
-                breakfast_pb_graph.visibility = View.VISIBLE
-                val currentDate = OffsetDateTime.parse("2020-09-19T16:47:39.824+05:30")
-                val sevendaysDate = OffsetDateTime.parse("2020-09-22T16:46:57.369+05:30")
-                progressBloodGlucoseBreakFast = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(2,currentDate,sevendaysDate)
-
+                  progressBloodGlucoseBreakFast = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(2,sevendaysDate,currentDate)
+                val breakFastPointsValue = IntArray(21)
                 for (i in   progressBloodGlucoseBreakFast.indices){
                     if (  progressBloodGlucoseBreakFast[i].day=="Sunday"){
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
@@ -262,7 +262,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                 }
 
                 requireActivity().runOnUiThread(Runnable {
-                    breakfast_pb_graph.visibility = View.GONE
+                    //breakfast_pb_graph.visibility = View.GONE
                     val breakfastParams: RelativeLayout.LayoutParams = V11.layoutParams as RelativeLayout.LayoutParams
                     breakfastParams.height = 200
                     breakfast_V11.layoutParams = breakfastParams
@@ -301,11 +301,8 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
         Coroutines.io {
             // LUNCH
             context?.let {
-                pb_lunch_graph.visibility = View.VISIBLE
-                val currentDate = OffsetDateTime.parse("2020-09-16T00:54:51.356+05:30")
-                val sevendaysDate = OffsetDateTime.parse("2020-09-22T16:46:57.369+05:30")
-                progressBloodGlucoseLunch = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(3,currentDate,sevendaysDate)
-
+                progressBloodGlucoseLunch = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(3,sevendaysDate,currentDate)
+                val lunchPointsValue = IntArray(21)
                 for (i in  progressBloodGlucoseLunch.indices){
                     if (progressBloodGlucoseLunch[i].day=="Sunday"){
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
@@ -420,13 +417,10 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
             }
         }
         Coroutines.io {
-            // LUNCH
+            // DINNER
             context?.let {
-                pb_graph_dinner.visibility = View.VISIBLE
-                val currentDate = OffsetDateTime.parse("2020-09-16T00:54:51.356+05:30")
-                val sevendaysDate = OffsetDateTime.parse("2020-09-22T16:46:57.369+05:30")
-                progressBloodGlucoseDinner = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(4,currentDate,sevendaysDate)
-
+                progressBloodGlucoseDinner = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(4,sevendaysDate,currentDate)
+                val dinnerPointsValue = IntArray(21)
                 for (i in  progressBloodGlucoseDinner.indices){
                     if (progressBloodGlucoseDinner[i].day=="Sunday"){
                         if (progressBloodGlucoseDinner[i].title == "Before Dinner")
@@ -543,11 +537,8 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
         Coroutines.io {
             // BedTime
             context?.let {
-                pb_graph_bedtime.visibility = View.VISIBLE
-                val currentDate = OffsetDateTime.parse("2020-09-16T00:54:51.356+05:30")
-                val sevendaysDate = OffsetDateTime.parse("2020-09-22T16:46:57.369+05:30")
-                progressBloodGlucoseBedTime = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(5,currentDate,sevendaysDate)
-
+                progressBloodGlucoseBedTime = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(5,sevendaysDate,currentDate)
+                val bedTimePointsValue = IntArray(7)
                 for (i in progressBloodGlucoseBedTime.indices){
                     if (progressBloodGlucoseBedTime[i].day=="Sunday")
                         bedTimePointsValue[0] = progressBloodGlucoseBedTime[i].value.toInt()

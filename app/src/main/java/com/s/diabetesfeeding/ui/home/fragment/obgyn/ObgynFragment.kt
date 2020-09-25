@@ -10,15 +10,19 @@ import androidx.navigation.Navigation
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.obgynentities.PrentalVisitRecord
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.home.fragment.diabetes.DiabetesFragmentArgs
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import kotlinx.android.synthetic.main.fragment_obgyn.*
+import kotlinx.android.synthetic.main.fragment_progress_blood_glucose.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.OffsetDateTime
 
 
 class ObgynFragment : Fragment() {
 
-    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
-        java.util.Date())
+
+    lateinit var currentDate:OffsetDateTime
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +39,16 @@ class ObgynFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tv_today_date_obgyn.text = currentDate
+
+        if(!prefs.getOffsetDateTime().isNullOrEmpty()){
+            currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_today_date_obgyn.text= value
+        }else{
+            currentDate =  OffsetDateTime.now()
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_today_date_obgyn.text= value
+        }
 
         val prentalVisitRecordList = listOf(
             PrentalVisitRecord("Pre-pregnancy weight", "200", "lb"),
@@ -76,6 +89,10 @@ class ObgynFragment : Fragment() {
         }
         mc_prenatal_visit.setOnClickListener {
             val action = ObgynFragmentDirections.actionObgynFragmentToPrentalVisitFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+        mc_progress.setOnClickListener {
+            val action = ObgynFragmentDirections.actionObgynFragmentToProgressObgynFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
