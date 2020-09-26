@@ -138,6 +138,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
             tv_date_of_week.text= getString(R.string.week_of,value)
             setAllProgressUI()
         }
+
     }
 
     private fun setAllProgressUI(){

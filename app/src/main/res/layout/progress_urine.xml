@@ -48,6 +48,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="85dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     >
                     <RelativeLayout
@@ -55,26 +56,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="7dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginStart="16dp">
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginLeft="22dp"
-                            android:layout_marginRight="22dp"
-                            android:background="@drawable/dash_line_obgyn"
-                            android:layerType="software"
-                            android:layout_height="2dp"/>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="7dp"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginBottom="20dp"
                         android:layout_marginStart="16dp">
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_alignParentTop="true"
@@ -83,9 +66,8 @@
                             android:background="@drawable/dash_line_obgyn"
                             android:layerType="software"
                             android:layout_height="2dp"/>
-
-
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -102,14 +84,15 @@
                             android:background="@drawable/dash_line_obgyn"
                             android:layerType="software"
                             android:layout_height="2dp"/>
-                    </RelativeLayout>
 
+
+                    </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="7dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="55dp"
+                        android:layout_marginBottom="60dp"
                         android:layout_marginStart="16dp">
 
                         <View
@@ -127,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="7dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="70dp"
+                        android:layout_marginBottom="80dp"
                         android:layout_marginStart="16dp">
 
                         <View
@@ -139,6 +122,7 @@
                             android:layerType="software"
                             android:layout_height="2dp"/>
                     </RelativeLayout>
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -157,34 +141,34 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="-6dp"
                 android:paddingEnd="6dp"
                 android:layout_weight="1"
                 tools:ignore="RtlSymmetry">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:text="10"
+                    android:text="@string/_20"
                     android:gravity="end"
-                    android:layout_marginBottom="0dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:text="25"
+                    android:text="@string/_40"
                     android:gravity="end"
-                    android:layout_marginBottom="17dp"
+                    android:layout_marginBottom="40dp"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:text="40"
+                    android:text="@string/_60"
                     android:gravity="end"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="60dp"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp" />
@@ -192,28 +176,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:text="55"
+                    android:text="@string/_80"
                     android:gravity="end"
-                    android:layout_marginBottom="47dp"
+                    android:layout_marginBottom="80dp"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:text="70"
-                    android:gravity="end"
-                    android:layout_marginBottom="63dp"
-                    android:layout_alignParentBottom="true"
-                    android:textColor="@color/colorObgyTheme"
-                    android:textSize="11sp" />
-
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:id="@+id/rl1"
                 android:layout_marginStart="0dp"
                 android:layout_weight="0.7">
@@ -234,21 +208,21 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V11"
+                    android:layout_above="@+id/urineV11"
                     android:text="M"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V11"
-                    android:layout_height="10dp"/>
+                    android:id="@+id/urineV11"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -266,7 +240,7 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V12"
+                    android:layout_above="@+id/urineV12"
                     />
 
                 <View
@@ -274,15 +248,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V12"
-                    android:layout_height="10dp"/>
+                    android:id="@+id/urineV12"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,14 +274,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V13"
+                    android:layout_above="@+id/urineV13"
                     android:text="M"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V13"
+                    android:id="@+id/urineV13"
                     android:layout_height="0dp"/>
 
             </RelativeLayout>
@@ -315,7 +289,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -332,14 +306,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V14"
+                    android:layout_above="@+id/urineV14"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V14"
+                    android:id="@+id/urineV14"
                     android:layout_height="0dp"/>
 
             </RelativeLayout>
@@ -347,7 +321,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -364,14 +338,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V15"
+                    android:layout_above="@+id/urineV15"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V15"
+                    android:id="@+id/urineV15"
                     android:layout_height="0dp"/>
 
             </RelativeLayout>
@@ -379,7 +353,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -396,14 +370,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V16"
+                    android:layout_above="@+id/urineV16"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V16"
+                    android:id="@+id/urineV16"
                     android:layout_height="0dp"/>
 
             </RelativeLayout>
@@ -411,7 +385,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -428,14 +402,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V17"
+                    android:layout_above="@+id/urineV17"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V17"
+                    android:id="@+id/urineV17"
                     android:layout_height="0dp"/>
 
             </RelativeLayout>
@@ -443,7 +417,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -461,20 +435,20 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V17"
+                    android:layout_above="@+id/urineV18"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V17"
+                    android:id="@+id/urineV18"
                     android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -492,20 +466,20 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V19"
+                    android:layout_above="@+id/urineV19"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V19"
+                    android:id="@+id/urineV19"
                     android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -523,20 +497,20 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V110"
+                    android:layout_above="@+id/urineV110"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V110"
+                    android:id="@+id/urineV110"
                     android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -554,20 +528,20 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V111"
+                    android:layout_above="@+id/urineV111"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V111"
+                    android:id="@+id/urineV111"
                     android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -585,14 +559,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V112"
+                    android:layout_above="@+id/urineV112"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V112"
+                    android:id="@+id/urineV112"
                     android:layout_height="0dp"/>
             </RelativeLayout>
 

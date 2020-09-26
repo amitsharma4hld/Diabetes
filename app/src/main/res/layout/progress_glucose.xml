@@ -233,14 +233,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V11"
+                    android:layout_above="@+id/glucoseV11"
                     android:text="M"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V11"
+                    android:id="@+id/glucoseV11"
                     android:layout_height="60dp"/>
 
             </RelativeLayout>
@@ -265,7 +265,7 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V12"
+                    android:layout_above="@+id/glucoseV12"
                     />
 
                 <View
@@ -273,7 +273,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V12"
+                    android:id="@+id/glucoseV12"
                     android:layout_height="100dp"/>
 
             </RelativeLayout>
@@ -299,14 +299,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V13"
+                    android:layout_above="@+id/glucoseV13"
                     android:text="M"/>
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V13"
+                    android:id="@+id/glucoseV13"
                     android:layout_height="140dp"/>
 
             </RelativeLayout>
@@ -331,14 +331,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V14"
+                    android:layout_above="@+id/glucoseV14"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V14"
+                    android:id="@+id/glucoseV14"
                     android:layout_height="100dp"/>
 
             </RelativeLayout>
@@ -363,14 +363,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V15"
+                    android:layout_above="@+id/glucoseV15"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V15"
+                    android:id="@+id/glucoseV15"
                     android:layout_height="100dp"/>
 
             </RelativeLayout>
@@ -395,14 +395,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V16"
+                    android:layout_above="@+id/glucoseV16"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V16"
+                    android:id="@+id/glucoseV16"
                     android:layout_height="100dp"/>
 
             </RelativeLayout>
@@ -427,14 +427,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V17"
+                    android:layout_above="@+id/glucoseV17"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V17"
+                    android:id="@+id/glucoseV17"
                     android:layout_height="100dp"/>
 
             </RelativeLayout>
@@ -460,14 +460,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V17"
+                    android:layout_above="@+id/glucoseV18"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V17"
+                    android:id="@+id/glucoseV18"
                     android:layout_height="100dp"/>
             </RelativeLayout>
             <RelativeLayout
@@ -491,14 +491,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V19"
+                    android:layout_above="@+id/glucoseV19"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V19"
+                    android:id="@+id/glucoseV19"
                     android:layout_height="100dp"/>
             </RelativeLayout>
             <RelativeLayout
@@ -522,14 +522,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V110"
+                    android:layout_above="@+id/glucoseV110"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V110"
+                    android:id="@+id/glucoseV110"
                     android:layout_height="100dp"/>
             </RelativeLayout>
             <RelativeLayout
@@ -553,14 +553,14 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V111"
+                    android:layout_above="@+id/glucoseV111"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V111"
+                    android:id="@+id/glucoseV111"
                     android:layout_height="100dp"/>
             </RelativeLayout>
             <RelativeLayout
@@ -584,20 +584,20 @@
                     android:src="@drawable/ic_circle_obgyn"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/bmi_V112"
+                    android:layout_above="@+id/glucoseV112"
                     />
                 <View
                     android:layout_width="1dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/bmi_V112"
+                    android:id="@+id/glucoseV112"
                     android:layout_height="100dp"/>
             </RelativeLayout>
 
         </LinearLayout>
         <ProgressBar
-            android:id="@+id/pb_graph"
+            android:id="@+id/pb_graph_glucose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

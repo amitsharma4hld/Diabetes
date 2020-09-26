@@ -1,10 +1,9 @@
 package com.s.diabetesfeeding.data.db
 
 import androidx.room.*
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyPoopData
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyWeight
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.*
+import com.s.diabetesfeeding.data.db.entities.obgynentities.ProgressPrentalVisit
+import org.threeten.bp.OffsetDateTime
 
 @Dao
 interface BreastFeedingDao {
@@ -15,7 +14,6 @@ interface BreastFeedingDao {
     suspend fun getAllBreastFeedSession(): List<BreastFeedingSessionData>
     @Update
     suspend fun updateBreastFeedSesssion(session: BreastFeedingSessionData)
-
     // DiaperChange
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAllDiaperChangeSession(session:List<BabyPoopData>)
@@ -37,4 +35,16 @@ interface BreastFeedingDao {
     suspend fun saveBabyWeight(weight: BabyWeight)
     @Query("SELECT * FROM BabyWeight")
     suspend fun getBabyWeight():List<BabyWeight>
+
+    // New Line
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveProgressBreastFeeding(progressBreastFeeding: ProgressBreastFeeding )
+    @Query("SELECT *  FROM ProgressBreastFeeding  WHERE dateTime BETWEEN :from AND :to")
+    fun getProgressDataBetweenDates(from: OffsetDateTime, to: OffsetDateTime): List<ProgressBreastFeeding>
+    // New Line
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveProgressDiaperChange( progressBabyPoopDiaperChange: ProgressBabyPoopDiaperChange )
+    @Query("SELECT *  FROM ProgressBabyPoopDiaperChange  WHERE dateTime BETWEEN :from AND :to")
+    fun getProgressDiaperChange(from: OffsetDateTime, to: OffsetDateTime): List<ProgressBabyPoopDiaperChange>
+
 }

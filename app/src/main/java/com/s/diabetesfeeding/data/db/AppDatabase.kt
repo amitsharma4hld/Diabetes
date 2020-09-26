@@ -5,12 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.entities.*
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyPoopData
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyWeight
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.*
 import com.s.diabetesfeeding.data.db.entities.obgynentities.*
 
 @Database(
@@ -37,8 +34,11 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.*
         BreastFeedingSessionData::class,
         BabyPoopData::class,
         ScoreType::class,
-        ProgressBloodGlucose::class
-                //ScoreWithCategoryCrossRef::class
+        ProgressBloodGlucose::class,
+        ProgressPrentalVisit::class,
+        ProgressBreastFeeding::class,
+        ProgressBabyPoopDiaperChange::class
+        // ScoreWithCategoryCrossRef::class
 
     ],
     version = 1

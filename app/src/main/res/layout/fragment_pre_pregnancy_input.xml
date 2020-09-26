@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.fragment.obgyn.PrePregnancyInputFragment"
+    tools:context=".ui.home.fragment.obgyn.PrentalInputFragment"
     >
 
     <LinearLayout
@@ -96,7 +96,7 @@
                                     android:textStyle="bold"
                                     android:maxLines="1"
                                     android:maxLength="1"
-                                    android:digits="123456789"
+                                    android:digits="0123456789"
                                     android:focusableInTouchMode="true"
                                     android:importantForAutofill="no"
                                     android:textAlignment="center"
@@ -139,7 +139,7 @@
                                     android:inputType="number"
                                     android:maxLines="1"
                                     android:maxLength="1"
-                                    android:digits="123456789"
+                                    android:digits="0123456789"
                                     android:imeOptions="actionNext"
                                     android:background="#fff"
                                     android:textColor="@color/colorObgyTheme"
@@ -179,7 +179,7 @@
                                     android:maxLines="1"
                                     android:maxLength="1"
                                     android:importantForAutofill="no"
-                                    android:digits="123456789"
+                                    android:digits="0123456789"
                                     android:imeOptions="actionDone"
                                     android:background="#fff"
                                     android:textColor="@color/colorObgyTheme"
@@ -193,13 +193,15 @@
 
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/tv_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_gravity="end"
                         android:fontFamily="@font/avenir_next_regular"
                         android:textColor="#fff"
-                        android:visibility="invisible"
+                        android:text="lbs"
+                        android:visibility="visible"
                         android:textSize="20sp" />
 
 

@@ -29,6 +29,7 @@ class PrentalVisitAdapter(val prentalVisitRecords : List<PrentalVisitRecord>,pri
     override fun onBindViewHolder(holder: RecordsViewHolder, position: Int) {
         val prentalRecord = prentalVisitRecords[position]
         holder.view.tv_measurement_of.text = prentalRecord.measurementOf
+        prentalRecord.unit
         holder.view.setOnClickListener {
                 val action = PrentalVisitFragmentDirections.actionPrentalVisitFragmentToPrePregnancyInputFragment()
                 action.prentalVisitRecord = prentalRecord

@@ -12,8 +12,12 @@ import androidx.fragment.app.Fragment
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
 import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.ProgressBloodGlucose
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressBreastFeeding
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getDayFromOffsetDateTime
 import kotlinx.android.synthetic.main.fragment_goal_breastfeed.*
 import org.threeten.bp.OffsetDateTime
 import java.util.concurrent.TimeUnit
@@ -63,7 +67,9 @@ class GoalBreastfeedFragment : Fragment() {
             }else if (tv_start_stop_done.text == "DONE +5"){
                 breastFeedingSessionData?.breastfeedingTime = currentTime
                 breastFeedingSessionData?.breastfeedingTimerCount = timmer
-                update(breastFeedingSessionData!!)
+                // NEW LINE
+                updateProgressData(breastFeedingSessionData!!)
+
             }
         }
     }
@@ -83,6 +89,19 @@ class GoalBreastfeedFragment : Fragment() {
                 Log.d("APPDATABASE : ","Updated id is ${breastFeedingSessionData.id}")
                 //requireActivity().onBackPressed()
                 updateScore()
+            }
+        }
+    }
+    private fun updateProgressData(breastFeedingSessionData: BreastFeedingSessionData) {
+        // NEW LINE
+        Coroutines.io {
+            context.let {
+                val currentDate = OffsetDateTime.now()
+                val progressData =  ProgressBreastFeeding(0,breastFeedingSessionData.breastfeedingTime,breastFeedingSessionData.breastfeedingTimerCount,
+                    breastFeedingSessionData.breastfeedingType,currentDate)
+                AppDatabase(requireContext()).getBreastFeedingDao().saveProgressBreastFeeding(progressData)
+                Log.d("APPDATABASE : ","progressData value is ${progressData.dateTime}")
+                update(breastFeedingSessionData)
             }
         }
     }

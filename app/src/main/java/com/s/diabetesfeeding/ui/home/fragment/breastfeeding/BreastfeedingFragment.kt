@@ -29,54 +29,18 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         java.util.Date())
 
     var sessions = listOf(
-        BreastFeedingSessionData(
-            "6:00AM",
-            "00:48"
-        ),
-        BreastFeedingSessionData(
-            "8:00AM",
-            "00:45"
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        ),
-        BreastFeedingSessionData(
-            "",
-            ""
-        )
+        BreastFeedingSessionData("6:00AM", "00:48","Breastfeed"),
+        BreastFeedingSessionData("8:00AM", "00:45","Supplemental"),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "","")
     )
     var sessions2 = listOf(
         BabyPoopData(

@@ -283,7 +283,7 @@
     </fragment>
     <fragment
         android:id="@+id/prePregnancyInputFragment"
-        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrePregnancyInputFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.obgyn.PrentalInputFragment"
         android:label="fragment_pre_pregnancy_input"
         tools:layout="@layout/fragment_pre_pregnancy_input" >
         <action

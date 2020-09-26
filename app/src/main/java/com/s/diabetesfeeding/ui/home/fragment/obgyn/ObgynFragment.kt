@@ -51,18 +51,18 @@ class ObgynFragment : Fragment() {
         }
 
         val prentalVisitRecordList = listOf(
-            PrentalVisitRecord("Pre-pregnancy weight", "200", "lb"),
+            PrentalVisitRecord("Pre-pregnancy weight", "", "Lbs"),
             PrentalVisitRecord("Height","","Inch"),
-            PrentalVisitRecord("BMI","200","lb"),
-            PrentalVisitRecord("Blood Pressure","","lb"),
-            PrentalVisitRecord("Fundal Height/EGA","","lb"),
-            PrentalVisitRecord("Fetal heart rate","","lb"),
-            PrentalVisitRecord("Weight","","lb"),
-            PrentalVisitRecord("Glucose Level","","lb"),
-            PrentalVisitRecord("Protein","","lb"),
-            PrentalVisitRecord("Urine","","lb"),
-            PrentalVisitRecord("Significant Findings","","lb"),
-            PrentalVisitRecord("Instructions","","lb")
+            PrentalVisitRecord("BMI","","Kg/m2"),
+            PrentalVisitRecord("Blood Pressure","","mmHg"),
+            PrentalVisitRecord("Fundal Height/EGA","","CM"),
+            PrentalVisitRecord("Fetal heart rate","","bpm"),
+            PrentalVisitRecord("Weight","","Lbs"),
+            PrentalVisitRecord("Glucose Level","","mg/dl"),
+            PrentalVisitRecord("Protein","","g/L"),
+            PrentalVisitRecord("Urine","",""),
+            PrentalVisitRecord("Significant Findings","",""),
+            PrentalVisitRecord("Instructions","","")
         )
 
         viewLifecycleOwner.lifecycleScope.launch {

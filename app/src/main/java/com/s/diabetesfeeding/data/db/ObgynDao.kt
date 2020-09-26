@@ -1,7 +1,9 @@
 package com.s.diabetesfeeding.data.db
 
 import androidx.room.*
+import com.s.diabetesfeeding.data.db.entities.ProgressBloodGlucose
 import com.s.diabetesfeeding.data.db.entities.obgynentities.*
+import org.threeten.bp.OffsetDateTime
 
 @Dao
 interface ObgynDao {
@@ -47,4 +49,8 @@ interface ObgynDao {
     @Update
     suspend fun updatePrentalVisitRecord(prentalVisitRecord: PrentalVisitRecord)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveProgressPrentalVisit(progressPrentalVisit: ProgressPrentalVisit )
+    @Query("SELECT *  FROM ProgressPrentalVisit  WHERE prentalVisiId=:id AND dateTime BETWEEN :from AND :to")
+    fun getProgressDataBetweenDates(id:Int, from: OffsetDateTime, to: OffsetDateTime): List<ProgressPrentalVisit>
 }

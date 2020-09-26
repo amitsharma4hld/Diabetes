@@ -126,5 +126,10 @@
     <string name="fetal_heart_rate_beats_per_minute">Fetal Heart Rate - Beats per minute</string>
     <string name="weight_lbs">Weight - Lbs</string>
     <string name="protien">Protien</string>
+    <string name="_20">+1</string>
+    <string name="_40">+2</string>
+    <string name="_60">+3</string>
+    <string name="_80">+4</string>
+    <string name="urine">Urine</string>
 
 </resources>

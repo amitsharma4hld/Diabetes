@@ -325,7 +325,21 @@
                     android:textSize="20sp"
                     android:fontFamily="@font/avenir_next_regular"
                     />
+                <include layout="@layout/progress_urine"/>
 
+                <TextView
+                    android:id="@+id/tv_urine_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/urine"
+                    android:textColor="@color/colorObgyTheme"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/avenir_next_regular"
+                    />
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="150dip"
                     android:layout_height="45dip"

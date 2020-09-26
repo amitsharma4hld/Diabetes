@@ -167,7 +167,6 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                 Log.d("APPDATABASE : ","progressData value is ${progressData.dateTime}")
             }
         }
-        //notifyDataSetChanged()
     }
     fun updateScore(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {

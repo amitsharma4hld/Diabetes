@@ -14,6 +14,8 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyPoopData
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressBabyPoopDiaperChange
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressBreastFeeding
 import com.s.diabetesfeeding.util.Coroutines
 import kotlinx.android.synthetic.main.fragment_diaper_change.*
 import org.threeten.bp.OffsetDateTime
@@ -64,7 +66,8 @@ class DiaperChangeFragment : Fragment() {
         }
         mcv_diaper_done.setOnClickListener {
             DiaperChangeSessionData?.poop_pee_time = currentTime
-            update(DiaperChangeSessionData!!)
+            updateProgressData(DiaperChangeSessionData!!)
+
         }
 
     }
@@ -76,6 +79,19 @@ class DiaperChangeFragment : Fragment() {
                 Log.d("APPDATABASE : ","Updated id is ${babyPoopData.id}")
                 //requireActivity().onBackPressed()
                 updateScore()
+            }
+        }
+    }
+    // New Line
+    private fun updateProgressData(babyPoopData: BabyPoopData) {
+        // NEW LINE
+        Coroutines.io {
+            context.let {
+                val currentDate = OffsetDateTime.now()
+                val progressData =  ProgressBabyPoopDiaperChange(0,babyPoopData.poop_pee_time,babyPoopData.isPoop, babyPoopData.isPee,currentDate)
+                AppDatabase(requireContext()).getBreastFeedingDao().saveProgressDiaperChange(progressData)
+                Log.d("APPDATABASE : ","progressData value is ${progressData.dateTime}")
+                update(babyPoopData)
             }
         }
     }

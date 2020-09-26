@@ -9,17 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.*
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressBabyPoopDiaperChange
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressBreastFeeding
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.CellClickListener
 import com.s.diabetesfeeding.ui.adapter.BreastFeedHistoryMainAdapter
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import kotlinx.android.synthetic.main.bottom_sheet_history.*
 import kotlinx.android.synthetic.main.fragment_breast_feeding_history.*
+import kotlinx.android.synthetic.main.fragment_progress_blood_glucose.*
+import org.threeten.bp.OffsetDateTime
 import java.util.*
 
 
 class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
-
+    lateinit var currentDate: OffsetDateTime
+    lateinit var sevendaysDate:OffsetDateTime
     val days = listOf(
         Days(1,"1"), Days(2,"2"), Days(3,"3"), Days(4,"4"),
         Days(5,"5"), Days(6,"6"), Days(7,"7"), Days(8,"8"),
@@ -32,6 +40,10 @@ class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
     val allCategory: MutableList<MonthWithDates> = ArrayList()
     // val daysList: MutableList<Days> = ArrayList()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+
+    // NEW LINE
+    private var progressBreastFeeding:List<ProgressBreastFeeding> = ArrayList()
+    private var progressDiaperChange:List<ProgressBabyPoopDiaperChange> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +92,39 @@ class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
         mcv_back.setOnClickListener {
             requireActivity().onBackPressed()
         }
+        if(!prefs.getOffsetDateTime().isNullOrEmpty()){
+            currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            sevendaysDate = currentDate.minusDays(7)
+            setAllProgressUI()
+        }else{
+            currentDate =  OffsetDateTime.now()
+            sevendaysDate = currentDate.minusDays(7)
+            setAllProgressUI()
+        }
+
     }
 
+    private fun setAllProgressUI() {
+        // NEW LINE
+        Coroutines.io {
+            // breastfeeding
+            context?.let {
+                progressBreastFeeding = AppDatabase(it).getBreastFeedingDao()
+                    .getProgressDataBetweenDates( sevendaysDate, currentDate)
+                progressBreastFeeding.size
+
+            }
+        }
+        Coroutines.io {
+            // DiaperChange
+            context?.let {
+                progressDiaperChange = AppDatabase(it).getBreastFeedingDao()
+                    .getProgressDiaperChange( sevendaysDate, currentDate)
+                progressDiaperChange.size
+
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
