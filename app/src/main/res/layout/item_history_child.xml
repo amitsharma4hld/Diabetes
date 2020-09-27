@@ -8,20 +8,45 @@
             >
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="45dp"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 app:cardCornerRadius="1dp"
                 app:cardBackgroundColor="#D8D8D8"
                 app:strokeColor="#686767"
                 app:strokeWidth="1dp"
                 android:layout_gravity="center"
                 >
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/chart1"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/seekBar1" />
 
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:orientation="horizontal"
+                   android:layout_marginRight="3dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginLeft="3dp"
+                   android:layout_height="match_parent">
+                   <View
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:background="#F3CF63"
+                   android:layout_gravity="bottom"
+                       android:id="@+id/breastfeedingprocess"
+                   android:layout_height="50dp"/>
+                   <View
+                       android:layout_width="0dp"
+                       android:layout_marginLeft="5dp"
+                       android:id="@+id/diperprocess"
+                       android:layout_weight="1"
+                       android:layout_gravity="bottom"
+                       android:background="#F3CF63"
+                       android:layout_height="60dp"/>
+                   <View
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_marginLeft="5dp"
+                       android:layout_gravity="bottom"
+                       android:id="@+id/stoolprocess"
+                       android:background="#F3CF63"
+                       android:layout_height="40dp"/>
+               </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="50dip"

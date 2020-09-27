@@ -9,6 +9,7 @@ import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.Days
 import com.s.diabetesfeeding.ui.CellClickListener
+import com.s.diabetesfeeding.util.logger.Log
 import kotlinx.android.synthetic.main.item_history_child.view.*
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.rl_done
@@ -29,6 +30,25 @@ class BreastFeedHistoryChilAdapter(private val context: Context, private val cat
 
     override fun onBindViewHolder(holder: ChildItemViewHolder, position: Int) {
         val categoryItems = categoryItem[position]
+        for (i in 0 until categoryItems.progressBreastFeeding.size) {
+            //convert both date by dd
+            if (categoryItems.date.equals(categoryItems.progressBreastFeeding.get(i).dateTime))
+              holder.itemView.breastfeedingprocess.height
+
+        }
+
+        for (i in 0 until categoryItems.progressDiaperChange.size) {
+            //convert both date by dd/mm/yyyy
+            if(categoryItems.progressDiaperChange.get(i).isPee)
+            if (categoryItems.date.equals(categoryItems.progressDiaperChange.get(i).dateTime))
+                holder.itemView.breastfeedingprocess.height
+
+            if(categoryItems.progressDiaperChange.get(i).isPoop)
+                if (categoryItems.date.equals(categoryItems.progressDiaperChange.get(i).dateTime))
+                    holder.itemView.breastfeedingprocess.height
+
+        }
+
         if (position==16){
             holder.view.cv_start.visibility = View.VISIBLE
         }else{
