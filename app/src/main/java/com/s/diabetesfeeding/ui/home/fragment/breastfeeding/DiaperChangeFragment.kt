@@ -77,7 +77,6 @@ class DiaperChangeFragment : Fragment() {
             context.let {
                 AppDatabase(requireContext()).getBreastFeedingDao().updateDiaperChangeSesssion(babyPoopData)
                 Log.d("APPDATABASE : ","Updated id is ${babyPoopData.id}")
-                //requireActivity().onBackPressed()
                 updateScore()
             }
         }

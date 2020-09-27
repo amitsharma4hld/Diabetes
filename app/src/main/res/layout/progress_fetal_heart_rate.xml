@@ -241,7 +241,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/fetal_heart_rateV11"
-                    android:layout_height="100dp"/>
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
             <RelativeLayout
@@ -274,7 +274,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/fetal_heart_rateV12"
-                    android:layout_height="200dp"/>
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
@@ -307,7 +307,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/fetal_heart_rateV13"
-                    android:layout_height="140dp"/>
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
@@ -339,7 +339,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/fetal_heart_rateV14"
-                    android:layout_height="150dp"/>
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
@@ -403,7 +403,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/fetal_heart_rateV16"
-                    android:layout_height="125dp"/>
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
@@ -597,6 +597,7 @@
             </RelativeLayout>
 
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/pb_graph_fetal_heart_rate"
             android:layout_width="wrap_content"

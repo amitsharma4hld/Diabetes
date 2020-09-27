@@ -52,6 +52,8 @@ class PrentalInputFragment : Fragment() {
         }
         if (!prentalVisitRecord?.value.isNullOrEmpty()){
             displayValue(prentalVisitRecord?.value.toString())
+        }
+        if (!prentalVisitRecord?.unit .isNullOrEmpty()){
             tv_unit.text = prentalVisitRecord?.unit
         }
         username.setOnClickListener {

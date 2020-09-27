@@ -72,7 +72,7 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:id="@+id/rl1"
                 android:layout_marginStart="0dp"
                 android:layout_weight="0.7">
@@ -112,7 +112,7 @@
                     android:id="@+id/week_one_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V11"
+                    android:layout_above="@+id/blood_presureV11"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -121,14 +121,14 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V11"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV11"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -166,7 +166,7 @@
                     android:id="@+id/week_two_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V12"
+                    android:layout_above="@+id/blood_presureV12"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -176,15 +176,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V12"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV12"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
                     android:id="@+id/week_three_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V13"
+                    android:layout_above="@+id/blood_presureV13"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -233,15 +233,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V13"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV13"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -278,7 +278,7 @@
                     android:id="@+id/week_four_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V14"
+                    android:layout_above="@+id/blood_presureV14"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -287,15 +287,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V14"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV14"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -332,7 +332,7 @@
                     android:id="@+id/week_five_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V15"
+                    android:layout_above="@+id/blood_presureV15"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -341,15 +341,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V15"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV15"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -386,7 +386,7 @@
                     android:id="@+id/week_six_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V16"
+                    android:layout_above="@+id/blood_presureV16"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -395,15 +395,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V16"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV16"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -440,7 +440,7 @@
                     android:id="@+id/week_seven_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V17"
+                    android:layout_above="@+id/blood_presureV17"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -449,15 +449,15 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V17"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV17"
+                    android:layout_height="0dp"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -494,7 +494,7 @@
                     android:id="@+id/week_eight_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V18"
+                    android:layout_above="@+id/blood_presureV18"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -503,13 +503,13 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V18"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV18"
+                    android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="0.7">
                 <TextView
                     android:layout_width="wrap_content"
@@ -546,7 +546,7 @@
                     android:id="@+id/week_nine_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V19"
+                    android:layout_above="@+id/blood_presureV19"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -555,13 +555,13 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V19"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV19"
+                    android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -598,7 +598,7 @@
                     android:id="@+id/week_ten_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V110"
+                    android:layout_above="@+id/blood_presureV110"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -607,13 +607,13 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V110"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV110"
+                    android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -650,7 +650,7 @@
                     android:id="@+id/week_eleven_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V111"
+                    android:layout_above="@+id/blood_presureV111"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -659,13 +659,13 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V111"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV111"
+                    android:layout_height="0dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="0dp"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
@@ -702,7 +702,7 @@
                     android:id="@+id/week_twelve_low"
                     android:visibility="visible"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@+id/V112"
+                    android:layout_above="@+id/blood_presureV112"
                     android:textColor="@color/colorObgyTheme"
                     android:textSize="11sp"
                     android:text="80"/>
@@ -711,11 +711,30 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/V112"
-                    android:layout_height="40dp"/>
+                    android:id="@+id/blood_presureV112"
+                    android:layout_height="0dp"/>
             </RelativeLayout>
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="bottom"
+            android:visibility="visible"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorWhite"
+                android:layerType="software"
+                android:visibility="visible"
+                android:layout_height="32dp"/>
+        </RelativeLayout>
         <ProgressBar
             android:id="@+id/pb_graph"
             android:layout_width="wrap_content"

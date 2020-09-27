@@ -43,65 +43,18 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         BreastFeedingSessionData("", "","")
     )
     var sessions2 = listOf(
-        BabyPoopData(
-            "6:00AM",
-            true,
-            false
-        ),
-        BabyPoopData(
-            "8:00AM",
-            false,
-            true
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
-        ),
-        BabyPoopData(
-            "",
-            false,
-            false
+        BabyPoopData("6:00AM", true, false),
+        BabyPoopData("8:00AM", false, true),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false
         )
     )
 
@@ -184,9 +137,16 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
                     AppDatabase(it).getBreastFeedingDao().saveAllObservation(observationList)
                 }
             }
+            // New Line Update
             context?.let {
                 if (AppDatabase(it).getBreastFeedingDao().getAllBreastFeedSession().isNullOrEmpty()) {
                     AppDatabase(it).getBreastFeedingDao().saveAllBreastFeedSession(sessions)
+                }
+            }
+            // New Line
+            context?.let {
+                if (AppDatabase(it).getBreastFeedingDao().getAllDiaperChangeSession().isNullOrEmpty()) {
+                    AppDatabase(it).getBreastFeedingDao().saveAllDiaperChangeSession(sessions2)
                 }
             }
             context?.let {
@@ -209,7 +169,7 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         rv_breastfeeding_sessions.removeAllViews()
         rv_breastfeeding_sessions.layoutManager = null
         rv_breastfeeding_sessions.layoutManager = GridLayoutManager(activity, 4)
-        //rv_breastfeeding_sessions!!.addItemDecoration(SpaceGridDecoration(4, 8, false))
+        rv_breastfeeding_sessions!!.addItemDecoration(SpaceGridDecoration(4, 8, false))
         rv_breastfeeding_sessions.adapter =
             DiaperChangeSessionAdapter(
                 sessions,
