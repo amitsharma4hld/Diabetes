@@ -276,7 +276,7 @@ class ProgressObgynFragment : Fragment() {
                 progressUrine = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(10,sevendaysDate,currentDate)
                 val urinePointsValue = IntArray(12)
                 for (i in   progressUrine.indices){
-                    if (progressUrine[i].measurementOf == "Protein")
+                    if (progressUrine[i].measurementOf == "Urine")
                         urinePointsValue[i] =   progressUrine[i].value.toInt()
                 }
                 requireActivity().runOnUiThread(Runnable {

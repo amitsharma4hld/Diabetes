@@ -56,6 +56,15 @@ class PrentalInputFragment : Fragment() {
         if (!prentalVisitRecord?.unit .isNullOrEmpty()){
             tv_unit.text = prentalVisitRecord?.unit
         }
+        if (!prentalVisitRecord?.measurementOf.isNullOrEmpty()){
+            if (prentalVisitRecord?.measurementOf == "Urine"){
+                et_digit_one.setText("0")
+                et_digit_two.setText("0")
+                et_digit_one.isFocusable = false
+                et_digit_two.isFocusable = false
+                et_digit_three.requestFocus()
+            }
+        }
         username.setOnClickListener {
             requireActivity().onBackPressed()
         }
