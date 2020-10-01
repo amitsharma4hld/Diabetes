@@ -247,7 +247,7 @@ class ProgressObgynFragment : Fragment() {
             context?.let {
                 progressProtien = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(9,sevendaysDate,currentDate)
                 val protienPointsValue = IntArray(12)
-                for (i in   progressProtien.indices){
+                for (i in  progressProtien.indices){
                     if (progressProtien[i].measurementOf == "Protein")
                         protienPointsValue[i] =   progressProtien[i].value.toInt()
                 }

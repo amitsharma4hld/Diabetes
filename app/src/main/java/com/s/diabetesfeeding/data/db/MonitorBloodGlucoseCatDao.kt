@@ -21,8 +21,13 @@ interface MonitorBloodGlucoseCatDao {
     @Transaction
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")
     suspend fun getItemsAndCategory(): List<CategoryWithItems>
-/*    @Query("DELETE FROM BloodGlucoseCategoryItem Where value")
-    suspend fun deleteTodaysMonitorGlucoseData()*/
+
+/*    @Transaction
+    @Query("SELECT * FROM MonitorBloodGlucoseCategory MBGC INNER JOIN BloodGlucoseCategoryItem BGCI ON MBGC.catId=BGCI.catItemId WHERE BGCI.itemsCatId=2")
+    suspend fun getItemsAndCategory(): List<CategoryWithItems>*/
+
+/*    @Query("SELECT * FROM colis INNER JOIN step ON colis.idColis= step.idColis ORDER BY date DESC")
+    fun getAllColisWithSteps():Flowable<List<ColisWithSteps>> */
 
     // Today's Insulin
     @Insert(onConflict = OnConflictStrategy.REPLACE)

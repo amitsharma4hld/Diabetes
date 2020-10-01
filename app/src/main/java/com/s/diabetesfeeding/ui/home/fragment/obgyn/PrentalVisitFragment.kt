@@ -99,4 +99,13 @@ class PrentalVisitFragment : Fragment(), KodeinAware,CellClickListener {
        // Navigation.findNavController(it).navigate(action)
     }
 
+    override fun onBottomClickListener(
+        day: String,
+        breastFeedingCount: String,
+        poopCount: String,
+        peepCount: String
+    ) {
+
+    }
+
 }

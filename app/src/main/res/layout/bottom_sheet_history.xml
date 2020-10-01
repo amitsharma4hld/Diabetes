@@ -61,6 +61,7 @@
             android:fontFamily="@font/avenir_next_bold"
             />
         <TextView
+            android:id="@+id/tv_breastfeed_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -102,6 +103,7 @@
             android:fontFamily="@font/avenir_next_bold"
             />
         <TextView
+            android:id="@+id/tv_poop_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -145,6 +147,7 @@
             android:fontFamily="@font/avenir_next_bold"
             />
         <TextView
+            android:id="@+id/tv_peep_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

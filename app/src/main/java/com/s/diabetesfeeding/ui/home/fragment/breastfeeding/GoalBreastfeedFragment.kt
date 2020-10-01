@@ -57,16 +57,16 @@ class GoalBreastfeedFragment : Fragment() {
             }else if (tv_start_stop_done.text == "STOP"){
                 tv_start_stop_done.text = "DONE +5"
                 meter.stop()
-                val elapsedMillis = (SystemClock.elapsedRealtime() - meter.base)
+              /*  val elapsedMillis = (SystemClock.elapsedRealtime() - meter.base)
               timmer =   String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
                     TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
-                )
+                )*/
 
             }else if (tv_start_stop_done.text == "DONE +5"){
                 breastFeedingSessionData?.breastfeedingTime = currentTime
-                breastFeedingSessionData?.breastfeedingTimerCount = timmer
+                breastFeedingSessionData?.breastfeedingTimerCount = meter.text.toString()
                 // NEW LINE
                 updateProgressData(breastFeedingSessionData!!)
 

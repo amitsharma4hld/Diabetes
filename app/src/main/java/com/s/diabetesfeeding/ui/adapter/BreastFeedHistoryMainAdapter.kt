@@ -29,12 +29,10 @@ class BreastFeedHistoryMainAdapter(val context: Context, private val allCategory
     }
 
     override fun onBindViewHolder(holder: HistoryMainViewHolder, position: Int) {
-        val category = allCategory[position]
-        holder.view.month_name.text = category.monthName
-        /*if (position == allCategory.size-1){
-            holder.view.view_rv_divider.visibility = View.GONE
-        }*/
-        setChildItem(holder.itemRecycler!!, category.daysitem)
+        allCategory.let {
+            val category = it[position]
+            setChildItem(holder.itemRecycler!!, category.daysitem.reversed())
+        }
     }
 
     private fun setChildItem(recyclerView: RecyclerView, daysitem: List<Days>) {
@@ -46,11 +44,10 @@ class BreastFeedHistoryMainAdapter(val context: Context, private val allCategory
                 daysitem,
                 cellClickListener
             )
-        /*recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter =  BreastFeedHistoryChilAdapter(context,daysitem)*/
+
     }
 
-    override fun getItemCount()=allCategory.size
+    override fun getItemCount() = allCategory.size
 
     class HistoryMainViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         var itemRecycler:RecyclerView? = null

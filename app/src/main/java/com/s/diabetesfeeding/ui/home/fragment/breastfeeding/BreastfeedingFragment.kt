@@ -29,8 +29,8 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         java.util.Date())
 
     var sessions = listOf(
-        BreastFeedingSessionData("6:00AM", "00:48","Breastfeed"),
-        BreastFeedingSessionData("8:00AM", "00:45","Supplemental"),
+        BreastFeedingSessionData("", "",""),
+        BreastFeedingSessionData("", "",""),
         BreastFeedingSessionData("", "",""),
         BreastFeedingSessionData("", "",""),
         BreastFeedingSessionData("", "",""),
@@ -43,8 +43,8 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         BreastFeedingSessionData("", "","")
     )
     var sessions2 = listOf(
-        BabyPoopData("6:00AM", true, false),
-        BabyPoopData("8:00AM", false, true),
+        BabyPoopData("", false, false),
+        BabyPoopData("", false, false),
         BabyPoopData("", false, false),
         BabyPoopData("", false, false),
         BabyPoopData("", false, false),
@@ -208,5 +208,14 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
     }
 
     override fun onCellClickListener(view: View) {
+    }
+
+    override fun onBottomClickListener(
+        day: String,
+        breastFeedingCount: String,
+        poopCount: String,
+        peepCount: String
+    ) {
+        
     }
 }

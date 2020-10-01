@@ -17,59 +17,32 @@ import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.CellClickListener
 import com.s.diabetesfeeding.ui.adapter.BreastFeedHistoryMainAdapter
 import com.s.diabetesfeeding.util.Coroutines
-import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
+import com.s.diabetesfeeding.util.getDateInMMYYYYOffsetDateTime
+import com.s.diabetesfeeding.util.logger.Log
 import kotlinx.android.synthetic.main.bottom_sheet_history.*
 import kotlinx.android.synthetic.main.fragment_breast_feeding_history.*
-import kotlinx.android.synthetic.main.fragment_progress_blood_glucose.*
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.*
 import java.util.*
 
 
 class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
-    lateinit var currentDate: OffsetDateTime
-    lateinit var sevendaysDate:OffsetDateTime
-    val days = listOf(
-        Days(1,"1"), Days(2,"2"), Days(3,"3"), Days(4,"4"),
-        Days(5,"5"), Days(6,"6"), Days(7,"7"), Days(8,"8"),
-        Days(9,"9"), Days(10,"10"), Days(11,"11"), Days(12,"12"), Days(13,"13"), Days(14,"14"),
-        Days(15,"15"), Days(16,"16"), Days(17,"17"), Days(18,"18"),
-        Days(19,"19"), Days(20,"20"), Days(21,"21"), Days(22,"22"), Days(23,"23"), Days(24,"24"),
-        Days(25,"25"), Days(26,"26"), Days(27,"27"), Days(28,"28"),
-        Days(29,"29"), Days(30,"30")
-    )
+
     val allCategory: MutableList<MonthWithDates> = ArrayList()
     // val daysList: MutableList<Days> = ArrayList()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
-
+    lateinit var currentDate: OffsetDateTime
+    lateinit var sevendaysDate:OffsetDateTime
+    var days: ArrayList<Days> =ArrayList()
+    var month: Int = 0
+    var year: Int = 0
     // NEW LINE
     private var progressBreastFeeding:List<ProgressBreastFeeding> = ArrayList()
     private var progressDiaperChange:List<ProgressBabyPoopDiaperChange> = ArrayList()
-
+    val weekdaysArray = arrayOf("SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //daysList.add(Days(1,"1"))
-
-        allCategory.add(MonthWithDates(1,"Aug 2020",days))
-       // allCategory.add(MonthWithDates(2,"Sep 2020",days))
-       /*
-        allCategory.add(MonthWithDates(3,"Mar 2020",days))
-        allCategory.add(MonthWithDates(4,"April 2020",days))
-        allCategory.add(MonthWithDates(5,"May 2020",days))
-        allCategory.add(MonthWithDates(6,"June 2020",days))
-        allCategory.add(MonthWithDates(7,"July 2020",days))
-        allCategory.add(MonthWithDates(8,"Aug 2020",days))
-        allCategory.add(MonthWithDates(9,"Sept 2020",days))
-        allCategory.add(MonthWithDates(10,"Oct 2020",days))
-        allCategory.add(MonthWithDates(11,"Nov 2020",days))
-        allCategory.add(MonthWithDates(12,"Dec 2020",days))
-        */
-        Coroutines.main {
-            context?.let {
-                showHistoryCalander(allCategory)
-            }
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -81,7 +54,7 @@ class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-            /*    buttonBottomSheetPersistent.text = when (newState) {
+            /*      buttonBottomSheetPersistent.text = when (newState) {
                     BottomSheetBehavior.STATE_EXPANDED -> "Close Persistent Bottom Sheet"
                     BottomSheetBehavior.STATE_COLLAPSED -> "Open Persistent Bottom Sheet"
                     else -> "Persistent Bottom Sheet"
@@ -92,17 +65,77 @@ class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
         mcv_back.setOnClickListener {
             requireActivity().onBackPressed()
         }
+        currentDate =  OffsetDateTime.now()
+
+        tb_previous_date.setOnClickListener {
+            currentDate = currentDate.minusMonths(1)
+            sevendaysDate = currentDate.minusMonths(1)
+            val value = getDateInMMYYYYOffsetDateTime(currentDate)
+            tv_date_of_week.text= value
+            setAllProgressUI()
+        }
+        tb_next_date.setOnClickListener {
+            currentDate = currentDate.plusMonths(1)
+            sevendaysDate =  currentDate.plusMonths(1)
+            val value = getDateInMMYYYYOffsetDateTime(currentDate)
+            tv_date_of_week.text= value
+            setAllProgressUI()
+        }
         if(!prefs.getOffsetDateTime().isNullOrEmpty()){
             currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
-            sevendaysDate = currentDate.minusDays(7)
+            sevendaysDate = currentDate.minusMonths(1)
+            val value = getDateInMMYYYYOffsetDateTime(currentDate)
+            tv_date_of_week.text= value
             setAllProgressUI()
         }else{
-            currentDate =  OffsetDateTime.now()
-            sevendaysDate = currentDate.minusDays(7)
+           currentDate =  OffsetDateTime.now()
+           sevendaysDate = currentDate.minusMonths(1)
+
+            val value = getDateInMMYYYYOffsetDateTime(currentDate)
+            tv_date_of_week.text= value
             setAllProgressUI()
         }
 
     }
+    private fun getCurrentDateInString(currentDate1: OffsetDateTime) {
+        if(allCategory.size>0)
+        allCategory.clear()
+        month = currentDate1.monthValue
+        year = currentDate1.year
+
+        val yearMonthObject: YearMonth = YearMonth.of(year, month)
+        val initial: LocalDate = LocalDate.of(OffsetDateTime.now().year, OffsetDateTime.now().monthValue, OffsetDateTime.now().dayOfMonth)
+        val daysInMonth: Int = initial.lengthOfMonth()
+        val diffrenceDaysInt = daysInMonth - currentDate1.dayOfMonth  // 31-1 = 30
+        // val firstDate = daysInMonth - (daysInMonth-1)
+        var firstDate:OffsetDateTime? = null
+
+
+        firstDate  = currentDate1.plusDays(diffrenceDaysInt.toLong()).minusDays(daysInMonth.toLong()-1)
+        var valueToAppend:Int = 0
+        for (i in weekdaysArray.indices){
+            if (firstDate.dayOfWeek.toString() == weekdaysArray[i]){
+                valueToAppend = i
+            }
+        }
+        if(days.size>0)
+            days.clear()
+        for (i in 0 until daysInMonth+valueToAppend)
+        {
+            if (i <= valueToAppend){
+                days.add(Days(i,"",progressBreastFeeding,progressDiaperChange))
+            }else{
+                days.add(Days(0,currentDate1.plusDays(diffrenceDaysInt.toLong()).minusDays(i.toLong()).toString(),progressBreastFeeding,progressDiaperChange))
+            }
+        }
+        allCategory.add(MonthWithDates(1,days))
+        Coroutines.main {
+            context?.let {
+                showHistoryCalander(allCategory)
+            }
+        }
+    }
+
 
     private fun setAllProgressUI() {
         // NEW LINE
@@ -111,19 +144,16 @@ class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
             context?.let {
                 progressBreastFeeding = AppDatabase(it).getBreastFeedingDao()
                     .getProgressDataBetweenDates( sevendaysDate, currentDate)
-                progressBreastFeeding.size
-
             }
-        }
-        Coroutines.io {
             // DiaperChange
             context?.let {
                 progressDiaperChange = AppDatabase(it).getBreastFeedingDao()
                     .getProgressDiaperChange( sevendaysDate, currentDate)
-                progressDiaperChange.size
 
             }
+            getCurrentDateInString(currentDate)
         }
+
     }
 
     override fun onCreateView(
@@ -144,6 +174,26 @@ class BreastFeedingHistoryFragment : Fragment(), CellClickListener {
                 BottomSheetBehavior.STATE_COLLAPSED
             }
             else{
+                BottomSheetBehavior.STATE_EXPANDED
+            }
+        bottomSheetBehavior.state = state
+    }
+
+    override fun onBottomClickListener(
+        day: String,
+        breastFeedingCount: String,
+        poopCount: String,
+        peepCount: String
+    ) {
+        val state =
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED){
+                BottomSheetBehavior.STATE_COLLAPSED
+            }
+            else{
+                day_name.text = day
+                tv_breastfeed_count.text = breastFeedingCount
+                tv_poop_count.text = poopCount
+                tv_peep_count.text = peepCount
                 BottomSheetBehavior.STATE_EXPANDED
             }
         bottomSheetBehavior.state = state

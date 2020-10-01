@@ -43,20 +43,9 @@
                 android:textSize="14sp" />
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Today"
-            android:textColor="#4F8394"
-            android:layout_centerInParent="true"
-            android:textStyle="bold"
-            android:fontFamily="@font/avenir_next_bold"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp" />
 
-            <ImageView
+
+        <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
@@ -70,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F3CF63"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -167,6 +157,43 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F3CF63"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/tb_previous_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="52dp"
+            android:padding="8dp"
+            />
+        <TextView
+            android:id="@+id/tv_date_of_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="June 2020"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:fontFamily="@font/avenir_next_regular"
+            />
+        <ImageView
+            android:id="@+id/tb_next_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_forward"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="52dp"
+            android:padding="8dp"
+            />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

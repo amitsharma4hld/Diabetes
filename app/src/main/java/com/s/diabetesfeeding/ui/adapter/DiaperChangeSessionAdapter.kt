@@ -27,31 +27,47 @@ class DiaperChangeSessionAdapter(val sessions : List<BabyPoopData>, private val 
 
     override fun onBindViewHolder(holder: SessionViewHolder, position: Int) {
         val session = sessions[position]
-        if (session.poop_pee_time.isEmpty() && sessions[position-1].poop_pee_time.isNotEmpty()){
-            holder.view.iv_session_time_blank.setImageResource(R.drawable.ic_session_add)
-            holder.view.iv_session_time_blank.setOnClickListener {
-                val action = BreastfeedingFragmentDirections.actionBreastfeedingFragmentToDiaperChangeFragment()
-                action.babyPoopData = session
-                Navigation.findNavController(it).navigate(action)
+        if (sessions[0].poop_pee_time.isNotEmpty()){
+            if (session.poop_pee_time.isEmpty() && sessions[position-1].poop_pee_time.isNotEmpty()){
+                holder.view.iv_session_time_blank.setImageResource(R.drawable.ic_session_add)
+                holder.view.iv_session_time_blank.setOnClickListener {
+                    val action = BreastfeedingFragmentDirections.actionBreastfeedingFragmentToDiaperChangeFragment()
+                    action.babyPoopData = session
+                    Navigation.findNavController(it).navigate(action)
+                }
             }
-        }
-        if (session.poop_pee_time !=""){
-            holder.view.tv_session_time_value.visibility = View.VISIBLE
-            holder.view.iv_session_time_blank.visibility = View.GONE
-            holder.view.cv_breastfeeding_blank.visibility = View.GONE
-            holder.view.cv_breastfeeding.visibility = View.VISIBLE
-            var reason: String = ""
-            if (session.isPoop){
-                reason = "Poop"
-            }else if (session.isPee){
-                reason = "pee"
+            if (session.poop_pee_time !=""){
+                holder.view.tv_session_time_value.visibility = View.VISIBLE
+                holder.view.iv_session_time_blank.visibility = View.GONE
+                holder.view.cv_breastfeeding_blank.visibility = View.GONE
+                holder.view.cv_breastfeeding.visibility = View.VISIBLE
+                var reason: String = ""
+                if (session.isPoop){
+                    reason = "Poop"
+                }else if (session.isPee){
+                    reason = "pee"
+                }
+                holder.view.tv_session_time_value.text = reason + "\n" +session.poop_pee_time
+            }else{
+                holder.view.tv_session_time_value.visibility = View.GONE
+                holder.view.iv_session_time_blank.visibility = View.VISIBLE
+                holder.view.cv_breastfeeding_blank.visibility = View.VISIBLE
             }
-            holder.view.tv_session_time_value.text = reason + "\n" +session.poop_pee_time
         }else{
-            holder.view.tv_session_time_value.visibility = View.GONE
-            holder.view.iv_session_time_blank.visibility = View.VISIBLE
-            holder.view.cv_breastfeeding_blank.visibility = View.VISIBLE
+            if (position==0){
+                holder.view.iv_session_time_blank.setImageResource(R.drawable.ic_session_add)
+                holder.view.iv_session_time_blank.setOnClickListener {
+                    val action = BreastfeedingFragmentDirections.actionBreastfeedingFragmentToDiaperChangeFragment()
+                    action.babyPoopData = session
+                    Navigation.findNavController(it).navigate(action)
+                }
+            }else{
+                holder.view.tv_session_time_value.visibility = View.GONE
+                holder.view.iv_session_time_blank.visibility = View.VISIBLE
+                holder.view.cv_breastfeeding_blank.visibility = View.VISIBLE
+            }
         }
+
 
     }
 
