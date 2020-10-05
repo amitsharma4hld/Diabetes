@@ -9,12 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.home.fragment.*
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import kotlinx.android.synthetic.main.fragment_diabetes.*
 import kotlinx.android.synthetic.main.fragment_home_screen.tv_blood_glucose
 import kotlinx.android.synthetic.main.fragment_home_screen.tv_insulin
 import kotlinx.android.synthetic.main.fragment_home_screen.tv_symptoms
 import kotlinx.android.synthetic.main.fragment_home_screen.tv_weight
+import kotlinx.android.synthetic.main.monitor_blood_glucose_fragment.*
+import org.threeten.bp.OffsetDateTime
 
 
 class DiabetesFragment : Fragment() {
@@ -40,7 +44,11 @@ class DiabetesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tv_today_date_diabetes.text = currentDate
+        if (prefs.getSavedFormattedDate().isNullOrEmpty()){
+            tv_today_date_diabetes.text=currentDate
+        }else{
+            tv_today_date_diabetes.text = prefs.getSavedFormattedDate()
+        }
         arguments?.let {
             username_diabetes?.text = "Hello "+DiabetesFragmentArgs.fromBundle(it).name +","
             tv_weeks?.text = DiabetesFragmentArgs.fromBundle(it).weekofpreg.toString()

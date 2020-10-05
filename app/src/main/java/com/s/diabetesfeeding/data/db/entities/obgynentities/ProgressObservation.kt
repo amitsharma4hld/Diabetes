@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 import org.threeten.bp.OffsetDateTime
 
 @Entity
-class PostPartumData (
-    @PrimaryKey
+class ProgressObservation (
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
-    var comment: String,
-    var date: String,
-    var isChecked: Boolean
+    var isChecked: Boolean,
+    var comment:String,
+    var offsetDateTime: OffsetDateTime
 )

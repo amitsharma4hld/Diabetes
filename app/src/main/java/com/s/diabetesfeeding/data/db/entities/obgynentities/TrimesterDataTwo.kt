@@ -6,7 +6,7 @@ import org.threeten.bp.OffsetDateTime
 
 @Entity
 class TrimesterDataTwo (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val title: String,
     var comment: String,

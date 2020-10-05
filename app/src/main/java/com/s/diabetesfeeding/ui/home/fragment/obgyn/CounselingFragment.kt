@@ -10,51 +10,53 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
-import com.s.diabetesfeeding.data.db.entities.obgynentities.PostPartumData
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataThree
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataTwo
+import com.s.diabetesfeeding.data.db.entities.obgynentities.*
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.home.fragment.HomeScreenFragment
+import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.fragment_counseling.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.OffsetDateTime
 
 
 class CounselingFragment : Fragment() {
     // val current_date = OffsetDateTime.now()
+    private var progressAllTrimester:List<ProgressAllTrimester> = ArrayList()
+
     private val trimesterTopicsOne = listOf(
-        TrimesterDataOne(0, "HIV and Other Routine Parental Test", "", null, false),
-        TrimesterDataOne(0, "Risk Factors Identified by Parental History", "", null, false),
-        TrimesterDataOne(0, "Anticipated Course of Parental Care", "", null, false),
-        TrimesterDataOne(0, "Nutrition and Weight Gain Counseling", "", null, false),
-        TrimesterDataOne(0, "HIV and Other Routine Parental Test", "", null, false),
-        TrimesterDataOne(0, "Anticipated Course of Parental Care", "", null, false),
-        TrimesterDataOne(0, "Risk Factors Identified by Parental History", "", null, false)
+        TrimesterDataOne(1, "HIV and Other Routine Parental Test", "", "", false),
+        TrimesterDataOne(2, "Risk Factors Identified by Parental History", "", "", false),
+        TrimesterDataOne(3, "Anticipated Course of Parental Care", "", "", false),
+        TrimesterDataOne(4, "Nutrition and Weight Gain Counseling", "", "", false),
+        TrimesterDataOne(5, "Toxoplasmosis Precautions", "", "", false),
+        TrimesterDataOne(6, "Sexual Activity", "", "", false)
     )
 
     private val trimesterTopicsTwo = listOf(
-        TrimesterDataTwo(0, "Signs and Symptoms of Preterm Labour", "", "", false),
-        TrimesterDataTwo(0, "Abnormal Lab Values", "", "", false),
-        TrimesterDataTwo(0, "Influenza Vaccine", "", "", false),
-        TrimesterDataTwo(0, "Selecting a Newborn Care Provider", "", "", false),
-        TrimesterDataTwo(0, "Toxoplasmosis Precautions", "", "", false),
-        TrimesterDataTwo(0, "Smoking Counseling", "", "", false)
+        TrimesterDataTwo(1, "Signs and Symptoms of Preterm Labour", "", "", false),
+        TrimesterDataTwo(2, "Abnormal Lab Values", "", "", false),
+        TrimesterDataTwo(3, "Influenza Vaccine", "", "", false),
+        TrimesterDataTwo(4, "Selecting a Newborn Care Provider", "", "", false),
+        TrimesterDataTwo(5, "Toxoplasmosis Precautions", "", "", false),
+        TrimesterDataTwo(6, "Smoking Counseling", "", "", false)
     )
 
     private val trimesterTopicsThree = listOf(
-        TrimesterDataThree(0, "Anesthesia/Analgesia Plans", "comments", "", false),
-        TrimesterDataThree(0, "Fetal Movement Monitoring", "comments", "", false),
-        TrimesterDataThree(0, "Labour Signs", "comments", "", false),
-        TrimesterDataThree(0, "VBAC Counseling", "comments", "", false),
-        TrimesterDataThree(0, "Signs and Symptoms of Pregnancy-Induced", "comments", "", false),
-        TrimesterDataThree(0, "Post term Counseling", "comments", "", false)
+        TrimesterDataThree(1, "Anesthesia/Analgesia Plans", "", "", false),
+        TrimesterDataThree(2, "Fetal Movement Monitoring", "", "", false),
+        TrimesterDataThree(3, "Labour Signs", "", "", false),
+        TrimesterDataThree(4, "VBAC Counseling", "", "", false),
+        TrimesterDataThree(5, "Signs and Symptoms of Pregnancy-Induced", "", "", false),
+        TrimesterDataThree(6, "Post term Counseling", "", "", false)
     )
     private val postPartumData = listOf(
-        PostPartumData(0, "Depression/Anxiety", "", "", false),
-        PostPartumData(0, "Infant Feeding Problems", "", "", false),
-        PostPartumData(0, "Birth Experience", "", "", false),
-        PostPartumData(0, "Glucose Screen(if GDM)", "", "", false),
-        PostPartumData(0, "Toxoplasmosis Precautions", "", "", false),
-        PostPartumData(0, "Zika Assessment, Testing (When indicated), and Counseling", "", "", false)
+        PostPartumData(1, "Depression/Anxiety", "", "", false),
+        PostPartumData(2, "Infant Feeding Problems", "", "", false),
+        PostPartumData(3, "Birth Experience", "", "", false),
+        PostPartumData(4, "Glucose Screen(if GDM)", "", "", false),
+        PostPartumData(5, "Toxoplasmosis Precautions", "", "", false),
+        PostPartumData(6, "Zika Assessment, Testing (When indicated), and Counseling", "", "", false)
     )
 
 
@@ -72,29 +74,125 @@ class CounselingFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch {
-            context?.let {
-                if (AppDatabase(it).getObgynDao().getAllTrimesterOne().isNullOrEmpty()){
-                    AppDatabase(it).getObgynDao().saveAllTrimesterOne(trimesterTopicsOne)
+        if (!prefs.getOffsetDateTime().isNullOrEmpty()) {
+            val fromDate = OffsetDateTime.parse(prefs.getFromOffsetDateTime())
+            val toDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            Coroutines.io {
+                // TrimesterOne
+                context?.let {
+                    progressAllTrimester = emptyList()
+                    progressAllTrimester = AppDatabase(it).getObgynDao()
+                        .getAllTrimesterProgressBetweenDates(1,fromDate,toDate)
+                }
+                context?.let {
+                    if (progressAllTrimester.isEmpty()) {
+                        AppDatabase(it).getObgynDao().saveAllTrimesterOne(trimesterTopicsOne)
+                    }else {
+                        AppDatabase(it).getObgynDao().saveAllTrimesterOne(trimesterTopicsOne)
+                        for (i in progressAllTrimester.indices){
+                            AppDatabase(it).getObgynDao()
+                                .updateTrimesterOneColumn(
+                                    progressAllTrimester[i].title,
+                                    progressAllTrimester[i].comment,
+                                    progressAllTrimester[i].isChecked,
+                                    progressAllTrimester[i].date)
+                        }
+                    }
+                }
+                // TrimesterTwo
+                context?.let {
+                    progressAllTrimester = emptyList()
+                    progressAllTrimester = AppDatabase(it).getObgynDao()
+                        .getAllTrimesterProgressBetweenDates(2,fromDate,toDate)
+                }
+                context?.let {
+                    if (progressAllTrimester.isEmpty()) {
+                        AppDatabase(it).getObgynDao().saveAllTrimesterTwo(trimesterTopicsTwo)
+                    }else {
+                        AppDatabase(it).getObgynDao().saveAllTrimesterTwo(trimesterTopicsTwo)
+                        for (i in progressAllTrimester.indices){
+                            AppDatabase(it).getObgynDao()
+                                .updateTrimesterTwoColumn(
+                                    progressAllTrimester[i].title,
+                                    progressAllTrimester[i].comment,
+                                    progressAllTrimester[i].isChecked,
+                                    progressAllTrimester[i].date)
+                        }
+                    }
+                }
+
+                // TrimesterThree
+                context?.let {
+                    progressAllTrimester = emptyList()
+                    progressAllTrimester = AppDatabase(it).getObgynDao()
+                        .getAllTrimesterProgressBetweenDates(3,fromDate,toDate)
+                }
+                context?.let {
+                    if (progressAllTrimester.isEmpty()) {
+                        AppDatabase(it).getObgynDao().saveAllTrimesterThree(trimesterTopicsThree)
+                    }else {
+                        AppDatabase(it).getObgynDao().saveAllTrimesterThree(trimesterTopicsThree)
+                        for (i in progressAllTrimester.indices){
+                            AppDatabase(it).getObgynDao()
+                                .updateTrimesterThreeColumn(
+                                    progressAllTrimester[i].title,
+                                    progressAllTrimester[i].comment,
+                                    progressAllTrimester[i].isChecked,
+                                    progressAllTrimester[i].date)
+                        }
+                    }
+                }
+
+                // PostPartum (Trimester Four)
+                context?.let {
+                    progressAllTrimester = emptyList()
+                    progressAllTrimester = AppDatabase(it).getObgynDao()
+                        .getAllTrimesterProgressBetweenDates(4,fromDate,toDate)
+                }
+                context?.let {
+                    if (progressAllTrimester.isEmpty()) {
+                        AppDatabase(it).getObgynDao().saveAllPostPartumData(postPartumData)
+                    }else {
+                        AppDatabase(it).getObgynDao().saveAllPostPartumData(postPartumData)
+                        for (i in progressAllTrimester.indices){
+                            AppDatabase(it).getObgynDao()
+                                .updateTrimesterPostPartumColumn(
+                                    progressAllTrimester[i].title,
+                                    progressAllTrimester[i].comment,
+                                    progressAllTrimester[i].isChecked,
+                                    progressAllTrimester[i].date)
+                        }
+                    }
                 }
             }
-            context?.let {
-                if (AppDatabase(it).getObgynDao().getAllTrimesterTwo().isNullOrEmpty()){
-                    AppDatabase(it).getObgynDao().saveAllTrimesterTwo(trimesterTopicsTwo)
+
+        }else{
+            viewLifecycleOwner.lifecycleScope.launch {
+                context?.let {
+                    if (AppDatabase(it).getObgynDao().getAllTrimesterOne().isNullOrEmpty()){
+                        AppDatabase(it).getObgynDao().saveAllTrimesterOne(trimesterTopicsOne)
+                    }
                 }
-            }
-            context?.let {
-                if (AppDatabase(it).getObgynDao().getAllTrimesterThree().isNullOrEmpty()){
-                    AppDatabase(it).getObgynDao().saveAllTrimesterThree(trimesterTopicsThree)
+                context?.let {
+                    if (AppDatabase(it).getObgynDao().getAllTrimesterTwo().isNullOrEmpty()){
+                        AppDatabase(it).getObgynDao().saveAllTrimesterTwo(trimesterTopicsTwo)
+                    }
                 }
-            }
-            context?.let {
-                if (AppDatabase(it).getObgynDao().getAllPostPartumData().isNullOrEmpty()){
-                    AppDatabase(it).getObgynDao().saveAllPostPartumData(postPartumData)
-                    Log.d("AppDatabase : ", "observationList Saved ${AppDatabase(it).getObgynDao().getAllPostPartumData().size} added")
+                context?.let {
+                    if (AppDatabase(it).getObgynDao().getAllTrimesterThree().isNullOrEmpty()){
+                        AppDatabase(it).getObgynDao().saveAllTrimesterThree(trimesterTopicsThree)
+                    }
+                }
+                context?.let {
+                    if (AppDatabase(it).getObgynDao().getAllPostPartumData().isNullOrEmpty()){
+                        AppDatabase(it).getObgynDao().saveAllPostPartumData(postPartumData)
+                        Log.d("AppDatabase : ", "observationList Saved ${AppDatabase(it).getObgynDao().getAllPostPartumData().size} added")
+                    }
                 }
             }
         }
+
+
 
         ib_first_trimester.setOnClickListener {
             addFragment(

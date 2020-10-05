@@ -67,7 +67,7 @@
     <string name="current_streat_days">Current Streat <b> 5 Days</b></string>
     <string name="profile">Profile</string>
     <string name="enter">Enter</string>
-    <string name="lb">lb</string>
+    <string name="lb">lbs</string>
     <string name="blood_glucose">Blood Glucose</string>
     <string name="monitor_blood_glucose">Monitor Blood Glucose</string>
     <string name="enter_blood_sugar_level">Enter blood sugar level</string>
@@ -94,7 +94,7 @@
     <string name="appointment">appointment</string>
     <string name="today_at">Today at</string>
     <string name="data_entry">Data Entry</string>
-    <string name="show_my_tracking_history">Show My Tracking History</string>
+    <string name="show_my_tracking_history">Tracking History</string>
     <string name="insulin_scoreboard">Insulin</string>
     <string name="breast">Breast</string>
     <string name="supplement">Supplement</string>
@@ -131,5 +131,24 @@
     <string name="_60">+3</string>
     <string name="_80">+4</string>
     <string name="urine">Urine</string>
+    <string name="save">Save</string>
+    <string name="apostrophe"> \'</string>
+    <string name="resources">Resources</string>
+
+    // Resources Links
+    <string name="link_one"><a href="http://www.dcbfc.org/eastRiverLactation.php">D.C. Breastfeeding Coalition</a></string>
+    <string name="link_two"><a href="https://www.breastfeedingcenter.org/">The Breastfeeding Center</a></string>
+    <string name="link_three"><a href="http://dcbfc.org/eastRiverLactation.php">Children\'s National Anacostia</a></string>
+    <string name="link_four"><a href="https://childrensnational.org/visit/resources-for-families/family-services/lactation-services#tab-1">District of Columbia Breastfeeding</a></string>
+    <string name="link_five"><a href="http://huhealthcare.com/healthcare/hospital/departments/pediatrics/support-groups">The National Breastfeeding Support at Howard University Hospital</a></string>
+    <string name="link_six"><a href="http://www.lllofmd-de-dc.org/Groups/WashingtonDC.html">La Leche league of MD,DE,DC</a></string>
+    <string name="link_seven"><a href="https://www.mamatotovillage.org/classes-397249.html">Mamatoto Village</a></string>
+    <string name="link_eight"><a href="https://www.medstargeorgetown.org/our-services/womens-health/treatments/parenting-and-lactation-services/">MedStar Georgetown University Hospital</a></string>
+    <string name="link_nine"><a href="https://www.hopkinsmedicine.org/gynecology_obstetrics/specialty_areas/birthing-services/sibley-memorial-hospital/lactation-services.htm">John Hopkins Sibley Hospital</a></string>
+    <string name="link_ten"><a href="https://www.dcwic.org/wic-families-breastfeeding">DISTRICT OF COLUMBIA WIC STATE AGENCY</a></string>
+    <string name="breastfeed">Breastfeed</string>
+    <string name="supplemental">Supplemental</string>
+    <string name="cancel">Cancel</string>
+
 
 </resources>

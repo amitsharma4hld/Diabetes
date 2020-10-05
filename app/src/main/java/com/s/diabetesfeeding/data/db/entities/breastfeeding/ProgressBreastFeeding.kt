@@ -8,6 +8,7 @@ import org.threeten.bp.OffsetDateTime
 class ProgressBreastFeeding (
     @PrimaryKey(autoGenerate = true)
     val id:Int,
+    var tempId:Int,
     var breastfeedingTime: String,
     var breastfeedingTimerCount: String,
     var breastfeedingType: String,

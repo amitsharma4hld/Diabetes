@@ -7,10 +7,10 @@ import java.io.Serializable
 
 @Entity
 data class BreastFeedingSessionData (
+    @PrimaryKey
+    var id : Int ,
+    var tempId : Int,
     var breastfeedingTime: String,
     var breastfeedingTimerCount: String,
     var breastfeedingType: String
-): Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id : Int = 0
-}
+): Serializable

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-      >
+        >
         <com.google.android.material.card.MaterialCardView
             android:layout_width="85dip"
             android:layout_height="70dip"
@@ -17,7 +17,7 @@
             android:id="@+id/cv_breastfeeding"
             app:cardBackgroundColor="#D4D7DA"
             android:layout_margin="2dp"
-            android:visibility="visible"
+            android:visibility="gone"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,25 +25,24 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
+
                 <TextView
-                    android:id="@+id/tv_session_type"
+                    android:id="@+id/tv_session_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/avenir_next_bold"
                     android:gravity="center"
-                    android:maxLines="1"
-                    android:layout_marginTop="4dp"
                     android:visibility="gone"
                     />
                 <TextView
-                    android:id="@+id/tv_session_time_value"
+                    android:id="@+id/tv_session_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
-                    android:lineSpacingMultiplier="0.8"
+                    android:textSize="16sp"
                     android:layout_marginTop="-6dp"
                     android:fontFamily="@font/avenir_next_regular"
                     android:gravity="center"

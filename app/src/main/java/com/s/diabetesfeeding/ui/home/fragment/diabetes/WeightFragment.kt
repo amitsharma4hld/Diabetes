@@ -15,6 +15,7 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.InsulinToday
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.WeightToday
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_insulin.*
@@ -40,7 +41,14 @@ class WeightFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         et_digit_one.requestFocus()
         // show the keyboard if has focus
-        showSoftKeyboard(et_digit_one)
+        // showSoftKeyboard(et_digit_one)
+        var currentDate:String = ""
+        currentDate = if (!prefs.getOffsetDateTime().isNullOrEmpty()){
+            val dateToString = prefs.getOffsetDateTime()!!.toString().split("T")
+            dateToString[0]
+        }else{
+            getCurrentDateInString()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
@@ -48,8 +56,7 @@ class WeightFragment : Fragment() {
                     for (i in AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight().indices){
                         val date = AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight()[i].date
                         val dateToString = date.toString().split("T")
-                        var currentDate = getCurrentDateInString()
-                        if (currentDate.equals(dateToString[0])) {
+                        if (currentDate == dateToString[0]) {
                             isWeightCalculated = true
                             displayWeight(AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysWeight()[i].weight!!)
                             return@let
@@ -60,25 +67,37 @@ class WeightFragment : Fragment() {
         }
 
         mcv_weight_done.setOnClickListener { it ->
-            val view:View = it
-            if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()){
-                weightCalculated = et_digit_one.text.toString() + et_digit_two.text.toString()+et_digit_three.text.toString()
-                viewLifecycleOwner.lifecycleScope.launch {
-                    context?.let {
-                        val currentDate = OffsetDateTime.now()
-                        if (!isWeightCalculated){
-                            AppDatabase(it).getMonitorBloodGlucoseCatDao()
-                                .saveTodaysWeight(WeightToday(0, weightCalculated!!, weightScore, currentDate))
-                            updateScore()
-                            requireActivity().shortToast("Score Updated")
-                        }else{
-                            view.snackbar("Already Saved For Today")
-                            requireActivity().onBackPressed()
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not edit")
+            } else {
+                val view: View = it
+                if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()) {
+                    weightCalculated =
+                        et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        context?.let {
+                            val currentDate = OffsetDateTime.now()
+                            if (!isWeightCalculated) {
+                                AppDatabase(it).getMonitorBloodGlucoseCatDao()
+                                    .saveTodaysWeight(
+                                        WeightToday(
+                                            0,
+                                            weightCalculated!!,
+                                            weightScore,
+                                            currentDate
+                                        )
+                                    )
+                                updateScore()
+                                requireActivity().shortToast("Score Updated")
+                            } else {
+                                view.snackbar("Already Saved For Today")
+                                requireActivity().onBackPressed()
+                            }
                         }
                     }
+                } else {
+                    it.snackbar("All field are required")
                 }
-            }else{
-                it.snackbar("All field are required")
             }
         }
     }
@@ -87,7 +106,6 @@ class WeightFragment : Fragment() {
             context?.let {
                 val currentDate = OffsetDateTime.now()
                 AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 3, weightScore, currentDate))
-                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
             }
             (context as Activity).onBackPressed()
         }

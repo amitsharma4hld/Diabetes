@@ -6,10 +6,10 @@ import org.threeten.bp.OffsetDateTime
 
 @Entity
 class TrimesterDataOne (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val title: String,
     var comment: String,
-    var date: String?=null,
+    var date: String,
     var isChecked: Boolean
 )

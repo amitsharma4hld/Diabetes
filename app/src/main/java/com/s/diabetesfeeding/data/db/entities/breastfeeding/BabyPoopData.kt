@@ -6,10 +6,10 @@ import java.io.Serializable
 
 @Entity
 data class BabyPoopData(
+    @PrimaryKey
+    var id : Int,
+    var temId:Int,
     var poop_pee_time: String,
     var isPoop: Boolean,
     var isPee: Boolean
-): Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id : Int = 0
-}
+): Serializable

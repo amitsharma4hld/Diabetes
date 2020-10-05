@@ -31,14 +31,15 @@
                 android:textColor="@color/colorObgyTheme"
                 />
             <TextView
+                android:id="@+id/tv_display_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/today"
                 android:textColor="@color/colorAccent"
-                android:textSize="28sp"
-                android:layout_marginBottom="16dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="18dp"
                 />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewMonitorBloodGlucose"

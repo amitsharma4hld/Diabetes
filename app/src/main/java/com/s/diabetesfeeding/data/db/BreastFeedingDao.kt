@@ -41,6 +41,12 @@ interface BreastFeedingDao {
     suspend fun saveProgressBreastFeeding(progressBreastFeeding: ProgressBreastFeeding )
     @Query("SELECT *  FROM ProgressBreastFeeding  WHERE dateTime BETWEEN :from AND :to")
     fun getProgressDataBetweenDates(from: OffsetDateTime, to: OffsetDateTime): List<ProgressBreastFeeding>
+
+    @Query("UPDATE BreastFeedingSessionData SET breastfeedingTime=:time,breastfeedingTimerCount=:timerCount,breastfeedingType=:type WHERE tempId=:tempId")
+    fun updateBreastFeedingSessionColumn(time:String,timerCount:String,type:String,tempId:Int)
+    @Query("UPDATE BabyPoopData SET poop_pee_time=:time,isPoop=:isPoop,isPee=:isPee WHERE temId=:tempId")
+    fun updateDiaperChangeColumn(time:String,isPoop:Boolean,isPee:Boolean,tempId:Int)
+
     // New Line
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveProgressDiaperChange( progressBabyPoopDiaperChange: ProgressBabyPoopDiaperChange )

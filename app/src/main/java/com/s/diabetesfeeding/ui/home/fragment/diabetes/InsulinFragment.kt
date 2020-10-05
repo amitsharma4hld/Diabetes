@@ -14,8 +14,10 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.InsulinToday
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.fragment_insulin.*
+import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.OffsetDateTime
 import java.text.DateFormat
@@ -25,12 +27,14 @@ import java.util.*
 
 class InsulinFragment : Fragment() {
 
-    var cir: Double = 0.0
-    var isf: Double = 0.0
-    val CIR_DEFAULT = 450
+    var cir: Float = 0.0F  //CIR(carbohydrate to insulin ratio)
+    var mib: Float = 0.0F // Meal insulin bolus
+    var isf: Float = 0.0F // Insulin Sensitivity Factor 
+    val CIR_DEFAULT = 450  // CIR(carbohydrate to insulin ratio)
+    val targetbloodValue = 80 // Target Blood Value
     var ISF_DEFAULT: Int = 0
     var tddInputValue : Double = 0.0
-    var unitCalculated : Double = 0.0
+    var unitCalculated : Float = 0.0F
     val InsulinScore: Int = 5
 
     lateinit var insulinToday: InsulinToday
@@ -49,6 +53,13 @@ class InsulinFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        var currentDate:String = ""
+        currentDate = if (!prefs.getOffsetDateTime().isNullOrEmpty()){
+            val dateToString = prefs.getOffsetDateTime()!!.toString().split("T")
+            dateToString[0]
+        }else{
+            getCurrentDateInString()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
@@ -56,15 +67,16 @@ class InsulinFragment : Fragment() {
                         for (i in AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysInsulin().indices){
                             val date = AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysInsulin()[i].date
                             val dateToString = date.toString().split("T")
-                            var currentDate = getCurrentDateInString()
-                            if (currentDate.equals(dateToString[0])) {
+                            if (currentDate == dateToString[0]) {
                                 isInsulinCalculated = true
                                 displayUnit(AppDatabase(it).getMonitorBloodGlucoseCatDao().getTodaysInsulin()[i].unit!!)
-                                return@let
                             }
                         }
                     }
             }
+        }
+        if (prefs.getSavedIsPreviousDate()){
+            mcv_done.isEnabled = false
         }
         mcv_done.setOnClickListener {
             val view:View = it
@@ -73,7 +85,7 @@ class InsulinFragment : Fragment() {
                     val current_date = OffsetDateTime.now()
                     if (!isInsulinCalculated){
                         AppDatabase(it).getMonitorBloodGlucoseCatDao()
-                            .saveTodaysInsulin(InsulinToday(0, unitCalculated, InsulinScore, current_date))
+                            .saveTodaysInsulin(InsulinToday(0, unitCalculated.toDouble(), InsulinScore, current_date))
                         updateScore()
                         it.shortToast("Score Updated")
                     }else{
@@ -84,19 +96,28 @@ class InsulinFragment : Fragment() {
             }
         }
       //  isf = getISF(tddInputValue)
-        getSelectedInsulinType()
         mcv_calculate.setOnClickListener{
-            if (!et_tdd.text.isNullOrEmpty() || !et_total_carb.text.isNullOrEmpty() || !et_current_blood_glucose.text.isNullOrEmpty())
-            {
-                tddInputValue = et_tdd.text.toString().toDouble()
-                cir = getCIR(tddInputValue)
-                val totalCarb = et_total_carb.text.toString().toDouble()
-                unitCalculated = totalCarb/cir
-                displayUnit(unitCalculated)
+            getSelectedInsulinType()
+            if (prefs.getSavedIsPreviousDate()){
+                it.snackbar("Previous data can not edit")
             }else{
-                it.snackbar("All the details required")
+                if (!et_tdd.text.isNullOrEmpty() || !et_total_carb.text.isNullOrEmpty() || !et_current_blood_glucose.text.isNullOrEmpty())
+                {
+                    tddInputValue = et_tdd.text.toString().toDouble()
+                    val currentbloodvalue = et_current_blood_glucose.text.toString().toDouble()
+                    cir = getCIR(tddInputValue.toFloat())
+                    val totalCarb = et_total_carb.text.toString().toDouble()
+                    mib = totalCarb.toFloat()/ cir
+                    // Calculation of Correction Dose
+                    isf = getISF(tddInputValue.toFloat())
+                    //  Correction dose =  // (Current blood sugar -Target blood sugar) / ISF  =  (160-90)/ 34  =   2.1 units
+                    val correctionDoseValue = (currentbloodvalue - targetbloodValue ) / isf
+                    unitCalculated = mib + correctionDoseValue.toFloat()
+                    displayUnit(unitCalculated.toDouble())
+                }else{
+                    it.snackbar("All the details required")
+                }
             }
-
         }
     }
     fun updateScore() {
@@ -114,12 +135,12 @@ class InsulinFragment : Fragment() {
     }
 
 
-    private fun getISF(tddInputValue: Double): Double {
+    private fun getISF(tddInputValue: Float): Float {
         isf = ISF_DEFAULT / tddInputValue
         return isf
     }
 
-    fun getCIR(tddInputValue:Double):Double{
+    fun getCIR(tddInputValue:Float):Float{
         cir = CIR_DEFAULT / tddInputValue
         return cir
     }

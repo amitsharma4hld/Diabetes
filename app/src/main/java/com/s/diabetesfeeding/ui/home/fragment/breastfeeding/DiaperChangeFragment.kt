@@ -32,6 +32,8 @@ class DiaperChangeFragment : Fragment() {
         java.util.Date())
     var DiaperChangeSessionData : BabyPoopData? = null
     val diaperChangeScore:Int = 5
+    var isPoopSelected:Boolean  = false
+    var isPeepSelected:Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -50,19 +52,36 @@ class DiaperChangeFragment : Fragment() {
         arguments?.let {
             DiaperChangeSessionData = DiaperChangeFragmentArgs.fromBundle(it).babyPoopData
         }
+
         tv_time.text=currentTime
 
         iv_poop.setOnClickListener {
-            iv_poop.setImageResource(R.drawable.ic_poop_fill)
-            iv_pee.setImageResource(R.drawable.ic_pee_unfill)
-            mcv_diaper_done.visibility = View.VISIBLE
-            DiaperChangeSessionData?.isPoop = true
+            isPoopSelected = !isPoopSelected
+            if (isPoopSelected){
+                iv_poop.setImageResource(R.drawable.ic_poop_fill)
+                mcv_diaper_done.visibility = View.VISIBLE
+                DiaperChangeSessionData?.isPoop = true
+            }else{
+                iv_poop.setImageResource(R.drawable.ic_poop_unfill)
+            }
+            if (!isPoopSelected && !isPeepSelected){
+                mcv_diaper_done.visibility = View.GONE
+            }
+
         }
         iv_pee.setOnClickListener {
-            iv_pee.setImageResource(R.drawable.ic_pee_fill)
-            iv_poop.setImageResource(R.drawable.ic_poop_unfill)
-            mcv_diaper_done.visibility = View.VISIBLE
-            DiaperChangeSessionData?.isPee = true
+            isPeepSelected = !isPeepSelected
+            if (isPeepSelected){
+                iv_pee.setImageResource(R.drawable.ic_pee_fill)
+                mcv_diaper_done.visibility = View.VISIBLE
+                DiaperChangeSessionData?.isPee = true
+            }else{
+                iv_pee.setImageResource(R.drawable.ic_pee_unfill)
+            }
+            if (!isPoopSelected && !isPeepSelected){
+                mcv_diaper_done.visibility = View.GONE
+            }
+
         }
         mcv_diaper_done.setOnClickListener {
             DiaperChangeSessionData?.poop_pee_time = currentTime
@@ -87,7 +106,7 @@ class DiaperChangeFragment : Fragment() {
         Coroutines.io {
             context.let {
                 val currentDate = OffsetDateTime.now()
-                val progressData =  ProgressBabyPoopDiaperChange(0,babyPoopData.poop_pee_time,babyPoopData.isPoop, babyPoopData.isPee,currentDate)
+                val progressData =  ProgressBabyPoopDiaperChange(0,babyPoopData.temId,babyPoopData.poop_pee_time,babyPoopData.isPoop, babyPoopData.isPee,currentDate)
                 AppDatabase(requireContext()).getBreastFeedingDao().saveProgressDiaperChange(progressData)
                 Log.d("APPDATABASE : ","progressData value is ${progressData.dateTime}")
                 update(babyPoopData)

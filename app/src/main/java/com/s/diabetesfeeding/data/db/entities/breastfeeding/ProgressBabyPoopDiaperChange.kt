@@ -8,6 +8,7 @@ import org.threeten.bp.OffsetDateTime
 class ProgressBabyPoopDiaperChange (
     @PrimaryKey(autoGenerate = true)
     val id:Int,
+    var temId:Int,
     var poop_pee_time: String,
     var isPoop: Boolean,
     var isPee: Boolean,

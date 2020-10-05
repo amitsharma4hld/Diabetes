@@ -149,19 +149,19 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                 progressBloodGlucose = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(1,sevendaysDate,currentDate)
                 val pointsValue = IntArray(7)
                 for (i in progressBloodGlucose.indices){
-                    if (progressBloodGlucose[i].day=="Sunday")
+                    if (progressBloodGlucose[i].day=="SUNDAY")
                         pointsValue[0] = progressBloodGlucose[i].value.toInt()
-                    if (progressBloodGlucose[i].day=="Monday")
+                    if (progressBloodGlucose[i].day=="MONDAY")
                         pointsValue[1] = progressBloodGlucose[i].value.toInt()
-                    if (progressBloodGlucose[i].day=="Tuesday")
+                    if (progressBloodGlucose[i].day=="TUESDAY")
                         pointsValue[2] = progressBloodGlucose[i].value.toInt()
-                    if (progressBloodGlucose[i].day=="Wednesday")
+                    if (progressBloodGlucose[i].day=="WEDNESDAY")
                         pointsValue[3] = progressBloodGlucose[i].value.toInt()
-                    if (progressBloodGlucose[i].day=="Thursday")
+                    if (progressBloodGlucose[i].day=="THURSDAY")
                         pointsValue[4] = progressBloodGlucose[i].value.toInt()
-                    if (progressBloodGlucose[i].day=="Friday")
+                    if (progressBloodGlucose[i].day=="FRIDAY")
                         pointsValue[5] = progressBloodGlucose[i].value.toInt()
-                    if (progressBloodGlucose[i].day=="Saturday")
+                    if (progressBloodGlucose[i].day=="SATURDAY")
                         pointsValue[6] = progressBloodGlucose[i].value.toInt()
                 }
 
@@ -186,7 +186,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                   progressBloodGlucoseBreakFast = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(2,sevendaysDate,currentDate)
                 val breakFastPointsValue = IntArray(21)
                 for (i in   progressBloodGlucoseBreakFast.indices){
-                    if (  progressBloodGlucoseBreakFast[i].day=="Sunday"){
+                    if (  progressBloodGlucoseBreakFast[i].day=="SUNDAY"){
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[0] =   progressBloodGlucoseBreakFast[i].value.toInt()
                         if (  progressBloodGlucoseBreakFast[i].title == "1 Hour After Breakfast")
@@ -194,7 +194,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                         if (  progressBloodGlucoseBreakFast[i].title == "2 Hour After Breakfast")
                             breakFastPointsValue[2] =   progressBloodGlucoseBreakFast[i].value.toInt()
                     }
-                    if (  progressBloodGlucoseBreakFast[i].day=="Monday") {
+                    if (  progressBloodGlucoseBreakFast[i].day=="MONDAY") {
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[3] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
@@ -205,7 +205,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             breakFastPointsValue[5] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
                     }
-                    if (  progressBloodGlucoseBreakFast[i].day=="Tuesday") {
+                    if (  progressBloodGlucoseBreakFast[i].day=="TUESDAY") {
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[6] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
@@ -216,7 +216,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             breakFastPointsValue[8] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
                     }
-                    if (  progressBloodGlucoseBreakFast[i].day=="Wednesday") {
+                    if (  progressBloodGlucoseBreakFast[i].day=="WEDNESDAY") {
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[9] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
@@ -227,7 +227,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             breakFastPointsValue[11] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
                     }
-                    if (  progressBloodGlucoseBreakFast[i].day=="Thursday") {
+                    if (  progressBloodGlucoseBreakFast[i].day=="THURSDAY") {
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[12] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
@@ -238,7 +238,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             breakFastPointsValue[14] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
                     }
-                    if (  progressBloodGlucoseBreakFast[i].day=="Friday") {
+                    if (  progressBloodGlucoseBreakFast[i].day=="FRIDAY") {
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[15] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
@@ -249,7 +249,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             breakFastPointsValue[17] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
                     }
-                    if (  progressBloodGlucoseBreakFast[i].day=="Saturday") {
+                    if (  progressBloodGlucoseBreakFast[i].day=="SATURDAY") {
                         if (  progressBloodGlucoseBreakFast[i].title == "Before Breakfast")
                             breakFastPointsValue[18] =
                                 progressBloodGlucoseBreakFast[i].value.toInt()
@@ -305,7 +305,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                 progressBloodGlucoseLunch = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(3,sevendaysDate,currentDate)
                 val lunchPointsValue = IntArray(21)
                 for (i in  progressBloodGlucoseLunch.indices){
-                    if (progressBloodGlucoseLunch[i].day=="Sunday"){
+                    if (progressBloodGlucoseLunch[i].day=="SUNDAY"){
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[0] = progressBloodGlucoseLunch[i].value.toInt()
                         if (progressBloodGlucoseLunch[i].title == "1 Hour After Lunch")
@@ -313,7 +313,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                         if (progressBloodGlucoseLunch[i].title == "2 Hour After Lunch")
                             lunchPointsValue[2] = progressBloodGlucoseLunch[i].value.toInt()
                     }
-                    if (progressBloodGlucoseLunch[i].day=="Monday") {
+                    if (progressBloodGlucoseLunch[i].day=="MONDAY") {
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[3] =
                                 progressBloodGlucoseLunch[i].value.toInt()
@@ -324,7 +324,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             lunchPointsValue[5] =
                                 progressBloodGlucoseLunch[i].value.toInt()
                     }
-                    if (progressBloodGlucoseLunch[i].day=="Tuesday") {
+                    if (progressBloodGlucoseLunch[i].day=="TUESDAY") {
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[6] =
                                 progressBloodGlucoseLunch[i].value.toInt()
@@ -335,7 +335,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             lunchPointsValue[8] =
                                 progressBloodGlucoseLunch[i].value.toInt()
                     }
-                    if (progressBloodGlucoseLunch[i].day=="Wednesday") {
+                    if (progressBloodGlucoseLunch[i].day=="WEDNESDAY") {
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[9] =
                                 progressBloodGlucoseLunch[i].value.toInt()
@@ -346,7 +346,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             lunchPointsValue[11] =
                                 progressBloodGlucoseLunch[i].value.toInt()
                     }
-                    if (progressBloodGlucoseLunch[i].day=="Thursday") {
+                    if (progressBloodGlucoseLunch[i].day=="THURSDAY") {
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[12] =
                                 progressBloodGlucoseLunch[i].value.toInt()
@@ -357,7 +357,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             lunchPointsValue[14] =
                                 progressBloodGlucoseLunch[i].value.toInt()
                     }
-                    if (progressBloodGlucoseLunch[i].day=="Friday") {
+                    if (progressBloodGlucoseLunch[i].day=="FRIDAY") {
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[15] =
                                 progressBloodGlucoseLunch[i].value.toInt()
@@ -368,7 +368,7 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                             lunchPointsValue[17] =
                                 progressBloodGlucoseLunch[i].value.toInt()
                     }
-                    if (progressBloodGlucoseLunch[i].day=="Saturday") {
+                    if (progressBloodGlucoseLunch[i].day=="SATURDAY") {
                         if (progressBloodGlucoseLunch[i].title == "Before Lunch")
                             lunchPointsValue[18] =
                                 progressBloodGlucoseLunch[i].value.toInt()
@@ -423,77 +423,77 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                 progressBloodGlucoseDinner = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(4,sevendaysDate,currentDate)
                 val dinnerPointsValue = IntArray(21)
                 for (i in  progressBloodGlucoseDinner.indices){
-                    if (progressBloodGlucoseDinner[i].day=="Sunday"){
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="SUNDAY"){
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[0] = progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[1] = progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[2] = progressBloodGlucoseDinner[i].value.toInt()
                     }
-                    if (progressBloodGlucoseDinner[i].day=="Monday") {
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="MONDAY") {
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[3] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[4] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[5] =
                                 progressBloodGlucoseDinner[i].value.toInt()
                     }
-                    if (progressBloodGlucoseDinner[i].day=="Tuesday") {
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="TUESDAY") {
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[6] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[7] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[8] =
                                 progressBloodGlucoseDinner[i].value.toInt()
                     }
-                    if (progressBloodGlucoseDinner[i].day=="Wednesday") {
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="WEDNESDAY") {
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[9] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[10] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[11] =
                                 progressBloodGlucoseDinner[i].value.toInt()
                     }
-                    if (progressBloodGlucoseDinner[i].day=="Thursday") {
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="THURSDAY") {
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[12] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[13] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[14] =
                                 progressBloodGlucoseDinner[i].value.toInt()
                     }
-                    if (progressBloodGlucoseDinner[i].day=="Friday") {
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="FRIDAY") {
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[15] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[16] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[17] =
                                 progressBloodGlucoseDinner[i].value.toInt()
                     }
-                    if (progressBloodGlucoseDinner[i].day=="Saturday") {
-                        if (progressBloodGlucoseDinner[i].title == "Before Dinner")
+                    if (progressBloodGlucoseDinner[i].day=="SATURDAY") {
+                        if (progressBloodGlucoseDinner[i].title == "Before Diner")
                             dinnerPointsValue[18] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "1 Hour After Diner")
                             dinnerPointsValue[19] =
                                 progressBloodGlucoseDinner[i].value.toInt()
-                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Dinner")
+                        if (progressBloodGlucoseDinner[i].title == "2 Hour After Diner")
                             dinnerPointsValue[20] =
                                 progressBloodGlucoseDinner[i].value.toInt()
                     }
@@ -541,19 +541,19 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
                 progressBloodGlucoseBedTime = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataBetweenDates(5,sevendaysDate,currentDate)
                 val bedTimePointsValue = IntArray(7)
                 for (i in progressBloodGlucoseBedTime.indices){
-                    if (progressBloodGlucoseBedTime[i].day=="Sunday")
+                    if (progressBloodGlucoseBedTime[i].day=="SUNDAY")
                         bedTimePointsValue[0] = progressBloodGlucoseBedTime[i].value.toInt()
-                    if (progressBloodGlucoseBedTime[i].day=="Monday")
+                    if (progressBloodGlucoseBedTime[i].day=="MONDAY")
                         bedTimePointsValue[1] = progressBloodGlucoseBedTime[i].value.toInt()
-                    if (progressBloodGlucoseBedTime[i].day=="Tuesday")
+                    if (progressBloodGlucoseBedTime[i].day=="TUESDAY")
                         bedTimePointsValue[2] = progressBloodGlucoseBedTime[i].value.toInt()
-                    if (progressBloodGlucoseBedTime[i].day=="Wednesday")
+                    if (progressBloodGlucoseBedTime[i].day=="WEDNESDAY")
                         bedTimePointsValue[3] = progressBloodGlucoseBedTime[i].value.toInt()
-                    if (progressBloodGlucoseBedTime[i].day=="Thursday")
+                    if (progressBloodGlucoseBedTime[i].day=="THURSDAY")
                         bedTimePointsValue[4] = progressBloodGlucoseBedTime[i].value.toInt()
-                    if (progressBloodGlucoseBedTime[i].day=="Friday")
+                    if (progressBloodGlucoseBedTime[i].day=="FRIDAY")
                         bedTimePointsValue[5] = progressBloodGlucoseBedTime[i].value.toInt()
-                    if (progressBloodGlucoseBedTime[i].day=="Saturday")
+                    if (progressBloodGlucoseBedTime[i].day=="SATURDAY")
                         bedTimePointsValue[6] = progressBloodGlucoseBedTime[i].value.toInt()
                 }
 

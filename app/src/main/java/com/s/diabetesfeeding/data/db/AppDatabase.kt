@@ -37,7 +37,10 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.*
         ProgressBloodGlucose::class,
         ProgressPrentalVisit::class,
         ProgressBreastFeeding::class,
-        ProgressBabyPoopDiaperChange::class
+        ProgressBabyPoopDiaperChange::class,
+        ProgressSymptoms::class,
+        ProgressObservation::class,
+        ProgressAllTrimester::class
         // ScoreWithCategoryCrossRef::class
 
     ],
@@ -71,6 +74,7 @@ abstract class AppDatabase : RoomDatabase(){
                 AppDatabase::class.java,
                 "DiabetesDatabase.db"
             ).build()
+
     }
 
     override fun clearAllTables() {

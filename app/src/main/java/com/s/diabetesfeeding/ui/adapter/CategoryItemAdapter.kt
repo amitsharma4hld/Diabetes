@@ -15,6 +15,7 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.ProgressBloodGlucose
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.getDayFromOffsetDateTime
 import com.s.diabetesfeeding.util.shortToast
@@ -118,7 +119,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                         updateScore(categoryItems)
                         holder.view.snackbar("Saved")
                     }else{
-                        //categoryItems.value = holder.view.et_value.text.toString()
+                        // categoryItems.value = holder.view.et_value.text.toString()
                         categoryItems.score = 1
                         updateData(categoryItems)
                         updateProgressData(categoryItems)
@@ -146,7 +147,11 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                 }
             }
         })
-
+        if (prefs.getSavedIsPreviousDate() && categoryItems.value.isEmpty()) {
+            holder.view.et_value.setText(" ")
+            holder.view.rl_second_done.isEnabled = false
+            holder.view.rl_done.isEnabled = false
+        }
     }
 
     private fun updateData(categoryItems: BloodGlucoseCategoryItem) {
@@ -155,14 +160,14 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                 AppDatabase(it).getMonitorBloodGlucoseCatDao().updateBloodGlucoseCategoryItem(categoryItems)
             }
         }
-        //notifyDataSetChanged()
+        // notifyDataSetChanged()
     }
     private fun updateProgressData(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {
             context.let {
                 val currentDate = OffsetDateTime.now()
                 val progressData =  ProgressBloodGlucose(0,categoryItems.itemsCatId,categoryItems.range,categoryItems.time,categoryItems.title,
-                    categoryItems.value,currentDate, getDayFromOffsetDateTime(currentDate))
+                    categoryItems.value,currentDate, currentDate.dayOfWeek.name,categoryItems.isBlank)
                 AppDatabase(it).getMonitorBloodGlucoseCatDao().saveProgressBloodGlucoseData(progressData)
                 Log.d("APPDATABASE : ","progressData value is ${progressData.dateTime}")
             }

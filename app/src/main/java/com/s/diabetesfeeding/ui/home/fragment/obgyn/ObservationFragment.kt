@@ -2,7 +2,6 @@ package com.s.diabetesfeeding.ui.home.fragment.obgyn
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,25 +9,24 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
-import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.obgynentities.Observation
-import com.s.diabetesfeeding.ui.home.fragment.ObeservationAdapter
-import com.s.diabetesfeeding.util.Coroutines
-import com.s.diabetesfeeding.util.getCurrentDateInString
-import com.s.diabetesfeeding.util.shortToast
-import com.s.diabetesfeeding.util.snackbar
+import com.s.diabetesfeeding.prefs
+import com.s.diabetesfeeding.ui.adapter.ObeservationAdapter
+import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.fragment_observation.*
-import kotlinx.android.synthetic.main.fragment_symptoms.*
 import kotlinx.android.synthetic.main.fragment_symptoms.recyclerViewMonitorBloodGlucose
 import kotlinx.coroutines.launch
 import org.threeten.bp.OffsetDateTime
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ObservationFragment : Fragment() {
-    val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
-        java.util.Date())
+
+    lateinit var currentDate:OffsetDateTime
     var isObservationScored:Boolean = false
     val observationScore: Int = 20
     var observationList: List<Observation> = ArrayList()
@@ -40,6 +38,22 @@ class ObservationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if(!prefs.getOffsetDateTime().isNullOrEmpty()){
+            currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_display_date.text= value
+        }else{
+            currentDate =  OffsetDateTime.now()
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_display_date.text= value
+        }
+        var currentDate:String = ""
+        currentDate = if (!prefs.getOffsetDateTime().isNullOrEmpty()){
+            val dateToString = prefs.getOffsetDateTime()!!.toString().split("T")
+            dateToString[0]
+        }else{
+            getCurrentDateInString()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
                 observationList =  AppDatabase(requireActivity().applicationContext).getObgynDao().getAllObservation()
@@ -50,7 +64,6 @@ class ObservationFragment : Fragment() {
                     for (i in AppDatabase(it).getHomeMenusDao().getScoreByCategory(6).indices){
                         val date = AppDatabase(it).getHomeMenusDao().getScoreByCategory(6)[i].date_time
                         val dateToString = date.toString().split("T")
-                        var currentDate = it.getCurrentDateInString()
                         if (currentDate.equals(dateToString[0])) {
                             isObservationScored = true
                             return@let
@@ -61,12 +74,16 @@ class ObservationFragment : Fragment() {
 
         }
         mcv_observation_done.setOnClickListener {
-            if (!isObservationScored){
-                updateScore()
-                requireActivity().shortToast("Score Updated")
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
             }else{
-                view?.snackbar("Already Saved For Today")
-                requireActivity().onBackPressed()
+                if (!isObservationScored){
+                    updateScore()
+                    requireActivity().shortToast("Score Updated")
+                }else{
+                    view?.snackbar("Already Saved For Today")
+                    requireActivity().onBackPressed()
+                }
             }
         }
     }
@@ -76,7 +93,6 @@ class ObservationFragment : Fragment() {
             context?.let {
                 val currentDate = OffsetDateTime.now()
                 AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 6, observationScore, currentDate))
-                Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
             }
             (context as Activity).onBackPressed()
         }
@@ -85,7 +101,10 @@ class ObservationFragment : Fragment() {
     private fun showObservation(observations: List<Observation>) {
         recyclerViewMonitorBloodGlucose.layoutManager = LinearLayoutManager(activity)
         recyclerViewMonitorBloodGlucose.adapter =
-            ObeservationAdapter(requireActivity().applicationContext,observations)
+            ObeservationAdapter(
+                requireActivity(),
+                observations
+            )
     }
 
     override fun onCreateView(
@@ -94,6 +113,12 @@ class ObservationFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_observation, container, false)
+    }
+
+    private fun getCurrentDateInString():String{
+        val currentDate: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
+            java.util.Date())
+        return currentDate
     }
 
 }

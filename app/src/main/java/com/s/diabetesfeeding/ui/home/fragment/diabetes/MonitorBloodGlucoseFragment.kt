@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.*
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.adapter.MonitorBloodGlucoseMainAdapter
 import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModel
 import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
 import com.s.diabetesfeeding.ui.home.fragment.HomeScreenFragmentDirections
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_symptoms.*
@@ -26,6 +28,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import org.threeten.bp.OffsetDateTime
 
 
 class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
@@ -52,9 +55,14 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tv_today_date_monitor_glucose.text=currentDate
+        if (prefs.getSavedFormattedDate().isNullOrEmpty()){
+            tv_today_date_monitor_glucose.text=currentDate
+        }else{
+            tv_today_date_monitor_glucose.text = prefs.getSavedFormattedDate()
+
+        }
         viewModel = ViewModelProvider(this,factory).get(MonitorBloodGlucoseViewModel::class.java)
-        //buildUI()
+        // buildUI()
 
         viewLifecycleOwner.lifecycleScope.launch {
             CategoryWithItems =  AppDatabase(requireActivity().applicationContext).getMonitorBloodGlucoseCatDao().getItemsAndCategory()

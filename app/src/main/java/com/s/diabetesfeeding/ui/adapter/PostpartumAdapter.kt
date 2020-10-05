@@ -10,11 +10,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
-import com.s.diabetesfeeding.data.db.entities.obgynentities.PostPartumData
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataThree
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataTwo
+import com.s.diabetesfeeding.data.db.entities.obgynentities.*
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_trimester.view.*
 import org.threeten.bp.OffsetDateTime
 import java.text.DateFormat
@@ -46,6 +45,10 @@ class PostpartumAdapter(val context: Context, val trimesterTopics : List<PostPar
         holder.view.cb_trimester.isChecked = topics.isChecked
         holder.view.tv_date.text = topics.date
         holder.view.tv_date.setOnClickListener {
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                return@setOnClickListener
+            }else
             calendar = Calendar.getInstance()
             day = calendar.get(Calendar.DAY_OF_MONTH)
             month = calendar.get(Calendar.MONTH)
@@ -64,15 +67,23 @@ class PostpartumAdapter(val context: Context, val trimesterTopics : List<PostPar
 
         }
         holder.view.cb_trimester.setOnClickListener(View.OnClickListener {
-            if (holder.view.cb_trimester.isChecked) {
-                topics.isChecked=true
-                topics.comment = holder.view.et_coment.text.toString()
-                update(topics)
-            } else {
-                topics.isChecked=false
-                topics.comment = holder.view.et_coment.text.toString()
-                update(topics)
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                if (holder.view.cb_trimester.isChecked) {
+                    holder.view.cb_trimester.isChecked = false
+                }
+            }else{
+                if (holder.view.cb_trimester.isChecked) {
+                    topics.isChecked=true
+                    topics.comment = holder.view.et_coment.text.toString()
+                    update(topics)
+                } else {
+                    topics.isChecked=false
+                    topics.comment = holder.view.et_coment.text.toString()
+                    update(topics)
+                }
             }
+
         })
     }
     private fun formatDate(year:Int, month:Int, day:Int):String{
@@ -88,7 +99,23 @@ class PostpartumAdapter(val context: Context, val trimesterTopics : List<PostPar
         Coroutines.io {
             context.let {
                 AppDatabase(it).getObgynDao().updatePostPartumData(dataOne)
-                Log.d("APPDATABASE : ","Update value is ${dataOne.isChecked}")
+                updateProgress(dataOne)
+            }
+        }
+    }
+    private fun updateProgress(postPartumData: PostPartumData){
+        Coroutines.io {
+            context.let {
+                val currentDate = OffsetDateTime.now()
+                val progressData = ProgressAllTrimester(
+                    0,
+                    4,
+                    postPartumData.title,
+                    postPartumData.comment,
+                    postPartumData.date,
+                    postPartumData.isChecked,
+                    currentDate)
+                AppDatabase(it).getObgynDao().saveAllTrimesterProgressData(progressData)
             }
         }
     }

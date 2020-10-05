@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.ui.home.fragment.obgyn
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,16 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.obgynentities.ProgressPrentalVisit
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.snackbar
+import kotlinx.android.synthetic.main.fragment_progress_obgyn.*
+import kotlinx.android.synthetic.main.fragment_progress_obgyn.mcv_progress_done
+import kotlinx.android.synthetic.main.fragment_progress_obgyn.tb_next_date
+import kotlinx.android.synthetic.main.fragment_progress_obgyn.tb_previous_date
+import kotlinx.android.synthetic.main.fragment_progress_obgyn.tv_date_of_week
 import kotlinx.android.synthetic.main.progress_blood_presure.*
 import kotlinx.android.synthetic.main.progress_fetal_heart_rate.*
 import kotlinx.android.synthetic.main.progress_fundal_height.*
@@ -25,7 +33,6 @@ import kotlinx.android.synthetic.main.progress_protien.*
 import kotlinx.android.synthetic.main.progress_urine.*
 import kotlinx.android.synthetic.main.progress_weight.*
 import org.threeten.bp.OffsetDateTime
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
@@ -40,10 +47,11 @@ class ProgressObgynFragment : Fragment() {
     private var progressWeight:List<ProgressPrentalVisit> = ArrayList()
     private var progressProtien:List<ProgressPrentalVisit> = ArrayList()
     private var progressUrine:List<ProgressPrentalVisit> = ArrayList()
-
+    val progressScore:Int=10
     lateinit var currentDate: OffsetDateTime
-    lateinit var sevendaysDate: OffsetDateTime
-
+    lateinit var twelveWeekDate: OffsetDateTime
+    var count:Int = 0
+    val allTrimesterTitleArray = arrayOf("1st Trimester","2nd Trimester","3rd Trimester","Postpartum")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -58,24 +66,59 @@ class ProgressObgynFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        tb_previous_date.setOnClickListener {
+            if (count>0){
+                count -=1
+                tv_date_of_week.text = allTrimesterTitleArray[count]
+                currentDate = twelveWeekDate
+                twelveWeekDate =  currentDate.minusWeeks(12)
+                setAllProgressUI()
+            }
+        }
+        tb_next_date.setOnClickListener {
+            if (count<3){
+                count +=1
+                tv_date_of_week.text = allTrimesterTitleArray[count]
+                currentDate = twelveWeekDate
+                twelveWeekDate =  currentDate.plusWeeks(12)
+                setAllProgressUI()
+            }
+
+        }
+
         if(!prefs.getOffsetDateTime().isNullOrEmpty()){
             currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
-            sevendaysDate = currentDate.minusDays(7)
-           // val value = getDateFromOffsetDateTime(currentDate)
+            twelveWeekDate = currentDate.minusWeeks(12)
             setAllProgressUI()
         }else{
             currentDate =  OffsetDateTime.now()
-            sevendaysDate = currentDate.minusDays(7)
-           // val value = getDateFromOffsetDateTime(currentDate)
+            twelveWeekDate = currentDate.minusWeeks(12)
             setAllProgressUI()
         }
+
+        if (!prefs.getSavedHeight().isNullOrEmpty()){
+            tv_measurement_of_height.text = prefs.getSavedHeight()
+        }
+        if (!prefs.getSavedPrePregnancyWeight().isNullOrEmpty()){
+            tv_measurement_of_weight.text = prefs.getSavedPrePregnancyWeight()
+            tv_lbs.visibility = View.VISIBLE
+        }
+
+        mcv_progress_done.setOnClickListener {
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                return@setOnClickListener
+            }else
+                updateScore()
+        }
+
     }
 
     private fun setAllProgressUI() {
         Coroutines.io {
             // BMI
             context?.let {
-                progressBMI = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(3,sevendaysDate,currentDate)
+                progressBMI = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(3,twelveWeekDate,currentDate)
                 val bmiPointsValue = IntArray(12)
                 for (i in   progressBMI.indices){
                     if (  progressBMI[i].measurementOf == "BMI")
@@ -105,24 +148,25 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Blood Pressure
             context?.let {
-                progressBloodPresure = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(4,sevendaysDate,currentDate)
-                val bloodPresurePointsValue = IntArray(12)
-                for (i in   progressBloodPresure.indices){
-                    if (  progressBloodPresure[i].measurementOf == "Blood Pressure")
-                        bloodPresurePointsValue[i] =   progressBloodPresure[i].value.toInt()
-                }
+                progressBloodPresure = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(4,twelveWeekDate,currentDate)
                 requireActivity().runOnUiThread(Runnable {
                     val viewProgress = arrayOf(blood_presureV11,blood_presureV12,blood_presureV13,blood_presureV14,
                         blood_presureV15,blood_presureV16,blood_presureV17,blood_presureV18,blood_presureV19,blood_presureV110,
                         blood_presureV111,blood_presureV12)
+
                     val viewBloodPresureHigh = arrayOf(week_one_high,week_two_high,week_three_high,week_four_high,
                         week_five_high,week_six_high,week_seven_high,week_eight_high,week_ten_high,week_eleven_high,week_twelve_high)
-                    val bmiParams: RelativeLayout.LayoutParams = V11.layoutParams as RelativeLayout.LayoutParams
-                    bmiParams.height = 10
+                    val viewBloodPresureLow = arrayOf(week_one_low,week_two_low,week_three_low,week_four_low,
+                        week_five_low,week_six_low,week_seven_low,week_eight_low,week_ten_low,week_eleven_low,week_twelve_low)
+
+                    val bmiParams: RelativeLayout.LayoutParams = blood_presureV11.layoutParams as RelativeLayout.LayoutParams
+                    bmiParams.height = 2
                     blood_presureV11.layoutParams = bmiParams
                     for (i in progressBloodPresure.indices){
-                        viewProgress[i].layoutParams.height = dpToPx(40)
-                        viewBloodPresureHigh[i].text = progressBloodPresure[i].value
+                        viewProgress[i].layoutParams.height = dpToPx(50)
+                        val data = progressBloodPresure[i].value.split(getString(R.string.apostrophe))
+                        viewBloodPresureHigh[i].text = data[0]
+                        viewBloodPresureLow[i].text = data[1]
                     }
                 })
             }
@@ -130,7 +174,7 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Fundal Hight
             context?.let {
-                progressFundalHeight = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(5,sevendaysDate,currentDate)
+                progressFundalHeight = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(5,twelveWeekDate,currentDate)
                 val fundalHightPointsValue = IntArray(12)
                 for (i in   progressFundalHeight.indices){
                     if (  progressFundalHeight[i].measurementOf == "Fundal Height/EGA")
@@ -159,7 +203,7 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Fetal Heart Rate - Beats per minute
             context?.let {
-                progressFetalHeartRate = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(6,sevendaysDate,currentDate)
+                progressFetalHeartRate = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(6,twelveWeekDate,currentDate)
                 val fetalHeartRatePointsValue = IntArray(12)
                 for (i in   progressFetalHeartRate.indices){
                     if (  progressFetalHeartRate[i].measurementOf == "Fetal heart rate")
@@ -187,7 +231,7 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Glucose
             context?.let {
-                progressGlucose = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(8,sevendaysDate,currentDate)
+                progressGlucose = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(8,twelveWeekDate,currentDate)
                 val glucosePointsValue = IntArray(12)
                 for (i in   progressGlucose.indices){
                     if (  progressGlucose[i].measurementOf == "Glucose Level")
@@ -216,7 +260,7 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Weight
             context?.let {
-                progressWeight = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(7,sevendaysDate,currentDate)
+                progressWeight = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(7,twelveWeekDate,currentDate)
                 val weightPointsValue = IntArray(12)
                 for (i in   progressWeight.indices){
                     if (  progressWeight[i].measurementOf == "Weight")
@@ -245,7 +289,7 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Protien
             context?.let {
-                progressProtien = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(9,sevendaysDate,currentDate)
+                progressProtien = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(9,twelveWeekDate,currentDate)
                 val protienPointsValue = IntArray(12)
                 for (i in  progressProtien.indices){
                     if (progressProtien[i].measurementOf == "Protein")
@@ -273,7 +317,7 @@ class ProgressObgynFragment : Fragment() {
         Coroutines.io {
             // Urine
             context?.let {
-                progressUrine = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(10,sevendaysDate,currentDate)
+                progressUrine = AppDatabase(it).getObgynDao().getProgressDataBetweenDates(10,twelveWeekDate,currentDate)
                 val urinePointsValue = IntArray(12)
                 for (i in   progressUrine.indices){
                     if (progressUrine[i].measurementOf == "Urine")
@@ -299,6 +343,16 @@ class ProgressObgynFragment : Fragment() {
             }
         }
 
+    }
+
+    fun updateScore() {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 9, progressScore, currentDate))
+            }
+            (context as Activity).onBackPressed()
+        }
     }
 
         private fun dpToPx(dp: Int): Int {

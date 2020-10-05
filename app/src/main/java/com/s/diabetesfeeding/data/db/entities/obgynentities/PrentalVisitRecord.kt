@@ -7,10 +7,9 @@ import java.io.Serializable
 
 @Entity
 data class PrentalVisitRecord (
+    @PrimaryKey
+    var id : Int,
     val measurementOf: String,
     var value: String,
     val unit: String
-) : Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id : Int = 0
-}
+):Serializable

@@ -2,6 +2,7 @@ package com.s.diabetesfeeding.ui.home.fragment
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -27,8 +28,7 @@ import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.*
 import com.s.diabetesfeeding.data.db.entities.obgynentities.Observation
-import com.s.diabetesfeeding.data.local.TempLocalData
-import com.s.diabetesfeeding.data.preferences.PreferenceProvider
+import com.s.diabetesfeeding.data.db.entities.obgynentities.ProgressObservation
 import com.s.diabetesfeeding.databinding.FragmentHomeScreenBinding
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.MainActivity
@@ -37,12 +37,14 @@ import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.threeten.bp.OffsetDateTime
+import java.io.File
 import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -66,7 +68,6 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     var month: Int = 0
     var year: Int = 0
     private lateinit var calendar:Calendar
-
     var currentDate: String = java.text.SimpleDateFormat(
         "MMM dd, yyyy",
         java.util.Locale.getDefault()
@@ -75,31 +76,36 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     )
     val allCategory: MutableList<MonitorBloodGlucoseCategory> = ArrayList()
     val categoryItemList: MutableList<BloodGlucoseCategoryItem> = ArrayList()
+    private var progressBloodGlucose:List<ProgressBloodGlucose> = java.util.ArrayList()
+    private var progressSymptoms:List<ProgressSymptoms> = java.util.ArrayList()
+    private var progressObservation:List<ProgressObservation> = ArrayList()
+
+
     private val fitnessOptions = FitnessOptions.builder()
         .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
         .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
         .build()
 
     val symptoms = listOf(
-        SymptomsData(1, "Shaky", false),
-        SymptomsData(2, "Fast heartbeat", false),
-        SymptomsData(3, "Sweating", false),
-        SymptomsData(4, "Dizzy", false),
-        SymptomsData(5, "Anxious", false),
-        SymptomsData(6, "Hungry", false),
-        SymptomsData(7, "Blurry Vision", false),
-        SymptomsData(8, "Weakness or Fatigue", false),
-        SymptomsData(9, "Headche", false),
-        SymptomsData(10, "Irritable", false),
-        SymptomsData(11, "Other", false)
+        SymptomsData(1, "Shaky", false,""),
+        SymptomsData(2, "Fast heartbeat", false,""),
+        SymptomsData(3, "Sweating", false,""),
+        SymptomsData(4, "Dizzy", false,""),
+        SymptomsData(5, "Anxious", false,""),
+        SymptomsData(6, "Hungry", false,""),
+        SymptomsData(7, "Blurry Vision", false,""),
+        SymptomsData(8, "Weakness or Fatigue", false,""),
+        SymptomsData(9, "Headche", false,""),
+        SymptomsData(10, "Irritable", false,""),
+        SymptomsData(11, "Other", false,"")
     )
     val observationList = listOf(
-        Observation(1,"Vaginal Bleeding",false),
-        Observation(2,"Leakage of fluid",false),
-        Observation(3,"Fetal movement",false),
-        Observation(4,"Contraction",false),
-        Observation(5,"Nausea and/or Vomiting",false),
-        Observation(6,"Other",false)
+        Observation(1,"Vaginal Bleeding",false,""),
+        Observation(2,"Leakage of fluid",false,""),
+        Observation(3,"Fetal movement",false,""),
+        Observation(4,"Contraction",false,""),
+        Observation(5,"Nausea and/or Vomiting",false,""),
+        Observation(6,"Other",false,"")
     )
 
     val homeMenusList = listOf(
@@ -138,14 +144,6 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             param2 = it.getString(ARG_PARAM2)
         }
 
-       /* val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            // Handle the back button event
-            if (isOptionSelected){
-                ll_options.visibility = View.VISIBLE
-                diabetes_options.visibility = View.GONE
-                isOptionSelected = false
-            }
-        } */
     }
 
     override fun onCreateView(
@@ -171,8 +169,17 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             showDialog("ccss")
         }
         prefs.saveIsLoggedIn(true)
-
-        tv_today_date.text = currentDate
+        if (prefs.getSavedFormattedDate().isNullOrEmpty()){
+            tv_today_date.text=currentDate
+        }else{
+            tv_today_date.text = prefs.getSavedFormattedDate()
+            val savedDate = prefs.getOffsetDateTime()
+            if (OffsetDateTime.parse(savedDate).dayOfMonth == OffsetDateTime.now().dayOfMonth) {
+                prefs.saveIsPrevousDate(false)
+            }else{
+                prefs.saveIsPrevousDate(true)
+            }
+        }
         tv_today_date.setOnClickListener {
             calendar = Calendar.getInstance()
             day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -184,14 +191,86 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     val selectedDate = formatDate(year, monthOfYear, day)
                     tv_today_date.text = selectedDate
 
+                    val odt = OffsetDateTime.now()
+                    val offsetDefaultZone = odt.offset
+
                     val month = monthOfYear + 1
                     val dayWithZero = if (day < 10) "0$day" else day.toString()
                     val monthWithZero = if (month < 10) "0$month" else month.toString()
-                    val date: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T00:00:10.356+05:30"
+                    val date: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T00:00:00.356" + offsetDefaultZone.toString()
+                    val toDate: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T23:59:58.356" + offsetDefaultZone.toString()
 
-                    val parseDateTime =  OffsetDateTime.parse(date)
                     prefs.saveformattedDate(selectedDate)
-                    prefs.saveOffsetDateTime(date)
+                    prefs.saveOffsetDateTime(toDate)
+                    prefs.saveFromDate(date)
+                    if (day == OffsetDateTime.now().dayOfMonth) {
+                        prefs.saveIsPrevousDate(false)
+                    }else{
+                        prefs.saveIsPrevousDate(true)
+                    }
+                    val fromOffsetDateTime = OffsetDateTime.parse(date)
+                    val toOffsetDate = OffsetDateTime.parse(toDate)
+
+                    Coroutines.io {
+                        // BloodGlucose
+                        context?.let {
+                            progressBloodGlucose = AppDatabase(it).getMonitorBloodGlucoseCatDao().getProgressDataWithoutId(fromOffsetDateTime,toOffsetDate)
+                        }
+                        context?.let {
+                            if (progressBloodGlucose.isEmpty()) {
+                                    AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(categoryItemList)
+                            }else {
+                                for (i in progressBloodGlucose.indices){
+                                    AppDatabase(it).getMonitorBloodGlucoseCatDao()
+                                        .updateBloodGlucoseColumn(
+                                            progressBloodGlucose[i].title,
+                                            progressBloodGlucose[i].time,
+                                            progressBloodGlucose[i].value,
+                                            progressBloodGlucose[i].isBlank)
+                                }
+                            }
+                        }
+                    }
+                    Coroutines.io {
+                        // Symptoms
+                        context?.let {
+                            progressSymptoms = AppDatabase(it).getSymptomsDao().getProgressDataWithoutId(fromOffsetDateTime,toOffsetDate)
+                        }
+                        context?.let {
+                            if (progressSymptoms.isEmpty()) {
+                                AppDatabase(it).getSymptomsDao().saveAllSymptoms(symptoms)
+                            }else {
+                                AppDatabase(it).getSymptomsDao().saveAllSymptoms(symptoms)
+                                for (i in progressSymptoms.indices){
+                                    AppDatabase(it).getSymptomsDao()
+                                        .updateSymptomColumn(
+                                            progressSymptoms[i].Symptom,
+                                            progressSymptoms[i].comment,
+                                            progressSymptoms[i].isChecked)
+                                }
+                            }
+                        }
+                    }
+                    Coroutines.io {
+                        // Observation
+                        context?.let {
+                            progressObservation = AppDatabase(it).getObgynDao().getProgressDataWithoutId(fromOffsetDateTime,toOffsetDate)
+                        }
+                        context?.let {
+                            if (progressObservation.isEmpty()) {
+                                AppDatabase(it).getObgynDao().saveAllObservation(observationList)
+                            }else {
+                                AppDatabase(it).getObgynDao().saveAllObservation(observationList)
+                                for (i in progressObservation.indices){
+                                    AppDatabase(it).getObgynDao()
+                                        .updateObservationColumn(
+                                            progressObservation[i].title,
+                                            progressObservation[i].comment,
+                                            progressObservation[i].isChecked)
+                                }
+                            }
+                        }
+                    }
 
                 }
             val datePickerDialog = DatePickerDialog(requireContext(),mDateSetListener, year, month,day)
@@ -199,7 +278,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             datePickerDialog.show()
 
         }
-        tv_steps_count.text = "0 steps today"
+        tv_steps_count.text = "# steps today"
 
         savedataAllCategory()
         saveAllCategoryItems()
@@ -213,9 +292,6 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             context?.let {
                 if ( AppDatabase(it).getHomeMenusDao().getAllScoreType().isNullOrEmpty()) {
                     AppDatabase(it).getHomeMenusDao().saveAllScoreType(scoreTypeList)
-                    Log.d("AppDatabase : ",
-                        "ScoreTyp Saved ${AppDatabase(it).getHomeMenusDao().getAllScoreType().size} added"
-                    )
                 }
             }
             context?.let {
@@ -242,12 +318,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             context?.let {
               if ( AppDatabase(it).getObgynDao().getAllObservation().isNullOrEmpty()) {
                     AppDatabase(it).getObgynDao().saveAllObservation(observationList)
-                  Log.d("AppDatabase : ",
-                      "observationList Saved ${AppDatabase(it).getObgynDao().getAllObservation().size} added"
-                  )
               }
             }
-
         }
 
         Diabetes.setOnClickListener {
@@ -287,6 +359,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { data ->
                 if (data != null) {
                     logoutUser(data)
+                    prefs.cearAllSharedPref()
                 }
             })
         }
@@ -479,8 +552,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 setMessage("Are you sure want to logout. This might delete unsaved progress.")
                 setPositiveButton("Yes") { _, _ ->
                     Coroutines.io{
-                       // AppDatabase(context).getUserDao().delete(data)
-                        AppDatabase(it).clearAllTables()
+                         AppDatabase(it).clearAllTables()
+                        //deleteDatabaseFile(requireActivity(),"DiabetesDatabase.db")
                         activity?.let{
                             val intent = Intent(it, MainActivity::class.java).also {
                                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -492,6 +565,16 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 setNegativeButton("No") { _, _ ->
                 }
             }.create().show()
+        }
+    }
+
+    private fun deleteDatabaseFile(context: Context, databaseName: String) {
+        val databases = File(context.applicationInfo.dataDir.toString() + "/databases")
+        val db = File(databases, databaseName)
+        if (db.delete()) println("Database deleted") else println("Failed to delete database")
+        val journal = File(databases, "$databaseName-journal")
+        if (journal.exists()) {
+            if (journal.delete()) println("Database journal deleted") else println("Failed to delete database journal")
         }
     }
 

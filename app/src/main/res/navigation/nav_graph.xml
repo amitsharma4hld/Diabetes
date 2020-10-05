@@ -151,6 +151,9 @@
         <action
             android:id="@+id/action_breastfeedingFragment_to_breastFeedingHistoryFragment"
             app:destination="@id/breastFeedingHistoryFragment" />
+        <action
+            android:id="@+id/action_breastfeedingFragment_to_resourcesFragment"
+            app:destination="@id/resourcesFragment" />
     </fragment>
     <fragment
         android:id="@+id/monitorBloodGlucoseFragment"
@@ -327,5 +330,14 @@
         <action
             android:id="@+id/action_scoreBoardFragment_to_homeScreenFragment"
             app:destination="@id/homeScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resourcesFragment"
+        android:name="com.s.diabetesfeeding.ui.home.fragment.breastfeeding.ResourcesFragment"
+        android:label="fragment_resources"
+        tools:layout="@layout/fragment_resources" >
+        <action
+            android:id="@+id/action_resourcesFragment_to_breastfeedingFragment"
+            app:destination="@id/breastfeedingFragment" />
     </fragment>
 </navigation>

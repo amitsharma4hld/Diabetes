@@ -733,7 +733,7 @@
                 android:background="@color/colorWhite"
                 android:layerType="software"
                 android:visibility="visible"
-                android:layout_height="32dp"/>
+                android:layout_height="28dp"/>
         </RelativeLayout>
         <ProgressBar
             android:id="@+id/pb_graph"

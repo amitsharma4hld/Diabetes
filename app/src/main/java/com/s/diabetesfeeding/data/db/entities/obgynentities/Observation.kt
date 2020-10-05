@@ -8,6 +8,7 @@ class Observation (
     @PrimaryKey
     val id: Int,
     val title: String,
-    var isChecked: Boolean
+    var isChecked: Boolean,
+    var comment:String
 
 )

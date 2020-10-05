@@ -17,6 +17,7 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.PostPartumData
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataThree
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataTwo
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.adapter.PostpartumAdapter
 import com.s.diabetesfeeding.ui.adapter.TrimesterAdapter
 import com.s.diabetesfeeding.ui.adapter.TrimesterThreeAdapter
@@ -89,13 +90,18 @@ class TrimesterFragment : Fragment() {
         }
 
         mcv_trimester_done.setOnClickListener {
-            if (!isCounselingScore){
-                updateScore()
-                requireActivity().shortToast("Score Updated")
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
             }else{
-                view?.snackbar("Already Saved For Today")
-                requireActivity().onBackPressed()
+                if (!isCounselingScore){
+                    updateScore()
+                    requireActivity().shortToast("Score Updated")
+                }else{
+                    view?.snackbar("Already Saved For Today")
+                    requireActivity().onBackPressed()
+                }
             }
+
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

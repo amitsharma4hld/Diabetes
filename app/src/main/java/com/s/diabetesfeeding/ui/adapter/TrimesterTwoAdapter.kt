@@ -3,20 +3,20 @@ package com.s.diabetesfeeding.ui.adapter
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
-import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataOne
+import com.s.diabetesfeeding.data.db.entities.obgynentities.ProgressAllTrimester
 import com.s.diabetesfeeding.data.db.entities.obgynentities.TrimesterDataTwo
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_trimester.view.*
 import org.threeten.bp.OffsetDateTime
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -44,6 +44,10 @@ class TrimesterTwoAdapter(val context: Context, val trimesterTopics : List<Trime
         holder.view.cb_trimester.isChecked = topics.isChecked
         holder.view.tv_date.text = topics.date
         holder.view.tv_date.setOnClickListener {
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                return@setOnClickListener
+            }else
             calendar = Calendar.getInstance()
             day = calendar.get(Calendar.DAY_OF_MONTH)
             month = calendar.get(Calendar.MONTH)
@@ -62,15 +66,23 @@ class TrimesterTwoAdapter(val context: Context, val trimesterTopics : List<Trime
 
         }
         holder.view.cb_trimester.setOnClickListener(View.OnClickListener {
-            if (holder.view.cb_trimester.isChecked) {
-                topics.isChecked=true
-                topics.comment = holder.view.et_coment.text.toString()
-                update(topics)
-            } else {
-                topics.isChecked=false
-                topics.comment = holder.view.et_coment.text.toString()
-                update(topics)
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                if (holder.view.cb_trimester.isChecked) {
+                    holder.view.cb_trimester.isChecked = false
+                }
+            }else{
+                if (holder.view.cb_trimester.isChecked) {
+                    topics.isChecked=true
+                    topics.comment = holder.view.et_coment.text.toString()
+                    update(topics)
+                } else {
+                    topics.isChecked=false
+                    topics.comment = holder.view.et_coment.text.toString()
+                    update(topics)
+                }
             }
+
         })
     }
     private fun formatDate(year:Int, month:Int, day:Int):String{
@@ -86,7 +98,23 @@ class TrimesterTwoAdapter(val context: Context, val trimesterTopics : List<Trime
         Coroutines.io {
             context.let {
                 AppDatabase(it).getObgynDao().updateTrimesterDataTwo(dataOne)
-                Log.d("APPDATABASE : ","Update value is ${dataOne.isChecked}")
+                updateProgress(dataOne)
+            }
+        }
+    }
+    private fun updateProgress(trimesterDataTwo: TrimesterDataTwo){
+        Coroutines.io {
+            context.let {
+                val currentDate = OffsetDateTime.now()
+                val progressData = ProgressAllTrimester(
+                    0,
+                    2,
+                    trimesterDataTwo.title,
+                    trimesterDataTwo.comment,
+                    trimesterDataTwo.date,
+                    trimesterDataTwo.isChecked,
+                    currentDate)
+                AppDatabase(it).getObgynDao().saveAllTrimesterProgressData(progressData)
             }
         }
     }

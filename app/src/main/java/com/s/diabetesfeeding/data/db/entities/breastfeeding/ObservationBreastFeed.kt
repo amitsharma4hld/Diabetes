@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ObservationBreastFeed (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val title: String,
     var value: String,

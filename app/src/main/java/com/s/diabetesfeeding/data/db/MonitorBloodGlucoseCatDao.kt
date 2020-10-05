@@ -18,16 +18,12 @@ interface MonitorBloodGlucoseCatDao {
     suspend fun getAllCategoryItems() : List<BloodGlucoseCategoryItem>
     @Update
     suspend fun updateBloodGlucoseCategoryItem(bloodGlucoseCategoryItem: BloodGlucoseCategoryItem)
+    @Query("UPDATE BloodGlucoseCategoryItem SET time=:time,value=:value,isBlank=:isBlank WHERE title=:title")
+    fun updateBloodGlucoseColumn(title:String,time:String,value:String,isBlank:Boolean)
+
     @Transaction
     @Query("SELECT * FROM MonitorBloodGlucoseCategory")
     suspend fun getItemsAndCategory(): List<CategoryWithItems>
-
-/*    @Transaction
-    @Query("SELECT * FROM MonitorBloodGlucoseCategory MBGC INNER JOIN BloodGlucoseCategoryItem BGCI ON MBGC.catId=BGCI.catItemId WHERE BGCI.itemsCatId=2")
-    suspend fun getItemsAndCategory(): List<CategoryWithItems>*/
-
-/*    @Query("SELECT * FROM colis INNER JOIN step ON colis.idColis= step.idColis ORDER BY date DESC")
-    fun getAllColisWithSteps():Flowable<List<ColisWithSteps>> */
 
     // Today's Insulin
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -51,9 +47,8 @@ interface MonitorBloodGlucoseCatDao {
     @Query("SELECT *  FROM ProgressBloodGlucose  WHERE itemsCatId=:id AND dateTime BETWEEN :from AND :to")
     fun getProgressDataBetweenDates(id:Int,from: OffsetDateTime, to: OffsetDateTime): List<ProgressBloodGlucose>
 
-/*   // Custom scoreboard data
-    @Query("select DISTINCT *  from ScoreTable st LEFT  JOIN HomeSubMenus HSM on HSM.id=ST.sub_menuid INNER  JOIN HomeMenus HM on HM.id=HSM.homeMenuId INNER  JOIN ScoreType STY on STY.id=HSM.score_type_id")
-    suspend fun getFilterScoreTable():List<FilterScoreTable>
-*/
+    @Query("SELECT *  FROM ProgressBloodGlucose  WHERE dateTime BETWEEN :from AND :to")
+    fun getProgressDataWithoutId(from: OffsetDateTime, to: OffsetDateTime): List<ProgressBloodGlucose>
+
 
 }

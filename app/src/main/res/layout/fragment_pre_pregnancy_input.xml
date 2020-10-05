@@ -52,6 +52,7 @@
                     android:layout_gravity="center"
                     android:layout_height="match_parent">
                     <TextView
+                        android:id="@+id/tv_data_entry_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -62,16 +63,19 @@
                         android:textSize="32sp" />
 
                     <LinearLayout
+                        android:id="@+id/ll_data_entry"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:weightSum="3"
                         android:gravity="center"
                         android:layout_marginTop="6dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        >
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/one"
+                            android:id="@+id/mcv_one"
                             android:layout_width="0dp"
                             android:layout_height="200dp"
                             android:layout_weight="1"
@@ -117,7 +121,7 @@
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             app:cardCornerRadius="30dp"
-                            android:id="@+id/two"
+                            android:id="@+id/mcv_two"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#fff"
                             android:layout_margin="4dp">
@@ -156,7 +160,7 @@
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             app:cardCornerRadius="30dp"
-                            android:id="@+id/three"
+                            android:id="@+id/mcv_three"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#fff"
                             android:layout_margin="2dp">
@@ -192,6 +196,41 @@
 
 
                     </LinearLayout>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_text_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        app:cardCornerRadius="30dp"
+                        android:visibility="gone"
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="#fff"
+                        android:layout_margin="2dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:layout_height="match_parent">
+                            <EditText
+                                android:id="@+id/et_text_digit_one"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:focusableInTouchMode="true"
+                                android:importantForAutofill="no"
+                                android:textAlignment="center"
+                                android:background="@null"
+                                android:textColor="@color/colorObgyTheme"
+                                android:textSize="16sp" />
+
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:id="@+id/tv_unit"
                         android:layout_width="wrap_content"
@@ -200,7 +239,7 @@
                         android:layout_gravity="end"
                         android:fontFamily="@font/avenir_next_regular"
                         android:textColor="#fff"
-                        android:text="lbs"
+                        android:text=""
                         android:visibility="visible"
                         android:textSize="20sp" />
 

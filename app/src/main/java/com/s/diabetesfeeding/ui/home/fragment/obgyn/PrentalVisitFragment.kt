@@ -15,12 +15,16 @@ import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.obgynentities.PrentalVisitRecord
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.CellClickListener
 import com.s.diabetesfeeding.ui.adapter.PrentalVisitAdapter
 import com.s.diabetesfeeding.ui.auth.AuthViewModel
 import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.SpaceGridDecoration
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
+import com.s.diabetesfeeding.util.snackbar
+import kotlinx.android.synthetic.main.fragment_observation.*
 import kotlinx.android.synthetic.main.fragment_prental_visit.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -31,8 +35,7 @@ import org.threeten.bp.OffsetDateTime
 
 class PrentalVisitFragment : Fragment(), KodeinAware,CellClickListener {
     override val kodein by kodein()
-    val currentDate: String = java.text.SimpleDateFormat("MM/dd/yyyy", java.util.Locale.getDefault()).format(
-        java.util.Date())
+    lateinit var currentDate:OffsetDateTime
     private lateinit var authViewModel: AuthViewModel
     private val authfactory : AuthViewModelFactory by instance()
     val parentalScore:Int=20
@@ -45,10 +48,22 @@ class PrentalVisitFragment : Fragment(), KodeinAware,CellClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        tv_date.text = currentDate
+        if(!prefs.getOffsetDateTime().isNullOrEmpty()){
+            currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_date.text= value
+        }else{
+            currentDate =  OffsetDateTime.now()
+            val value = getDateFromOffsetDateTime(currentDate)
+            tv_date.text= value
+        }
         mcv_prental_done.setOnClickListener {
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                return@setOnClickListener
+            }else
             updateScore()
-            requireActivity().onBackPressed()
+            //requireActivity().onBackPressed()
         }
         authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { data ->
             if (data != null) {
@@ -88,7 +103,7 @@ class PrentalVisitFragment : Fragment(), KodeinAware,CellClickListener {
         Coroutines.io {
             context?.let {
                 val currentDate = OffsetDateTime.now()
-                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 9, parentalScore, currentDate))
+                AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 8, parentalScore, currentDate))
                 Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
             }
             (context as Activity).onBackPressed()
