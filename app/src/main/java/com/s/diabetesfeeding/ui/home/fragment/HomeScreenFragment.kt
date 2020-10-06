@@ -37,6 +37,7 @@ import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getStandardFormattedDateForAllScreen
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -166,7 +167,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!prefs.getSavedIsLoggedIn()) {
-            showDialog("ccss")
+            showDialog()
         }
         prefs.saveIsLoggedIn(true)
         if (prefs.getSavedFormattedDate().isNullOrEmpty()){
@@ -189,7 +190,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             val mDateSetListener =
                 DatePickerDialog.OnDateSetListener { it, year, monthOfYear, day ->
                     val selectedDate = formatDate(year, monthOfYear, day)
-                    tv_today_date.text = selectedDate
+
+                    tv_today_date.text = getStandardFormattedDateForAllScreen(selectedDate)
 
                     val odt = OffsetDateTime.now()
                     val offsetDefaultZone = odt.offset
@@ -200,7 +202,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     val date: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T00:00:00.356" + offsetDefaultZone.toString()
                     val toDate: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T23:59:58.356" + offsetDefaultZone.toString()
 
-                    prefs.saveformattedDate(selectedDate)
+                    prefs.saveformattedDate(getStandardFormattedDateForAllScreen(selectedDate))
                     prefs.saveOffsetDateTime(toDate)
                     prefs.saveFromDate(date)
                     if (day == OffsetDateTime.now().dayOfMonth) {
@@ -626,7 +628,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     }
 
 
-        private fun showDialog(title: String) {
+        private fun showDialog() {
             val dialog = Dialog(requireActivity())
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(false)
