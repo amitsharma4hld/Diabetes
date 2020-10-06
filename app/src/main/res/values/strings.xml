@@ -149,6 +149,21 @@
     <string name="breastfeed">Breastfeed</string>
     <string name="supplemental">Supplemental</string>
     <string name="cancel">Cancel</string>
+    <string name="salutation">Salutation</string>
+    <string name="first_name">First Name</string>
+    <string name="role">Role</string>
+    <string name="confirm_phone_number">Confirm Phone Number</string>
+    <string name="office_phone_number">Office Phone Number</string>
+    <string name="endocrinologist">Endocrinologist</string>
+    <string name="obstetrics_gynecology"><![CDATA[Obstetrics & Gynecology]]></string>
+    <string name="neo">Neo</string>
+    <string name="lactation_specialist">Lactation Specialist</string>
+    <string name="clinical_assistant">Clinical Assistant</string>
+    <string name="day_care_provider">Day Care Provider</string>
+    <string name="patient">Patient</string>
+    <string name="administrator">Administrator</string>
+    <string name="study_group">Study Group</string>
+    <string name="goup_one">Goup One</string>
 
 
 </resources>

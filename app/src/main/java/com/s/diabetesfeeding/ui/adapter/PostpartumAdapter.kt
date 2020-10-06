@@ -13,6 +13,7 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.obgynentities.*
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.getStandardFormattedDateForAllScreen
 import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_trimester.view.*
 import org.threeten.bp.OffsetDateTime
@@ -58,8 +59,8 @@ class PostpartumAdapter(val context: Context, val trimesterTopics : List<PostPar
                 OnDateSetListener { it, year, monthOfYear, day ->
                     //val date: String = year.toString() + "-" + (monthOfYear + 1).toString() + "-" + day.toString()
                     val selectedDate = formatDate(year,monthOfYear,day)
-                    holder.view.tv_date.text =  selectedDate
-                    topics.date = selectedDate
+                    holder.view.tv_date.text =  getStandardFormattedDateForAllScreen(selectedDate)
+                    topics.date = getStandardFormattedDateForAllScreen(selectedDate)
                 }
             val datePickerDialog = DatePickerDialog(context,mDateSetListener, year, month,day)
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)

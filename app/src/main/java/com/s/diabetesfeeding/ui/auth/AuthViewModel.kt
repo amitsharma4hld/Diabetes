@@ -1,9 +1,16 @@
 package com.s.diabetesfeeding.ui.auth
 
+import android.app.Dialog
+import android.content.Context
 import android.view.View
+import android.view.Window
+import android.widget.TextView
 import androidx.databinding.BaseObservable
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
+import com.google.android.material.card.MaterialCardView
+import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.db.entities.obgynentities.Observation
 import com.s.diabetesfeeding.data.repositories.UserRepository
 import com.s.diabetesfeeding.util.ApiException
 import com.s.diabetesfeeding.util.Coroutines
@@ -15,6 +22,9 @@ class AuthViewModel(
 ) : ViewModel() {
     val isLoginSelected = ObservableBoolean(true)
     val isSignUpSelected = ObservableBoolean(false)
+
+    var isSignUpDone = ObservableBoolean(false)
+    var isStudyGroupSelect = ObservableBoolean(false)
 
     var email: String? = null
     var password: String? = null
@@ -84,16 +94,36 @@ class AuthViewModel(
                                 return@main
                             }else{
                                 if (authResponse.data?.msg.isNullOrBlank()){
+                                    isSignUpDone.set(true)
+                                    authListener?.onFailure("Great, Please continue to fill other details")
                                   /*  authListener?.onFailure("Register Successful." + "\n" +
-                                            "Please verify your mail and than login.")*/
-                                    authListener?.onVerificationFailed("Register Successful.","Please verify your mail and than login.")
+                                            "Please verify your mail and than login.") */
+
+                                   // authListener?.onVerificationFailed("Register Successful.","Please verify your mail and than login.")
+
                                 }else
                                     authListener?.onFailure(authResponse.data?.msg!!)
+                                if (authResponse.data?.msg == "Sorry, that username already exists!"){
+                                    if (isStudyGroupSelect.get()){
+                                        authListener?.onVerificationFailed("Register Successful.","Please verify your mail and than login.")
+                                    }
+                                    isStudyGroupSelect.set(true)
+                                    isSignUpDone.set(false)
+                                }
                                 return@main
                             }
                         }
                     }else{
-                        authListener?.onFailure(authResponse.data?.msg!!)
+                        // authListener?.onFailure(authResponse.data?.msg!!)
+                        if (authResponse.data?.msg == "Sorry, that username already exists!"){
+                            if (isStudyGroupSelect.get()){
+                                authListener?.onVerificationFailed("Register Successful.","Please verify your mail and than login.")
+                                isSignUpDone.set(false)
+                            }
+                            isStudyGroupSelect.set(true)
+                            isSignUpDone.set(false)
+                            authListener?.onFailure("please continue")
+                        }
                     }
 
                 }catch (e:ApiException){
@@ -111,12 +141,14 @@ class AuthViewModel(
     fun onLoginSelect(view: View){
         isLoginSelected.set(true)
         isSignUpSelected.set(false)
+        isSignUpDone.set(false)
         showOrGoneOnLoginClick(view)
 
     }
     fun onSingUpSelect(view: View){
         isSignUpSelected.set(true)
         isLoginSelected.set(false)
+        isSignUpDone.set(false)
         showOrGoneOnSignUpClick(view)
     }
 
@@ -134,6 +166,10 @@ class AuthViewModel(
             View.VISIBLE
         }
     }
+    fun onRoleClick(){
+
+    }
+
     /*
     fun View.showOrGone(show: Boolean) {
         visibility = if(show) {

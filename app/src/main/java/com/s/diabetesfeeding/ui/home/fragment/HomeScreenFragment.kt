@@ -402,15 +402,18 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 }else
                     tv_steps_count?.text =  getString(R.string.step_count_display, total)
                      Log.i("TAG", "Total steps: $total")
-                viewLifecycleOwner.lifecycleScope.launch {
-                    context?.let {
+                Coroutines.io {
+                    context.let {
                         val currentDate = OffsetDateTime.now()
-                        AppDatabase(it).getHomeMenusDao()
-                            .saveSteps(
-                                StepCount(0, total, "", currentDate)
-                            )
+                        if (it != null) {
+                            AppDatabase(it).getHomeMenusDao()
+                                .saveSteps(
+                                    StepCount(0, total, "", currentDate)
+                                )
+                        }
                     }
                 }
+
             }
             .addOnFailureListener { e ->
 

@@ -129,6 +129,24 @@ fun Context.showObservationComentDialog(title: Observation) {
     }
     dialog.show()
 }
+
+fun Context.showSlectRoleDialog(title: Observation) {
+    val dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCancelable(true)
+    dialog.setContentView(R.layout.custome_select_role_dialog)
+    val body = dialog.findViewById(R.id.mcv_patient) as MaterialCardView
+    val mBtn = dialog.findViewById(R.id.tv_close_button) as TextView
+
+    body.setOnClickListener {
+
+    }
+    mBtn.setOnClickListener {
+        dialog.dismiss()
+    }
+
+    dialog.show()
+}
 fun Context.chooseBreastFeedTypeDialog(
     mcontext: FragmentActivity,
     breastFeedingSessionData: BreastFeedingSessionData

@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
 import com.s.diabetesfeeding.data.db.entities.Days
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.CellClickListener
 import com.s.diabetesfeeding.util.getDDMMYYYYOffsetDateTime
 import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import com.s.diabetesfeeding.util.logger.Log
+import com.s.diabetesfeeding.util.showComentDialog
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_history_child.view.*
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.rl_done
@@ -61,12 +64,29 @@ class BreastFeedHistoryChilAdapter(private val context: Context, private val cat
                 }
             }
 
-            if (getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(categoryItems.date))
-                    .equals(getDDMMYYYYOffsetDateTime(OffsetDateTime.now()))){
+            // TODO : Compare with previous date if previous date selected.
+            if (prefs.getSavedIsPreviousDate()) {
+                if (!prefs.getOffsetDateTime().isNullOrEmpty()){
+                    if (getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(categoryItems.date)) ==
+                        getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(prefs.getOffsetDateTime()))){
+                        holder.view.cv_start.visibility = View.VISIBLE
+                    }else{
+                        holder.view.cv_start.visibility = View.GONE
+                    }
+                }
+            }else {
+                if (getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(categoryItems.date)) == getDDMMYYYYOffsetDateTime(OffsetDateTime.now())){
+                    holder.view.cv_start.visibility = View.VISIBLE
+                }else{
+                    holder.view.cv_start.visibility = View.GONE
+                }
+            }
+
+           /* if (getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(categoryItems.date)) == getDDMMYYYYOffsetDateTime(OffsetDateTime.now())){
                 holder.view.cv_start.visibility = View.VISIBLE
             }else{
                 holder.view.cv_start.visibility = View.GONE
-            }
+            }*/
 
             holder.view.cv_start.setOnClickListener {
 

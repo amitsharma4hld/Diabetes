@@ -132,7 +132,12 @@
                 android:id="@+id/loginView"
                 android:visibility="visible"
                 >
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="@{!viewmodel.isStudyGroupSelect() ? View.VISIBLE : View.GONE}"
+    >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -140,6 +145,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_gravity="center"
+                    android:visibility="@{!viewmodel.isSignUpDone() ? View.VISIBLE : View.GONE}"
                     android:layout_height="wrap_content">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/mc_username"
@@ -202,7 +208,6 @@
                             android:textStyle="bold" />
 
                     </com.google.android.material.card.MaterialCardView>
-
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -264,7 +269,259 @@
                             android:textStyle="bold" />
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_gravity="center"
+                    android:visibility="@{viewmodel.isSignUpDone() ? View.VISIBLE : View.GONE}"
+                    android:layout_height="wrap_content">
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mc_salutation"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="4dp"
+                        android:textStyle="bold"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_salutation"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:text=""
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/salutation"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:id="@+id/mcv_first_name"
+                        app:strokeColor="#00ae99"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="4dp"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_first_name"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/first_name"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+
+                            android:textStyle="bold" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:id="@+id/mcv_last_name"
+                        app:strokeColor="#00ae99"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="4dp"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_last_name"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:id="@+id/mcv_Role"
+                        app:strokeColor="#00ae99"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="4dp"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_role"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/role"
+                            android:inputType="textPassword"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_cell_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="4dp"
+                        android:textStyle="bold"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_cell_phone_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:text=""
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/user_name"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:id="@+id/mcv_confirm_phone_number"
+                        app:strokeColor="#00ae99"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="4dp"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_confirm_phone_number"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/confirm_phone_number"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:cardCornerRadius="20dp"
+                        android:id="@+id/mcv_office_phone_number"
+                        app:strokeColor="#00ae99"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="4dp"
+                        app:cardForegroundColor="@android:color/transparent"
+                        >
+
+                        <EditText
+                            android:id="@+id/et_office_phone_number"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/avenir_next_bold"
+                            android:gravity="start|center"
+                            android:hint="@string/office_phone_number"
+                            android:inputType="phone"
+                            android:paddingStart="18dp"
+                            android:maxLines="1"
+                            android:textColorHint="@color/colorGrayTextHint"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                </LinearLayout>
+</LinearLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="20dp"
+                    android:id="@+id/mcv_select_group"
+                    app:strokeColor="#00ae99"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:visibility="@{viewmodel.isStudyGroupSelect() ? View.VISIBLE : View.GONE}"
+                    app:cardForegroundColor="@android:color/transparent"
+                    >
+
+                    <EditText
+                        android:id="@+id/et_select_group"
+                        android:text=""
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:fontFamily="@font/avenir_next_bold"
+                        android:gravity="start|center"
+                        android:hint="@string/study_group"
+                        android:inputType="text"
+                        android:paddingStart="18dp"
+                        android:maxLines="1"
+                        android:textColorHint="@color/colorGrayTextHint"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
                 <TextView
                     android:id="@+id/tv_forgetpass"
                     android:layout_width="match_parent"

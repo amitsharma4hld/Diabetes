@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.Data
 import com.s.diabetesfeeding.ui.auth.AuthListener
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), AuthListener, KodeinAware {
         super.onCreate(savedInstanceState)
         setFullScreen(window)
         setContentView(R.layout.activity_main)
+        AndroidThreeTen.init(this)
         val viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         viewModel.authListener = this
         viewModel.getLoggedInUser().observe(this, Observer { data ->
