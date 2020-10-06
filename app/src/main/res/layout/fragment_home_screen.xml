@@ -72,296 +72,31 @@
                 </com.google.android.material.card.MaterialCardView>
 
             </RelativeLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:weightSum="4"
-                android:visibility="gone"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_height="50dp">
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="110dp"
-                        android:layout_height="40dp"
-                        app:cardCornerRadius="20dp"
-                        android:id="@+id/mc_today"
-                        app:cardForegroundColor="@android:color/transparent"
-                        app:strokeColor="#00ae99"
-                        android:layout_margin="2dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:text="@string/today"
-                            android:fontFamily="@font/avenir_next_regular"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
-                    </com.google.android.material.card.MaterialCardView>
-                    <TextView
-                        android:id="@+id/tv_today"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:text="@string/today"
-                        android:fontFamily="@font/avenir_next_regular"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="match_parent">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="110dp"
-                        android:layout_height="40dp"
-                        app:cardCornerRadius="20dp"
-                        android:id="@+id/mc_week"
-                        app:cardForegroundColor="@android:color/transparent"
-                        app:strokeColor="#00ae99"
-                        android:visibility="gone"
-                        android:layout_margin="2dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:text="@string/week"
-                            android:fontFamily="@font/avenir_next_regular"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
-                    </com.google.android.material.card.MaterialCardView>
-                    <TextView
-                        android:id="@+id/tv_week"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/avenir_next_regular"
-                        android:text="@string/week"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="match_parent">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="110dp"
-                        android:layout_height="40dp"
-                        app:cardCornerRadius="20dp"
-                        android:id="@+id/mc_month"
-                        app:cardForegroundColor="@android:color/transparent"
-                        app:strokeColor="#00ae99"
-                        android:visibility="gone"
-                        android:layout_margin="2dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:fontFamily="@font/avenir_next_regular"
-                            android:text="@string/month"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
-                    </com.google.android.material.card.MaterialCardView>
-                    <TextView
-                        android:id="@+id/tv_month"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/avenir_next_regular"
-                        android:text="@string/month"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="match_parent">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="110dp"
-                        android:layout_height="40dp"
-                        app:cardCornerRadius="20dp"
-                        android:id="@+id/mc_all"
-                        app:cardForegroundColor="@android:color/transparent"
-                        app:strokeColor="#00ae99"
-                        android:visibility="gone"
-                        android:layout_margin="2dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:fontFamily="@font/avenir_next_regular"
-                            android:text="@string/all"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
-                    </com.google.android.material.card.MaterialCardView>
-                    <TextView
-                        android:id="@+id/tv_all"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:text="@string/all"
-                        android:fontFamily="@font/avenir_next_regular"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
-                </RelativeLayout>
-
+                android:gravity="center"
+                >
+                <TextView
+                    android:id="@+id/tv_today_date"
+                    android:layout_width="130dip"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="June 4. 2020"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+                <ImageView
+                    android:id="@+id/iv_calendar_picup_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_calendar_today_new"
+                    android:padding="4dp"
+                    />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_today_date"
-                android:layout_width="130dip"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="June 4. 2020"
-                android:fontFamily="@font/avenir_next_regular"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
 
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:weightSum="2"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dip"
-                        app:cardCornerRadius="30dp"
-                        android:id="@+id/totalnumber"
-                        app:cardBackgroundColor="@color/colorAccent"
-                        android:layout_margin="2dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:layout_height="match_parent">
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:text="Week"
-                                android:textColor="#fff"
-                                android:textSize="16sp" />
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:textStyle="bold"
-                                android:text="12"
-                                android:textColor="#fff"
-                                android:textSize="24dp" />
-
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:text="of"
-                                android:textColor="#fff"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:text="Pragnancy"
-                                android:textColor="#fff"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dip"
-                        app:cardCornerRadius="30dp"
-                        android:id="@+id/drname"
-                        app:cardBackgroundColor="@color/colorAccent"
-                        android:layout_margin="2dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:orientation="vertical"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_height="match_parent">
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:textStyle="bold"
-                                android:text="Dr. Brand"
-                                android:textColor="#fff"
-                                android:textSize="24dp" />
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:textStyle="normal"
-                                android:text="appointment"
-                                android:textColor="#fff"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:text="Todat at"
-                                android:textColor="#fff"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:layout_width="130dip"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:textStyle="bold"
-                                android:text="12:00 N"
-                                android:textColor="#fff"
-                                android:textSize="24dp" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-                </RelativeLayout>
-
-            </LinearLayout>-->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

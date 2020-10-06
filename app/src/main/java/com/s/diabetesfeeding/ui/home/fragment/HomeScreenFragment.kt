@@ -37,7 +37,6 @@ import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.util.Coroutines
-import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -47,6 +46,7 @@ import org.threeten.bp.OffsetDateTime
 import java.io.File
 import java.text.DateFormat
 import java.util.*
+import java.util.Collections.list
 import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
@@ -180,7 +180,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 prefs.saveIsPrevousDate(true)
             }
         }
-        tv_today_date.setOnClickListener {
+        iv_calendar_picup_date.setOnClickListener {
             calendar = Calendar.getInstance()
             day = calendar.get(Calendar.DAY_OF_MONTH)
             month = calendar.get(Calendar.MONTH)
@@ -271,6 +271,14 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                             }
                         }
                     }
+                    Coroutines.io {
+                        // Step Count
+                        context?.let {
+                                val date = AppDatabase(it).getHomeMenusDao().getStepsCountDateWise(fromOffsetDateTime,toOffsetDate)
+                                val step =  date[date.lastIndex].stepsCount
+                                tv_steps_count?.text = getString(R.string.step_count_display, step)
+                        }
+                    }
 
                 }
             val datePickerDialog = DatePickerDialog(requireContext(),mDateSetListener, year, month,day)
@@ -278,7 +286,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             datePickerDialog.show()
 
         }
-        tv_steps_count.text = "# steps today"
+        // tv_steps_count.text = "# steps today"
 
         savedataAllCategory()
         saveAllCategoryItems()
@@ -366,10 +374,6 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     }
     private fun getGoogleAccount() = GoogleSignIn.getAccountForExtension(requireActivity(), fitnessOptions)
 
-    /**
-     * Reads the current daily step total, computed from midnight of the current day on the device's
-     * current timezone.
-     */
     private fun readData() {
         Fitness.getHistoryClient(requireActivity(), getGoogleAccount())
             .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
@@ -378,8 +382,33 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     dataSet.isEmpty -> 0
                     else -> dataSet.dataPoints.first().getValue(Field.FIELD_STEPS).asInt()
                 }
-                tv_steps_count?.text =  getString(R.string.step_count_display, total)
-                Log.i("TAG", "Total steps: $total")
+
+                if (prefs.getSavedIsPreviousDate()) {
+                    val fromDate = OffsetDateTime.parse(prefs.getFromOffsetDateTime())
+                    val toDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        context?.let {
+                            val date = AppDatabase(it).getHomeMenusDao().getStepsCountDateWise(fromDate,toDate)
+                            if (!date.isNullOrEmpty()){
+                                val step =  date[date.lastIndex].stepsCount
+                                tv_steps_count?.text = getString(R.string.step_count_display, step)
+                            }else
+                                tv_steps_count?.text= getString(R.string.step_count_display, 0)
+                        }
+                    }
+
+                }else
+                    tv_steps_count?.text =  getString(R.string.step_count_display, total)
+                     Log.i("TAG", "Total steps: $total")
+                viewLifecycleOwner.lifecycleScope.launch {
+                    context?.let {
+                        val currentDate = OffsetDateTime.now()
+                        AppDatabase(it).getHomeMenusDao()
+                            .saveSteps(
+                                StepCount(0, total, "", currentDate)
+                            )
+                    }
+                }
             }
             .addOnFailureListener { e ->
 

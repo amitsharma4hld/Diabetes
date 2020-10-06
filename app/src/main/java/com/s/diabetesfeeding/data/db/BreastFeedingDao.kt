@@ -53,4 +53,10 @@ interface BreastFeedingDao {
     @Query("SELECT *  FROM ProgressBabyPoopDiaperChange  WHERE dateTime BETWEEN :from AND :to")
     fun getProgressDiaperChange(from: OffsetDateTime, to: OffsetDateTime): List<ProgressBabyPoopDiaperChange>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveProgressDailyObservation(progressDailyObservation: ProgressDailyObservation)
+    @Query("SELECT *  FROM ProgressDailyObservation  WHERE offsetDateTime BETWEEN :from AND :to")
+    fun getProgressDailyObservation(from: OffsetDateTime, to: OffsetDateTime): List<ProgressDailyObservation>
+    @Query("UPDATE ObservationBreastFeed SET value=:value,isBoolean=:isBoolean,unit=:unit WHERE title=:title")
+    fun updateDailyObservationColumn(title:String,value:String,isBoolean:Boolean,unit:String)
 }

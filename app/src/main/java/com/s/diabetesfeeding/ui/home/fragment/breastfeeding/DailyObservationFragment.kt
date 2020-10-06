@@ -12,10 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.ProgressSymptoms
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressDailyObservation
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.adapter.DailyObservationsAdapter
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.fragment_daily_observation.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.OffsetDateTime
@@ -46,6 +50,10 @@ class DailyObservationFragment : Fragment() {
             showObservations(observationList)
         }
         mcv_done.setOnClickListener {
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not be edited")
+                (context as Activity).onBackPressed()
+            }else
             updateScore()
            //requireActivity().onBackPressed()
         }
@@ -70,7 +78,6 @@ class DailyObservationFragment : Fragment() {
             (context as Activity).onBackPressed()
         }
     }
-
 
 
 }

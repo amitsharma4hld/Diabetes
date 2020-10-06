@@ -2,6 +2,7 @@ package com.s.diabetesfeeding.ui.adapter
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
@@ -13,8 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.ObservationBreastFeed
+import com.s.diabetesfeeding.data.db.entities.breastfeeding.ProgressDailyObservation
+import com.s.diabetesfeeding.prefs
+import com.s.diabetesfeeding.ui.home.fragment.breastfeeding.observationList
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.snackbar
+import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.*
 import kotlinx.android.synthetic.main.item_daily_observations_layout.view.*
+import org.threeten.bp.OffsetDateTime
 
 
 class DailyObservationsAdapter (private val context: Context, val observations : List<ObservationBreastFeed>) : RecyclerView.Adapter<DailyObservationsAdapter.ObservationsViewHolder>(){
@@ -33,12 +40,43 @@ class DailyObservationsAdapter (private val context: Context, val observations :
         val observations = observations[position]
         holder.view.tv_observation_title.text = observations.title
         holder.view.et_observation_value.setText(observations.value)
+
+        if (observations.title == "Sleep Hours"){
+            holder.view.et_observation_value.hint = "4-10"
+        }else if(observations.title == "Rate your fatigue") {
+            holder.view.et_observation_value.hint = "1-10"
+        }else if(observations.title == "Glass of water per day") {
+            holder.view.et_observation_value.hint = "4-10"
+        }else if(observations.title == "Meals per day") {
+            holder.view.et_observation_value.hint = "1-5"
+        }else if(observations.title == "Helps with chores") {
+            holder.view.et_observation_value.filters = arrayOf(InputFilter.LengthFilter(3))
+            holder.view.et_observation_value.hint = "YES"
+        }else if(observations.title == "Glass of alcohol per day?") {
+            holder.view.et_observation_value.hint = "0-10"
+        }else if(observations.title == "Smoking") {
+            holder.view.et_observation_value.filters = arrayOf(InputFilter.LengthFilter(3))
+            holder.view.et_observation_value.hint = "NO"
+        }else if(observations.title == "Rate your stress") {
+            holder.view.et_observation_value.hint = "0-10"
+        }
+
+        if (prefs.getSavedIsPreviousDate()) {
+            holder.view.et_observation_value.setOnClickListener {
+                it.snackbar("Previous data can not be edited")
+            }
+            holder.view.et_observation_value.isFocusable = false
+        }
+
         if (observations.isBoolean){
-            if (observations.value.equals("Yes")){
+            if (observations.value == "Yes"){
                 isSelected = true
             }
             holder.view.et_observation_value.inputType = InputType.TYPE_NULL
             holder.view.et_observation_value.setOnClickListener {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                }else
                 if (isSelected){
                     holder.view.et_observation_value.setText("No")
                     observations.value = "No"
@@ -52,6 +90,7 @@ class DailyObservationsAdapter (private val context: Context, val observations :
                 }
             }
         }
+
         holder.view.et_observation_value.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
             }
@@ -63,6 +102,7 @@ class DailyObservationsAdapter (private val context: Context, val observations :
             }
         })
 
+
     }
 
     class ObservationsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -71,8 +111,20 @@ class DailyObservationsAdapter (private val context: Context, val observations :
         Coroutines.io {
             context.let {
                 AppDatabase(it).getBreastFeedingDao().updateObservation(observationitem)
-                Log.d("APPDATABASE : ","Update value is ${observationitem.value}")
+                updateProgressDailyObservation(observationitem)
             }
         }
     }
+
+    private fun updateProgressDailyObservation(observationBreastFeed: ObservationBreastFeed) {
+        Coroutines.io {
+            context?.let {
+                val currentDate = OffsetDateTime.now()
+                val progressData = ProgressDailyObservation(0,observationBreastFeed.title,
+                    observationBreastFeed.value,observationBreastFeed.isBoolean,observationBreastFeed.unit,currentDate)
+                AppDatabase(it).getBreastFeedingDao().saveProgressDailyObservation(progressData)
+            }
+        }
+    }
+
 }

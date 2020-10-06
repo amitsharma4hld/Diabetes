@@ -33,6 +33,7 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         java.util.Date())
     private var progressBreastFeeding:List<ProgressBreastFeeding> = ArrayList()
     private var progressDiaperChange:List<ProgressBabyPoopDiaperChange> = ArrayList()
+    private var progressDailyObservation : List<ProgressDailyObservation> = ArrayList()
     var sessions = listOf(
         BreastFeedingSessionData(1,1, "","",""),
         BreastFeedingSessionData(2,2, "","",""),
@@ -61,7 +62,16 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         BabyPoopData(11,11,"", false, false),
         BabyPoopData(12,12,"", false, false)
     )
-
+    val observationList = listOf(
+        ObservationBreastFeed(1,"Sleep Hours","",false,""),
+        ObservationBreastFeed(2,"Rate your fatigue","",false,""),
+        ObservationBreastFeed(3,"Glass of water per day","",false,""),
+        ObservationBreastFeed(4,"Meals per day","",false,""),
+        ObservationBreastFeed(5,"Helps with chores","",true,""),
+        ObservationBreastFeed(6,"Glass of alcohol per day?","",false,""),
+        ObservationBreastFeed(7,"Smoking","",true,""),
+        ObservationBreastFeed(8,"Rate your stress","",false,"")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,16 +87,7 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
         arguments?.let {
             username_breastfeeding?.text = "Hello "+ DiabetesFragmentArgs.fromBundle(it).name +","
         }
-        val observationList = listOf(
-            ObservationBreastFeed(1,"Sleep Hours","",false,""),
-            ObservationBreastFeed(2,"Rate your fatigue","",false,""),
-            ObservationBreastFeed(3,"Glass of water per day","",false,""),
-            ObservationBreastFeed(4,"Meals per day","",false,""),
-            ObservationBreastFeed(5,"Helps with chores","Yes",true,""),
-            ObservationBreastFeed(6,"Glass of alcohol per day?","0",false,""),
-            ObservationBreastFeed(7,"Smoking","No",true,""),
-            ObservationBreastFeed(8,"Rate your stress","4",false,"")
-        )
+
 
         val typefaceRegular = ResourcesCompat.getFont(requireContext(), R.font.avenir_next_regular)
         val typefaceBold = ResourcesCompat.getFont(requireContext(), R.font.avenir_next_bold)
@@ -190,6 +191,27 @@ class BreastfeedingFragment : Fragment(), CellClickListener {
                                     progressDiaperChange[i].isPoop,
                                     progressDiaperChange[i].isPee,
                                     progressDiaperChange[i].temId)
+                        }
+                    }
+                }
+                // ProgressDailyObservation
+                context?.let {
+                    progressDailyObservation = emptyList()
+                    progressDailyObservation = AppDatabase(it).getBreastFeedingDao()
+                        .getProgressDailyObservation( fromDate, toDate)
+                }
+                context?.let {
+                    if (progressDailyObservation.isEmpty()){
+                        AppDatabase(it).getBreastFeedingDao().saveAllObservation(observationList)
+                    }else{
+                        AppDatabase(it).getBreastFeedingDao().saveAllObservation(observationList)
+                        for (i in progressDailyObservation.indices){
+                            AppDatabase(it).getBreastFeedingDao()
+                                .updateDailyObservationColumn(
+                                    progressDailyObservation[i].title,
+                                    progressDailyObservation[i].value,
+                                    progressDailyObservation[i].isBoolean,
+                                    progressDailyObservation[i].unit)
                         }
                     }
                 }

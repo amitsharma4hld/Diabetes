@@ -40,7 +40,9 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.*
         ProgressBabyPoopDiaperChange::class,
         ProgressSymptoms::class,
         ProgressObservation::class,
-        ProgressAllTrimester::class
+        ProgressAllTrimester::class,
+        ProgressDailyObservation::class,
+        StepCount::class
         // ScoreWithCategoryCrossRef::class
 
     ],

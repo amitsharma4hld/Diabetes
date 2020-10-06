@@ -50,6 +50,7 @@
                         android:textColor="@color/colorObservations"
                         android:textSize="20sp"
                         android:inputType="number"
+                        android:maxLength="2"
                         android:fontFamily="@font/avenir_next_regular"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"

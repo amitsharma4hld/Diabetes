@@ -13,6 +13,7 @@ import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.WeightToday
 import com.s.diabetesfeeding.data.db.entities.breastfeeding.BabyWeight
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.showSoftKeyboard
 import com.s.diabetesfeeding.util.snackbar
@@ -41,15 +42,20 @@ class BabyWeightFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         et_digit_one.requestFocus()
         et_digit_one.showSoftKeyboard(et_digit_one)
-
+        var currentDate:String = ""
+        currentDate = if (!prefs.getOffsetDateTime().isNullOrEmpty()){
+            val dateToString = prefs.getOffsetDateTime()!!.toString().split("T")
+            dateToString[0]
+        }else{
+            getCurrentDateInString()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
                 if (AppDatabase(it).getBreastFeedingDao().getBabyWeight().isNotEmpty()){
                     for (i in AppDatabase(it).getBreastFeedingDao().getBabyWeight().indices){
                         val date = AppDatabase(it).getBreastFeedingDao().getBabyWeight()[i].date
                         val dateToString = date.toString().split("T")
-                        var currentDate = getCurrentDateInString()
-                        if (currentDate.equals(dateToString[0])) {
+                        if (currentDate == dateToString[0]) {
                             isWeightCalculated = true
                             displayWeight(AppDatabase(it).getBreastFeedingDao().getBabyWeight()[i].weight!!)
                             return@let
@@ -58,28 +64,39 @@ class BabyWeightFragment : Fragment() {
                 }
             }
         }
-        done.setOnClickListener {
-            val view:View = it
-            if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()){
-                weightCalculated = et_digit_one.text.toString() + et_digit_two.text.toString()+et_digit_three.text.toString()
-                viewLifecycleOwner.lifecycleScope.launch {
-                    context?.let {
-                        val currentDate = OffsetDateTime.now()
-                        if (!isWeightCalculated){
-                            AppDatabase(it).getBreastFeedingDao()
-                                .saveBabyWeight(BabyWeight(0, weightCalculated!!, weightScore, currentDate))
-                            updateScore()
-                            //requireActivity().onBackPressed()
-                        }else{
-                            view.snackbar("Already Saved For Today")
+        done.setOnClickListener { it ->
+            if (prefs.getSavedIsPreviousDate()) {
+                it.snackbar("Previous data can not edit")
+            } else {
+                val view: View = it
+                if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()) {
+                    weightCalculated =
+                        et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        context?.let {
+                            val currentDate = OffsetDateTime.now()
+                            if (!isWeightCalculated) {
+                                AppDatabase(it).getBreastFeedingDao()
+                                    .saveBabyWeight(
+                                        BabyWeight(
+                                            0,
+                                            weightCalculated!!,
+                                            weightScore,
+                                            currentDate
+                                        )
+                                    )
+                                updateScore()
+                                //requireActivity().onBackPressed()
+                            } else {
+                                view.snackbar("Already Saved For Today")
+                            }
                         }
                     }
+                } else {
+                    it.snackbar("All field are required")
                 }
-            }else{
-                it.snackbar("All field are required")
             }
         }
-
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

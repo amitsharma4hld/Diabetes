@@ -13,9 +13,11 @@ import com.s.diabetesfeeding.data.db.entities.DistinctDateTimeList
 import com.s.diabetesfeeding.data.db.entities.FilterScoreTable
 import com.s.diabetesfeeding.data.db.entities.ScoreBoardFinalData
 import com.s.diabetesfeeding.data.db.entities.ScoreHashMapData
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.adapter.ScoreBoardAdapter
 import kotlinx.android.synthetic.main.fragment_score_board.*
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,7 +45,13 @@ class ScoreBoardFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        var currentDate:String = ""
+        currentDate = if (!prefs.getOffsetDateTime().isNullOrEmpty()){
+            val dateToString = prefs.getOffsetDateTime()!!.toString().split("T")
+            dateToString[0]
+        }else{
+            getCurrentDateInString()
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             context.let {
                 ScoresWithCategory =  AppDatabase(it!!).getHomeMenusDao().getFilterScoreTable()
@@ -56,7 +64,9 @@ class ScoreBoardFragment : Fragment() {
                 for (i in DistinctDateTimeList.indices) {
                     val date = AppDatabase(it).getHomeMenusDao().getDistinctDateTime()[i].date_time
                     val dateToString = date.toString().split("T")
-                    listDate.add(dateToString[0])
+                    if (currentDate == dateToString[0]) {
+                        listDate.add(dateToString[0])
+                    }
                 }
                 distinctDate = listDate.distinct()
                 pb_loading.visibility=View.GONE
@@ -105,6 +115,9 @@ class ScoreBoardFragment : Fragment() {
         val dateToString = date.split("T")
         return dateToString[0]
     }
-
+    private fun getCurrentDateInString():String{
+        val currentDate: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return currentDate
+    }
 
 }
