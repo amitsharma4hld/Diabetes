@@ -64,7 +64,6 @@ class BreastFeedHistoryChilAdapter(private val context: Context, private val cat
                 }
             }
 
-            // TODO : Compare with previous date if previous date selected.
             if (prefs.getSavedIsPreviousDate()) {
                 if (!prefs.getOffsetDateTime().isNullOrEmpty()){
                     if (getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(categoryItems.date)) ==
@@ -81,12 +80,6 @@ class BreastFeedHistoryChilAdapter(private val context: Context, private val cat
                     holder.view.cv_start.visibility = View.GONE
                 }
             }
-
-           /* if (getDDMMYYYYOffsetDateTime(OffsetDateTime.parse(categoryItems.date)) == getDDMMYYYYOffsetDateTime(OffsetDateTime.now())){
-                holder.view.cv_start.visibility = View.VISIBLE
-            }else{
-                holder.view.cv_start.visibility = View.GONE
-            }*/
 
             holder.view.cv_start.setOnClickListener {
 
