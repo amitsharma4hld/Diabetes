@@ -23,7 +23,6 @@
     >
 <RelativeLayout
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
     android:padding="32dp"
@@ -80,11 +79,69 @@
                     android:textColorHint="@color/colorGrayTextHint"
                     android:background="@null"
                     android:textColor="#000"
+                    android:text="@={viewmodel.email}"
                     android:textStyle="bold"
                     android:fontFamily="@font/avenir_next_bold"
                     android:paddingStart="24dp"
                     android:textSize="18sp" />
             </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardCornerRadius="20dp"
+        android:id="@+id/code"
+        app:strokeColor="#00ae99"
+        app:cardForegroundColor="@android:color/transparent"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/email"
+        android:layout_marginTop="18dp"
+        android:visibility="@{viewmodel.isOtpSend() ? View.VISIBLE : View.GONE}"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|start"
+            android:hint="@string/code"
+            android:textColorHint="@color/colorGrayTextHint"
+            android:background="@null"
+            android:textColor="#000"
+            android:inputType="number"
+            android:text="@={viewmodel.code}"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="24dp"
+            android:textSize="18sp" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:cardCornerRadius="20dp"
+        android:id="@+id/password"
+        app:strokeColor="#00ae99"
+        app:cardForegroundColor="@android:color/transparent"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/code"
+        android:layout_marginTop="18dp"
+        android:visibility="@{viewmodel.isOtpSend() ? View.VISIBLE : View.GONE}"
+
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|start"
+            android:hint="@string/new_password"
+            android:textColorHint="@color/colorGrayTextHint"
+            android:background="@null"
+            android:textColor="#000"
+            android:text="@={viewmodel.password}"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_next_bold"
+            android:paddingStart="24dp"
+            android:textSize="18sp" />
+    </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="match_parent"
@@ -96,16 +153,18 @@
             android:lineSpacingExtra="2dp"
             android:textStyle="normal"
             android:textColor="#4F8394"
+            android:layout_marginTop="18dp"
             android:layout_marginBottom="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_above="@+id/bt_continue"
+            android:layout_below="@+id/password"
+            android:visibility="@{!viewmodel.isOtpSend() ? View.VISIBLE : View.INVISIBLE}"
             />
         <com.google.android.material.card.MaterialCardView
             android:layout_width="100dip"
             android:layout_height="40dp"
             app:cardCornerRadius="20dp"
-            android:layout_gravity="center"
             android:id="@+id/bt_continue"
             android:onClick="@{viewmodel::onContinueButtonClick}"
             app:cardForegroundColor="@android:color/transparent"

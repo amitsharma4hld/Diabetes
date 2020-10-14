@@ -10,8 +10,8 @@
                 android:layout_width="45dp"
                 android:layout_height="70dp"
                 app:cardCornerRadius="1dp"
-                app:cardBackgroundColor="#D8D8D8"
-                app:strokeColor="#686767"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:strokeColor="@color/colorWhite"
                 app:strokeWidth="1dp"
                 android:layout_gravity="center"
                 >

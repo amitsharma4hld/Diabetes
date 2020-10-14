@@ -7,11 +7,12 @@
     android:background="@color/colorBackground"
     tools:context=".ui.home.fragment.diabetes.SymptomsFragment"
     >
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:fillViewport="true"
         android:scrollbars="none"
         >
 
@@ -52,13 +53,70 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewMonitorBloodGlucose"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_symptoms_list"
+                android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:scrollbars="none"
                 android:outlineAmbientShadowColor="@color/app_main_text_color"
                 android:outlineSpotShadowColor="@color/app_main_text_color"
                 tools:targetApi="p" />
+            <CheckBox
+                android:id="@+id/cb_no_symptom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/app_main_text_color"
+                android:fontFamily="@font/avenir_next_regular"
+                android:textColorHint="@color/app_main_text_color"
+                android:text="@string/no_symptoms"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:buttonTint="@color/color_monitorblood_glucose_theme"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="start"
+                tools:targetApi="lollipop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <CheckBox
+                    android:id="@+id/cb_other_symptom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_main_text_color"
+                    android:fontFamily="@font/avenir_next_regular"
+                    android:textColorHint="@color/app_main_text_color"
+                    android:text="@string/other"
+                    android:textSize="18sp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:buttonTint="@color/color_monitorblood_glucose_theme"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="start"
+                    tools:targetApi="lollipop" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="220dip"
+                    android:layout_height="45dip"
+                    app:cardCornerRadius="30dp"
+                    android:id="@+id/mc_describe"
+                    app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="32dp"
+                    android:visibility="visible"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/describe"
+                        android:textColor="@color/color_describe"
+                        android:textSize="20sp" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_what_can_you_do"
@@ -93,5 +151,5 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

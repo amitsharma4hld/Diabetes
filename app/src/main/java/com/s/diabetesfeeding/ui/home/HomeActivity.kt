@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
@@ -57,10 +58,13 @@ class HomeActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottom_navigation,navController)
         setupBottomNavMenu(navController)
 
+        bottom_navigation.getOrCreateBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment).verticalOffset = 20
+
         initializeLogging()
         checkPermissionsAndRun(FitActionRequestCode.SUBSCRIBE)
 
     }
+
     private fun checkPermissionsAndRun(fitActionRequestCode: FitActionRequestCode) {
         if (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 permissionApproved()
@@ -244,6 +248,8 @@ class HomeActivity : AppCompatActivity() {
     private fun setupBottomNavMenu(navController: NavController) {
         bottomNavigation = findViewById(R.id.bottom_navigation)
         bottomNavigation?.setupWithNavController(navController)
+
+        //bottomNavigation?.setOnNavigationItemReselectedListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -252,5 +258,9 @@ class HomeActivity : AppCompatActivity() {
             null
         )
     }
+
+   /* override fun onNavigationItemReselected(item: MenuItem) {
+        TODO("Not yet implemented")
+    }*/
 
 }

@@ -40,10 +40,12 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_endocrinologist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:textSize="14sp"
                     android:padding="2dp"
+                    android:gravity="center"
                     android:fontFamily="@font/avenir_next_bold"
                     android:textColor="@color/colorWhite"
                     android:text="@string/endocrinologist"/>
@@ -69,8 +71,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_obstetrics_gynecology"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
@@ -99,8 +103,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_neo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
@@ -128,8 +134,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_lactation_specialist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
@@ -157,13 +165,15 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_social_worker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
                     android:textColor="@color/colorWhite"
-                    android:text="@string/obstetrics_gynecology"/>
+                    android:text="@string/social_worker"/>
 
             </LinearLayout>
 
@@ -186,8 +196,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_clinical_assistant"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
@@ -215,8 +227,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_day_care_provider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
@@ -244,8 +258,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_patient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"
@@ -273,8 +289,10 @@
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_administrator"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:padding="2dp"
                     android:fontFamily="@font/avenir_next_bold"

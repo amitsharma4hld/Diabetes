@@ -13,23 +13,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
 import com.s.diabetesfeeding.data.db.entities.BloodGlucoseCategoryItem
+import com.s.diabetesfeeding.data.db.entities.CategoryWithItems
 import com.s.diabetesfeeding.data.db.entities.ProgressBloodGlucose
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
-import com.s.diabetesfeeding.util.getDayFromOffsetDateTime
-import com.s.diabetesfeeding.util.shortToast
 import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 import org.threeten.bp.OffsetDateTime
 
 
-class CategoryItemAdapter (private val context: Context,private val categoryItem: List<BloodGlucoseCategoryItem>): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
+class CategoryItemAdapter(
+    private val context: Context,
+    private val categoryItem: List<BloodGlucoseCategoryItem>,
+    private val allCategory: List<CategoryWithItems>,
+    private val positionParent: Int
+): RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>() {
     var tempPosition: Int = 0
     class CategoryItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     }
-
+    private val currentTime: String = java.text.SimpleDateFormat("hh:mm a", java.util.Locale.getDefault()).format(
+        java.util.Date())
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder {
         return CategoryItemViewHolder(
             LayoutInflater.from(parent.context)
@@ -55,39 +60,63 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
             holder.view.et_value.inputType = InputType.TYPE_CLASS_NUMBER
             holder.view.et_value.setText("")
             holder.view.rl_done.isEnabled = true
+            holder.view.mc_done.isEnabled = true
+            holder.view.mcv_input.isEnabled = true
         }else{
             holder.view.et_value.inputType = InputType.TYPE_NULL
             holder.view.et_value.setText(categoryItems.value)
+            holder.view.tv_time.text = categoryItems.time
+            holder.view.tv_time.visibility = View.VISIBLE
             holder.view.rl_done.isEnabled = false
+            holder.view.mcv_input.isEnabled = false
+            holder.view.mc_done.isEnabled = false
         }
         if (position==1){
             if(categoryItem[1].value.isNotEmpty() || categoryItem[2].value.isNotEmpty()){
                 holder.view.et_value.inputType = InputType.TYPE_NULL
                  if (categoryItem[1].value.isNotEmpty()){
                      holder.view.et_value.setText(categoryItems.value)
+                     holder.view.tv_time.text = categoryItems.time
+                     holder.view.tv_time.visibility = View.VISIBLE
                      holder.view.rl_second_done.isEnabled = false
+                     holder.view.mcv_second_done.isEnabled = false
+                     holder.view.mcv_input.isEnabled = false
                  }
                 else{
                     holder.view.et_value.setText(" ")
-                    holder.view.rl_second_done.isEnabled = false
+                    holder.view.et_value.inputType = InputType.TYPE_NULL
+                     //holder.view.tv_time.text = categoryItems.time
+                     holder.view.tv_time.visibility = View.GONE
+                     holder.view.rl_second_done.isEnabled = false
+                     holder.view.mcv_second_done.isEnabled = false
+                     holder.view.mcv_input.isEnabled = false
+
                 }
             }
         }
         if (position==2){
             if(categoryItem[1].value.isNotEmpty() || categoryItem[2].value.isNotEmpty()){
                 holder.view.et_value.inputType = InputType.TYPE_NULL
-                if (categoryItem[2].value.isNotEmpty()){
+                if (categoryItem[2].value.isNotEmpty()) {
                     holder.view.et_value.setText(categoryItems.value)
+                    holder.view.tv_time.text = categoryItems.time
+                    holder.view.tv_time.visibility = View.VISIBLE
                     holder.view.rl_second_done.isEnabled = false
+                    holder.view.mcv_second_done.isEnabled = false
+                    holder.view.mcv_input.isEnabled = false
                 }
-               else{
-                   holder.view.et_value.setText(" ")
-                   holder.view.rl_second_done.isEnabled = false
+               else {
+                    holder.view.et_value.setText(" ")
+                    holder.view.et_value.inputType = InputType.TYPE_NULL
+                    holder.view.tv_time.visibility = View.GONE
+                    holder.view.mcv_second_done.isEnabled = false
+                    holder.view.mcv_input.isEnabled = false
+                    holder.view.rl_second_done.isEnabled = false
                }
             }
         }
         holder.view.tv_title.text = categoryItems.title
-        holder.view.tv_time.text = categoryItems.time
+        //holder.view.tv_time.text = categoryItems.time
         holder.view.tv_range_value.text = categoryItems.range
 
         var isBlank: Boolean
@@ -99,6 +128,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
             }else{
                 categoryItems.value = holder.view.et_value.text.toString()
                 categoryItems.score = 1
+                categoryItems.time = currentTime
                 updateData(categoryItems)
                 updateProgressData(categoryItems)
                 updateScore(categoryItems)
@@ -114,6 +144,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                     if (tempPosition == 2){
                         val categoryItems = categoryItem[2]
                         categoryItems.score = 1
+                        categoryItems.time = currentTime
                         updateData(categoryItems)
                         updateProgressData(categoryItems)
                         updateScore(categoryItems)
@@ -121,6 +152,7 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                     }else{
                         // categoryItems.value = holder.view.et_value.text.toString()
                         categoryItems.score = 1
+                        categoryItems.time = currentTime
                         updateData(categoryItems)
                         updateProgressData(categoryItems)
                         updateScore(categoryItems)
@@ -147,12 +179,103 @@ class CategoryItemAdapter (private val context: Context,private val categoryItem
                 }
             }
         })
-        if (prefs.getSavedIsPreviousDate() && categoryItems.value.isEmpty()) {
+
+        if (prefs.getSavedIsPreviousDate() && categoryItems.value.isBlank()) {
             holder.view.et_value.setText(" ")
+            holder.view.et_value.inputType = InputType.TYPE_NULL
             holder.view.rl_second_done.isEnabled = false
             holder.view.rl_done.isEnabled = false
+
+            holder.view.mc_done.isEnabled = false
+            holder.view.mcv_second_done.isEnabled = false
+            holder.view.mcv_input.isEnabled = false
         }
+
+        if (!prefs.getSavedIsPreviousDate()){
+            if (positionParent == 1){
+                val parentList = allCategory[0].bloodGlucoseCategoryItems
+                if (parentList.isNotEmpty()){
+
+                    if (position==0 && parentList[0].value.isBlank()){
+                        holder.view.et_value.setText(" ")
+                        holder.view.mcv_input.isEnabled = false
+                        holder.view.mc_done.isEnabled = false
+                        holder.view.et_value.inputType = InputType.TYPE_NULL
+                    }else{
+                        if (position > 0){
+                            if (allCategory[1].bloodGlucoseCategoryItems[0].value.isBlank()){
+                                holder.view.et_value.setText(" ")
+                                holder.view.mcv_input.isEnabled = false
+                                holder.view.mcv_second_done.isEnabled = false
+                                holder.view.et_value.inputType = InputType.TYPE_NULL
+                            }
+                        }
+
+                    }
+
+                }
+            }
+            if (positionParent == 2){
+                val parentList = allCategory[1].bloodGlucoseCategoryItems
+                if (parentList.isNotEmpty()){
+
+                    if (position==0 && (parentList[1].value.isBlank() && parentList[2].value.isBlank())){
+                        holder.view.et_value.setText(" ")
+                        holder.view.mcv_input.isEnabled = false
+                        holder.view.mc_done.isEnabled = false
+                        holder.view.et_value.inputType = InputType.TYPE_NULL
+                    }
+                    else{
+                        if (position > 0){
+                            if (allCategory[2].bloodGlucoseCategoryItems[0].value.isBlank()){
+                                holder.view.et_value.setText(" ")
+                                holder.view.mcv_input.isEnabled = false
+                                holder.view.mcv_second_done.isEnabled = false
+                                holder.view.et_value.inputType = InputType.TYPE_NULL
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (positionParent == 3){
+                val parentList = allCategory[2].bloodGlucoseCategoryItems
+                if (parentList.isNotEmpty()){
+
+                    if (position==0 && (parentList[1].value.isBlank() && parentList[2].value.isBlank())){
+                        holder.view.et_value.setText(" ")
+                        holder.view.mcv_input.isEnabled = false
+                        holder.view.mc_done.isEnabled = false
+                        holder.view.et_value.inputType = InputType.TYPE_NULL
+                    }
+                    else{
+                        if (position > 0){
+                            if (allCategory[3].bloodGlucoseCategoryItems[0].value.isBlank()){
+                                holder.view.et_value.setText(" ")
+                                holder.view.mcv_input.isEnabled = false
+                                holder.view.mcv_second_done.isEnabled = false
+                                holder.view.et_value.inputType = InputType.TYPE_NULL
+                            }
+                        }
+                    }
+                }
+            }
+            if (positionParent == 4) {
+                val parentList = allCategory[3].bloodGlucoseCategoryItems
+                if (parentList.isNotEmpty()) {
+                    if (position == 0 && (parentList[1].value.isBlank() && parentList[2].value.isBlank())) {
+                        holder.view.et_value.setText(" ")
+                        holder.view.mcv_input.isEnabled = false
+                        holder.view.mc_done.isEnabled = false
+                        holder.view.et_value.inputType = InputType.TYPE_NULL
+                    }
+                }
+            }
+        }
+
     }
+
+    // if things are enabled and disabled we will grayish the filed
 
     private fun updateData(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {

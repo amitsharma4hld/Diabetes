@@ -23,6 +23,7 @@ import org.threeten.bp.OffsetDateTime
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 
 class InsulinFragment : Fragment() {
@@ -131,7 +132,7 @@ class InsulinFragment : Fragment() {
         }
     }
     fun displayUnit(unit:Double){
-        tv_display_unit.text = requireActivity().roundOffDecimal(unit).toString() + " Unit"
+        tv_display_unit.text = unit.roundToInt().toString()   + " Unit" // requireActivity().roundOffDecimal(unit).toString() + " Unit"
     }
 
 

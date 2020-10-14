@@ -65,7 +65,7 @@ class ObgynFragment : Fragment() {
             PrentalVisitRecord(9,"Protein","","g/L"),
             PrentalVisitRecord(10,"Urine","",""),
             PrentalVisitRecord(11,"Significant Findings","",""),
-            PrentalVisitRecord(12,"Instructions","","")
+            PrentalVisitRecord(12,"Recommendations","","")
         )
 
         if (!prefs.getOffsetDateTime().isNullOrEmpty()) {

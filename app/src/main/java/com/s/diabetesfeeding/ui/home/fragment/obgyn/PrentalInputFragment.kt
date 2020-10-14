@@ -3,6 +3,7 @@ package com.s.diabetesfeeding.ui.home.fragment.obgyn
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.Html
 import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
@@ -101,8 +102,16 @@ class PrentalInputFragment : Fragment() {
                 param.setMargins(16,2,2,2)
                 mcv_three.layoutParams = param
                 et_digit_one.requestFocus()
-                et_digit_one.hint = "high "
-                et_digit_three.hint = "low"
+                et_digit_one.setHint(
+                    Html.fromHtml(
+                        "<small><small><small>"
+                                + getString(R.string.blood_presure_type_systolic)
+                                + "</small></small></small>"));
+                et_digit_three.setHint(
+                    Html.fromHtml(
+                        "<small><small><small>"
+                                + getString(R.string.blood_presure_type_diastolic)
+                                + "</small></small></small>"));
                 et_digit_one.filters = arrayOf(InputFilter.LengthFilter(3))
                 et_digit_three.filters = arrayOf(InputFilter.LengthFilter(3))
             }
@@ -123,7 +132,7 @@ class PrentalInputFragment : Fragment() {
                 et_digit_two.isFocusable = false
                 et_digit_three.requestFocus()
             }
-            if (prentalVisitRecord?.measurementOf == "Significant Findings" || prentalVisitRecord?.measurementOf == "Instructions" ){
+            if (prentalVisitRecord?.measurementOf == "Significant Findings" || prentalVisitRecord?.measurementOf == "Recommendations" ){
                 tv_data_entry_title.text = "Text Entry"
                 ll_data_entry.visibility = View.GONE
                 mcv_text_one.visibility = View.VISIBLE
@@ -184,7 +193,6 @@ class PrentalInputFragment : Fragment() {
                                 }
                             }
                         }
-
 
                     }else {
                         mcv_weight_done.snackbar("Fields can not be empty")

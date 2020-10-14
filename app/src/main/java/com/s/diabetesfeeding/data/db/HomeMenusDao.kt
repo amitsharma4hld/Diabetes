@@ -36,8 +36,11 @@ interface HomeMenusDao {
     @Query("SELECT * FROM ScoreTable WHERE sub_menuId=:subId")
     suspend fun getScoreByCategory(subId:Int):List<ScoreTable>
 
-    @Query("SELECT date_time from ScoreTable")
-    suspend fun getDistinctDateTime():List<DistinctDateTimeList>
+    /*@Query("SELECT date_time from ScoreTable")
+    suspend fun getDistinctDateTime():List<DistinctDateTimeList>*/
+
+    @Query("SELECT date_time from ScoreTable WHERE date_time BETWEEN :from AND :to")
+    suspend fun getDistinctDateTime(from: OffsetDateTime, to: OffsetDateTime):List<DistinctDateTimeList>
 
     // ScoreType Dao
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -60,5 +63,8 @@ interface HomeMenusDao {
     suspend fun updateStepsCount(stepCount: StepCount)
     @Query("SELECT * FROM StepCount WHERE offsetDateTime BETWEEN :from AND :to")
     suspend fun getStepsCountDateWise(from: OffsetDateTime, to: OffsetDateTime): List<StepCount>
+
+    @Query("SELECT * FROM ScoreTable WHERE date_time BETWEEN :from AND :to")
+    suspend fun getScoresBetweenDates(from: OffsetDateTime, to: OffsetDateTime): List<ScoreTable>
 
 }

@@ -2,34 +2,37 @@ package com.s.diabetesfeeding.ui.auth
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.card.MaterialCardView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.Data
-import com.s.diabetesfeeding.data.db.entities.breastfeeding.BreastFeedingSessionData
 import com.s.diabetesfeeding.databinding.ActivityLoginBinding
 import com.s.diabetesfeeding.ui.home.HomeActivity
-import com.s.diabetesfeeding.util.*
+import com.s.diabetesfeeding.util.alertDialog
+import com.s.diabetesfeeding.util.hide
+import com.s.diabetesfeeding.util.show
+import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
+
 class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     override val kodein by kodein()
     private val factory : AuthViewModelFactory by instance()
     var studyGroup:String = ""
+    private lateinit var viewModel:AuthViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -37,7 +40,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val binding : ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-            val viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
+             viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.authListener = this
 
@@ -73,16 +76,10 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     }
     override fun onSuccess(data: Data) {
         progress_bar.hide()
-      /* root_layout.snackbar("${data.display_name} is Logged in")
-        val itn = Intent(this@LoginActivity, HomeActivity::class.java)
-        startActivity(itn)
-        finish()*/
     }
     @SuppressLint("ResourceAsColor")
     override fun onFailure(message: String) {
         root_layout.snackbar("$message")
-        //mc_username.strokeColor =  Color.parseColor("#000000")
-        //mc_username.strokeWidth = 10
         progress_bar.hide()
     }
 
@@ -91,34 +88,88 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.custome_select_role_dialog)
-        val body = dialog.findViewById(R.id.mcv_patient) as MaterialCardView
+
+        val endocrinologist = dialog.findViewById(R.id.tv_endocrinologist) as TextView
+        val obstetricsGynecology = dialog.findViewById(R.id.tv_obstetrics_gynecology) as TextView
+        val neo = dialog.findViewById(R.id.tv_neo) as TextView
+        val lactationSpecialist = dialog.findViewById(R.id.tv_lactation_specialist) as TextView
+        val socialWorker = dialog.findViewById(R.id.tv_social_worker) as TextView
+        val clinicalAssistant = dialog.findViewById(R.id.tv_clinical_assistant) as TextView
+        val dayCareProvider = dialog.findViewById(R.id.tv_day_care_provider) as TextView
+        val patient = dialog.findViewById(R.id.tv_patient) as TextView
+        val administrator = dialog.findViewById(R.id.tv_administrator) as TextView
+
         val mBtn = dialog.findViewById(R.id.tv_close_button) as TextView
 
-        body.setOnClickListener {
-            et_role.setText("Patient")
+        endocrinologist.setOnClickListener {
+            viewModel.role = endocrinologist.text.toString()
+            et_role.setText(viewModel.role)
             dialog.dismiss()
         }
+        obstetricsGynecology.setOnClickListener {
+            viewModel.role = obstetricsGynecology.text.toString()
+            et_role.setText(viewModel.role)
+            dialog.dismiss()
+        }
+        neo.setOnClickListener {
+            viewModel.role = neo.text.toString()
+            et_role.setText(viewModel.role)
+            dialog.dismiss()
+        }
+        lactationSpecialist.setOnClickListener {
+            viewModel.role = lactationSpecialist.text.toString()
+            et_role.setText(viewModel.role)
+                dialog.dismiss()
+        }
+        socialWorker.setOnClickListener {
+            viewModel.role = socialWorker.text.toString()
+            et_role.setText(viewModel.role)
+                dialog.dismiss()
+        }
+        clinicalAssistant.setOnClickListener {
+            viewModel.role = clinicalAssistant.text.toString()
+            et_role.setText(viewModel.role)
+                dialog.dismiss()
+        }
+        dayCareProvider.setOnClickListener {
+            viewModel.role = dayCareProvider.text.toString()
+            et_role.setText(viewModel.role)
+                dialog.dismiss()
+        }
+        patient.setOnClickListener {
+            viewModel.role = patient.text.toString()
+            et_role.setText(viewModel.role)
+                dialog.dismiss()
+        }
+        administrator.setOnClickListener {
+            viewModel.role = administrator.text.toString()
+            et_role.setText(viewModel.role)
+                dialog.dismiss()
+        }
+
         mBtn.setOnClickListener {
             dialog.dismiss()
         }
 
         dialog.show()
     }
-    fun chooseGroupDialog() {
+    private fun chooseGroupDialog() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.custome_study_group_dialog)
-        val mcvGroupOne = dialog.findViewById(R.id.mcv_group_one) as MaterialCardView
-        val mcvGroupTwo = dialog.findViewById(R.id.mcv_group_two) as MaterialCardView
+        val tvGroupOne = dialog.findViewById(R.id.tv_g_one) as TextView
+        val tvGroupTwo = dialog.findViewById(R.id.tv_g_two) as TextView
         val closeButton = dialog.findViewById(R.id.tv_close_button) as TextView
 
-        mcvGroupOne.setOnClickListener {
-            et_select_group.setText("Group One")
+        tvGroupOne.setOnClickListener {
+            viewModel.group = "group-1"
+            et_select_group.setText(viewModel.group)
             dialog.dismiss()
         }
-        mcvGroupTwo.setOnClickListener {
-            et_select_group.setText("Group Two")
+        tvGroupTwo.setOnClickListener {
+            viewModel.group = "group-2"
+            et_select_group.setText(viewModel.group)
             dialog.dismiss()
         }
         closeButton.setOnClickListener {
@@ -126,4 +177,5 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         }
         dialog.show()
     }
+
 }

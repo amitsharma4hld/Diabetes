@@ -28,7 +28,7 @@ class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCatego
         if (position == allCategory.size-1){
             holder.view.view_rv_divider.visibility = View.GONE
         }
-        setChildItem(holder.itemRecycler!!, category.bloodGlucoseCategoryItems)
+        setChildItem(holder.itemRecycler!!, category.bloodGlucoseCategoryItems,position)
     }
 
     class MonitorBloodGlucoseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -38,8 +38,12 @@ class MonitorBloodGlucoseMainAdapter (val context: Context,private val allCatego
         }
     }
 
-    private fun setChildItem(recyclerView: RecyclerView, categoryItem: List<BloodGlucoseCategoryItem>) {
+    private fun setChildItem(
+        recyclerView: RecyclerView,
+        categoryItem: List<BloodGlucoseCategoryItem>,
+        position: Int
+    ) {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter =  CategoryItemAdapter(context,categoryItem)
+        recyclerView.adapter =  CategoryItemAdapter(context,categoryItem,allCategory,position)
     }
 }

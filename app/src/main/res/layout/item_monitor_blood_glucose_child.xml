@@ -30,12 +30,13 @@
             android:layout_centerVertical="true"
             >
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_input"
                 android:layout_width="53dip"
                 android:layout_height="48dip"
                 android:padding="2dp"
                 android:layout_centerVertical="true"
                 app:cardCornerRadius="30dp"
-                app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
+                app:cardBackgroundColor="@color/selecttab"
                 >
                 <EditText
                     android:id="@+id/et_value"
@@ -81,8 +82,11 @@
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="08:30 AM"
+                    android:text=""
+                    android:textAllCaps="true"
                     android:textSize="14sp"
+                    android:layout_marginEnd="16dp"
+                    android:visibility="gone"
                     android:textColor="@color/colorTitleText"
                     android:fontFamily="@font/avenir_next_regular"
                     />
@@ -94,7 +98,6 @@
                     android:textSize="14sp"
                     android:layout_toEndOf="@+id/tv_time"
                     android:textColor="@color/colorTitleText"
-                    android:layout_marginStart="16dp"
                     android:maxLines="1"
                     android:fontFamily="@font/avenir_next_bold"
                     />
@@ -127,8 +130,7 @@
                 android:layout_gravity="center_horizontal"
                 app:cardCornerRadius="30dp"
                 android:id="@+id/mc_done"
-                app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
-                >
+                app:cardBackgroundColor="@color/selecttab"                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -164,11 +166,12 @@
             android:layout_alignParentEnd="true"
             >
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_second_done"
                 android:layout_width="100dip"
                 android:layout_height="38dip"
                 android:layout_gravity="center_horizontal"
                 app:cardCornerRadius="30dp"
-                app:cardBackgroundColor="@color/color_monitorblood_glucose_theme"
+                app:cardBackgroundColor="@color/selecttab"
                 >
                 <TextView
                     android:layout_width="match_parent"

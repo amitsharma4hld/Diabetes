@@ -74,7 +74,7 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
         }
 
     }
-    fun showMonitorBloodGlucoseMain(category: List<CategoryWithItems>) {
+    private fun showMonitorBloodGlucoseMain(category: List<CategoryWithItems>) {
         recyclerViewMonitorBloodGlucoses.layoutManager = LinearLayoutManager(activity)
         recyclerViewMonitorBloodGlucoses.adapter = MonitorBloodGlucoseMainAdapter(requireActivity(),category)
     }

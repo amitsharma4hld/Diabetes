@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="badgeStyle">@style/CustomBadge</item>
+
     </style>
     <style name="Log" parent="AppTheme">
         <item name="android:typeface">monospace</item>
@@ -22,6 +24,10 @@
     </style>
     <style name="progressBarBreastFeeding" parent="@style/Theme.AppCompat">
         <item name="colorAccent">@color/color_breastfeeding_theme</item>
+    </style>
+
+    <style name="CustomBadge" parent="@style/Widget.MaterialComponents.Badge">
+        <item name="backgroundColor">@color/colorTitleText</item>
     </style>
 
 </resources>

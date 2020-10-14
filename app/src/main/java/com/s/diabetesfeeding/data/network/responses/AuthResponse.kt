@@ -8,5 +8,6 @@ data class AuthResponse(
     val message: String?,
     val data: Data?,
     val status: String?,
-    val error_code: String?
+    val error_code: String?,
+    val success: String?
 )

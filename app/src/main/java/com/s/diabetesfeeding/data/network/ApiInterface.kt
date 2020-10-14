@@ -24,18 +24,31 @@ interface ApiInterface {
     suspend fun userRegister(
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("name") name: String,
+        @Field("username") username: String,
         @Field("type") type: String,
         @Field("key") key: String,
-        @Field("deviceType") deviceType: String
+        @Field("deviceType") deviceType: String,
+        @Field("salutation") salutation: String,
+        @Field("name") name: String,
+        @Field("role") role: String,
+        @Field("phoneNumber") cellPhoneNumber: String,
+        @Field("officePhoneNumber") officePhoneNumber: String,
+        @Field("group") group: String
     ) : Response<AuthResponse>
 
     @FormUrlEncoded
-    @PUT("Forgot Password")
+    @PUT("forgot-password")
     suspend fun forgotPass(
-        @Field("username") email: String,
-        @Field("password") password: String
+        @Field("email") email: String
     ) : Response<AuthResponse>
+
+    @FormUrlEncoded
+    @PUT("update-password")
+    suspend fun updatePassword(
+        @Field("email") email: String,
+        @Field("code") code: String,
+        @Field("password") password: String
+    ): Response<AuthResponse>
 
     @GET("get-fields")
     suspend fun getMonitorbloodGlucose() :Response<MonitorbloodGlucoseResponse>

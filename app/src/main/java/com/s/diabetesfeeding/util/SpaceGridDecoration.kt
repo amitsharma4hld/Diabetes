@@ -25,4 +25,5 @@ class SpaceGridDecoration(private val mSpanCount: Int, private val mSpacing: Int
             }
         }
     }
+
 }

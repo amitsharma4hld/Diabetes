@@ -40,7 +40,7 @@ class GoalBreastfeedFragment : Fragment() {
         arguments?.let {
             breastFeedingSessionData = GoalBreastfeedFragmentArgs.fromBundle(it).breastFeedingSession
         }
-
+        context?.chooseBreastFeedTypeDialog(requireActivity(),breastFeedingSessionData!!)
         if (prefs.getSavedFormattedDate().isNullOrEmpty()){
             tv_date.text = currentDate
         }else{
@@ -52,23 +52,26 @@ class GoalBreastfeedFragment : Fragment() {
         val meter = requireActivity().findViewById<Chronometer>(R.id.tv_timer)
         meter.format = "%s"
         meter.base = SystemClock.elapsedRealtime()
-        //var timmer:String = ""
+        meter.stop()
+        var timmer:String = ""
+        var isWorking = false
         cv_start.setOnClickListener {
             when (tv_start_stop_done.text) {
                 "START" -> {
                     tv_start_stop_done.text = "STOP"
                     // ISSUE : Start while initializing
+                    meter.base = SystemClock.elapsedRealtime();
                     meter.start()
                 }
                 "STOP" -> {
                     tv_start_stop_done.text = "DONE +5"
                     meter.stop()
-                    /*  val elapsedMillis = (SystemClock.elapsedRealtime() - meter.base)
+                      val elapsedMillis = (SystemClock.elapsedRealtime() - meter.base)
                                 timmer =   String.format("%02d:%02d",
                                       TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
                                       TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) -
                                               TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
-                                  )*/
+                                  )
                 }
                 "DONE +5" -> {
                     breastFeedingSessionData?.breastfeedingTime = currentTime
@@ -79,7 +82,6 @@ class GoalBreastfeedFragment : Fragment() {
                 }
             }
         }
-        context?.chooseBreastFeedTypeDialog(requireActivity(),breastFeedingSessionData!!)
 
     }
     override fun onCreateView(

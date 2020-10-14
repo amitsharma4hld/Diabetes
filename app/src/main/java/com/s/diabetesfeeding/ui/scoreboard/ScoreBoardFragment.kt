@@ -15,8 +15,11 @@ import com.s.diabetesfeeding.data.db.entities.ScoreBoardFinalData
 import com.s.diabetesfeeding.data.db.entities.ScoreHashMapData
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.adapter.ScoreBoardAdapter
+import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
+import kotlinx.android.synthetic.main.fragment_progress_blood_glucose.*
 import kotlinx.android.synthetic.main.fragment_score_board.*
 import kotlinx.coroutines.launch
+import org.threeten.bp.OffsetDateTime
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,7 +29,8 @@ var ScoresWithCategory: List<FilterScoreTable> = ArrayList()
 var DistinctDateTimeList: List<DistinctDateTimeList> = ArrayList()
 val listDate: MutableList<String> = ArrayList()
 var distinctDate: List<String> = ArrayList()
-
+lateinit var currentDate: OffsetDateTime
+lateinit var sevendaysDate: OffsetDateTime
 
 class ScoreBoardFragment : Fragment() {
 
@@ -45,28 +49,36 @@ class ScoreBoardFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var currentDate:String = ""
+        /*var currentDate:String = ""
         currentDate = if (!prefs.getOffsetDateTime().isNullOrEmpty()){
             val dateToString = prefs.getOffsetDateTime()!!.toString().split("T")
             dateToString[0]
         }else{
             getCurrentDateInString()
+        }*/
+        if(!prefs.getOffsetDateTime().isNullOrEmpty()){
+            currentDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+            sevendaysDate = currentDate.minusDays(7)
+        }else{
+            currentDate =  OffsetDateTime.now()
+            sevendaysDate = currentDate.minusDays(7)
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             context.let {
                 ScoresWithCategory =  AppDatabase(it!!).getHomeMenusDao().getFilterScoreTable()
             }
             context.also {
                 pb_loading.visibility=View.VISIBLE
-                DistinctDateTimeList =  AppDatabase(it!!).getHomeMenusDao().getDistinctDateTime()
+                DistinctDateTimeList =  AppDatabase(it!!).getHomeMenusDao().getDistinctDateTime(sevendaysDate,currentDate)
                 listDate.clear()
                 distinctDate = emptyList()
                 for (i in DistinctDateTimeList.indices) {
-                    val date = AppDatabase(it).getHomeMenusDao().getDistinctDateTime()[i].date_time
+                    val date = AppDatabase(it).getHomeMenusDao().getDistinctDateTime(sevendaysDate,currentDate)[i].date_time
                     val dateToString = date.toString().split("T")
-                    if (currentDate == dateToString[0]) {
+
                         listDate.add(dateToString[0])
-                    }
+
                 }
                 distinctDate = listDate.distinct()
                 pb_loading.visibility=View.GONE

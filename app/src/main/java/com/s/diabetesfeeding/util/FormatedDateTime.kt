@@ -18,7 +18,7 @@ fun getDateFromOffsetDateTime (offsetDateTime: OffsetDateTime): String {
 @SuppressLint("SimpleDateFormat")
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 fun getStandardFormattedDateForAllScreen(convertedDate: String): String {
-    val mSimpleDateFormat = SimpleDateFormat("dd-MMM-yyyy")
+    val mSimpleDateFormat = SimpleDateFormat("MM-dd-yyyy")
     mSimpleDateFormat.timeZone = TimeZone.getDefault()
     return SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(mSimpleDateFormat.parse(convertedDate))
 }

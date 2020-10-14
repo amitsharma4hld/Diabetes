@@ -1,6 +1,7 @@
 package com.s.diabetesfeeding.ui.auth
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.Data
 import com.s.diabetesfeeding.databinding.ActivityForgetPassBinding
-import com.s.diabetesfeeding.util.alertDialog
-import com.s.diabetesfeeding.util.hide
-import com.s.diabetesfeeding.util.show
-import com.s.diabetesfeeding.util.snackbar
+import com.s.diabetesfeeding.ui.MainActivity
+import com.s.diabetesfeeding.ui.home.HomeActivity
+import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.activity_forget_pass.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -48,5 +48,12 @@ class ForgetPassActivity : AppCompatActivity(),AuthListener, KodeinAware {
     override fun onFailure(message: String) {
         root_layout.snackbar("$message")
         progress_bar_new.hide()
+        if (message=="Password updated successfully"){
+            longToast(message)
+            Intent(this, LoginActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
+            }
+        }
     }
 }

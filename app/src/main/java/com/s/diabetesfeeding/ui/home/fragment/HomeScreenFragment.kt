@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.ui.home.fragment
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
@@ -23,6 +24,7 @@ import com.google.android.gms.fitness.Fitness
 import com.google.android.gms.fitness.FitnessOptions
 import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.data.Field
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.SymptomsData
 import com.s.diabetesfeeding.data.db.AppDatabase
@@ -38,6 +40,7 @@ import com.s.diabetesfeeding.ui.home.HomeViewModel
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.getStandardFormattedDateForAllScreen
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -46,8 +49,8 @@ import org.kodein.di.generic.instance
 import org.threeten.bp.OffsetDateTime
 import java.io.File
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Collections.list
 import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
@@ -80,6 +83,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
     private var progressBloodGlucose:List<ProgressBloodGlucose> = java.util.ArrayList()
     private var progressSymptoms:List<ProgressSymptoms> = java.util.ArrayList()
     private var progressObservation:List<ProgressObservation> = ArrayList()
+    private var scoreTableList:List<ScoreTable> = ArrayList()
 
 
     private val fitnessOptions = FitnessOptions.builder()
@@ -96,9 +100,19 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         SymptomsData(6, "Hungry", false,""),
         SymptomsData(7, "Blurry Vision", false,""),
         SymptomsData(8, "Weakness or Fatigue", false,""),
-        SymptomsData(9, "Headche", false,""),
+        SymptomsData(9, "Headache", false,""),
         SymptomsData(10, "Irritable", false,""),
-        SymptomsData(11, "Other", false,"")
+        SymptomsData(11, "TempOne", false,""),
+        SymptomsData(12, "Extreme Thirst", false,""),
+        SymptomsData(13, "Need To Urinate Often", false,""),
+        SymptomsData(14, "Dry Skin", false,""),
+        SymptomsData(15, "Blurry Vision", false,""),
+        SymptomsData(16, "Hungry", false,""),
+        SymptomsData(17, "Drowsy", false,""),
+        SymptomsData(18, "Slow Healing Wound", false,""),
+        SymptomsData(19, "TempTwo", false,""),
+        SymptomsData(20, "No Symptoms", false,""),
+        SymptomsData(21, "Other", false,"")
     )
     val observationList = listOf(
         Observation(1,"Vaginal Bleeding",false,""),
@@ -136,6 +150,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         HomeSubMenus(14, "Baby Weight", 3,2)
     )
 
+    lateinit var fromCurrentDateTime: String
+    lateinit var toCurrentDateTime: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,11 +180,34 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         return binding.root
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!prefs.getSavedIsLoggedIn()) {
             showDialog()
         }
+
+        val bottomNavigationBarBadge: BottomNavigationView = requireActivity().findViewById(R.id.bottom_navigation)
+
+
+        if (prefs.getFromOffsetDateTime().isNullOrBlank()){
+            val mCalendar = Calendar.getInstance()
+            val mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+            val mMonth = mCalendar.get(Calendar.MONTH)
+            val mYear = mCalendar.get(Calendar.YEAR)
+
+            val odt = OffsetDateTime.now()
+            val offsetDefaultZone = odt.offset
+
+            val month = mMonth + 1
+            val dayWithZero = if (mDay < 10) "0$mDay" else mDay.toString()
+            val monthWithZero = if (month < 10) "0$month" else month.toString()
+            fromCurrentDateTime = mYear.toString() + "-" + monthWithZero + "-" + dayWithZero + "T00:00:00.356" + offsetDefaultZone.toString()
+            toCurrentDateTime = mYear.toString() + "-" + monthWithZero + "-" + dayWithZero + "T23:59:58.356" + offsetDefaultZone.toString()
+
+            Log.d("DateAndTime :",fromCurrentDateTime + " / " + toCurrentDateTime)
+        }
+
         prefs.saveIsLoggedIn(true)
         if (prefs.getSavedFormattedDate().isNullOrEmpty()){
             tv_today_date.text=currentDate
@@ -189,9 +228,12 @@ class HomeScreenFragment : Fragment(), KodeinAware {
 
             val mDateSetListener =
                 DatePickerDialog.OnDateSetListener { it, year, monthOfYear, day ->
-                    val selectedDate = formatDate(year, monthOfYear, day)
+                    //val selectedDate = formatDate(year, monthOfYear, day)
+                    calendar.set(year, monthOfYear, day)
+                    val format = SimpleDateFormat("MM-dd-yyyy")
+                    val strDate: String = format.format(calendar.time)
 
-                    tv_today_date.text = getStandardFormattedDateForAllScreen(selectedDate)
+                    tv_today_date.text = getStandardFormattedDateForAllScreen(strDate)
 
                     val odt = OffsetDateTime.now()
                     val offsetDefaultZone = odt.offset
@@ -202,7 +244,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                     val date: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T00:00:00.356" + offsetDefaultZone.toString()
                     val toDate: String = year.toString() + "-" + monthWithZero + "-" + dayWithZero + "T23:59:58.356" + offsetDefaultZone.toString()
 
-                    prefs.saveformattedDate(getStandardFormattedDateForAllScreen(selectedDate))
+                    prefs.saveformattedDate(getStandardFormattedDateForAllScreen(strDate))
                     prefs.saveOffsetDateTime(toDate)
                     prefs.saveFromDate(date)
                     if (day == OffsetDateTime.now().dayOfMonth) {
@@ -222,6 +264,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                             if (progressBloodGlucose.isEmpty()) {
                                     AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(categoryItemList)
                             }else {
+                                AppDatabase(it).getMonitorBloodGlucoseCatDao().saveAllBloodGlucoseCategoryItem(categoryItemList)
                                 for (i in progressBloodGlucose.indices){
                                     AppDatabase(it).getMonitorBloodGlucoseCatDao()
                                         .updateBloodGlucoseColumn(
@@ -277,8 +320,24 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                         // Step Count
                         context?.let {
                                 val date = AppDatabase(it).getHomeMenusDao().getStepsCountDateWise(fromOffsetDateTime,toOffsetDate)
-                                val step =  date[date.lastIndex].stepsCount
-                                tv_steps_count?.text = getString(R.string.step_count_display, step)
+                                if (!date.isNullOrEmpty()) {
+                                    val step =  date[date.lastIndex].stepsCount
+                                    tv_steps_count?.text = getString(R.string.step_count_display, step)
+                                }else{
+                                    tv_steps_count?.text = getString(R.string.step_count_display, 0)
+                                }
+                        }
+                    }
+                    Coroutines.io {
+                        context?.let {
+                                scoreTableList =  AppDatabase(it).getHomeMenusDao()
+                                    .getScoresBetweenDates(fromOffsetDateTime,toOffsetDate)
+                                if (!scoreTableList.isNullOrEmpty()){
+                                    bottomNavigationBarBadge.getOrCreateBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment).number =
+                                        scoreTableList.map { it.score }.sum()
+                                }else{
+                                    bottomNavigationBarBadge.removeBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment)
+                                }
                         }
                     }
 
@@ -293,6 +352,8 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         savedataAllCategory()
         saveAllCategoryItems()
         readData()
+
+        // If DB is null load data
         viewLifecycleOwner.lifecycleScope.launch {
             context?.let {
                 if (AppDatabase(it).getMonitorBloodGlucoseCatDao().getAllCategory().isNullOrEmpty()){
@@ -326,13 +387,42 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             }
 
             context?.let {
-              if ( AppDatabase(it).getObgynDao().getAllObservation().isNullOrEmpty()) {
+              if (AppDatabase(it).getObgynDao().getAllObservation().isNullOrEmpty()) {
                     AppDatabase(it).getObgynDao().saveAllObservation(observationList)
               }
+            }
+
+            context?.let {
+                if (prefs.getFromOffsetDateTime().isNullOrEmpty()){
+                    scoreTableList =  AppDatabase(it).getHomeMenusDao()
+                        .getScoresBetweenDates(OffsetDateTime.parse(fromCurrentDateTime),OffsetDateTime.parse(toCurrentDateTime))
+                    if (!scoreTableList.isNullOrEmpty()){
+                        bottomNavigationBarBadge.getOrCreateBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment).number =
+                            scoreTableList.map { it.score }.sum()
+                    }else{
+                        bottomNavigationBarBadge.removeBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment)
+                    }
+                }else{
+                    Coroutines.io {
+                        context?.let {
+                            val fromDate = OffsetDateTime.parse(prefs.getFromOffsetDateTime())
+                            val toDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
+                            scoreTableList =  AppDatabase(it).getHomeMenusDao()
+                                .getScoresBetweenDates(fromDate,toDate)
+                            if (!scoreTableList.isNullOrEmpty()){
+                                bottomNavigationBarBadge.getOrCreateBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment).number =
+                                    scoreTableList.map { it.score }.sum()
+                            }else{
+                                bottomNavigationBarBadge.removeBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment)
+                            }
+                        }
+                    }
+                }
             }
         }
 
         Diabetes.setOnClickListener {
+            bottomNavigationBarBadge.removeBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment)
              viewModel.user.value?.let { it1 ->
                  val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToDiabetesFragment()
                      .setDoctorname(it1.doctorName.toString())
@@ -344,6 +434,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
         }
 
         OBGYN.setOnClickListener {
+            bottomNavigationBarBadge.removeBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment)
             viewModel.user.value?.let { it1 ->
                 val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToObgynFragment(
                     it1.display_name!!,
@@ -355,6 +446,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             }
         }
         breastfeeding.setOnClickListener {
+            bottomNavigationBarBadge.removeBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment)
             viewModel.user.value?.let { it1 ->
                 val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToBreastfeedingFragment()
                     .setDoctorname(it1.doctorName.toString())
@@ -369,7 +461,6 @@ class HomeScreenFragment : Fragment(), KodeinAware {
             authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { data ->
                 if (data != null) {
                     logoutUser(data)
-                    prefs.cearAllSharedPref()
                 }
             })
         }
@@ -388,7 +479,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 if (prefs.getSavedIsPreviousDate()) {
                     val fromDate = OffsetDateTime.parse(prefs.getFromOffsetDateTime())
                     val toDate = OffsetDateTime.parse(prefs.getOffsetDateTime())
-                    viewLifecycleOwner.lifecycleScope.launch {
+                    Coroutines.io {
                         context?.let {
                             val date = AppDatabase(it).getHomeMenusDao().getStepsCountDateWise(fromDate,toDate)
                             if (!date.isNullOrEmpty()){
@@ -428,7 +519,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 1,
                 "wake_up_fasting",
                 "65-95",
-                "08:30 AM",
+                "",
                 "Wake Up Fasting",
                 "",
                 0,
@@ -442,7 +533,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 2,
                 "before_breakfast",
                 "65-95",
-                "08:30 AM",
+                "",
                 "Before Breakfast",
                 "",
                 0,
@@ -455,7 +546,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 2,
                 "1_hr_after_breakfast",
                 "65-140",
-                "09:30 AM",
+                "",
                 "1 Hour After Breakfast",
                 "",
                 0,
@@ -468,7 +559,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 2,
                 "2_hr_after_breakfast",
                 "65-120",
-                "10:30 AM",
+                "",
                 "2 Hour After Breakfast",
                 "",
                 0,
@@ -482,7 +573,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 3,
                 "before_lunch",
                 "65-95",
-                "12:30 PM",
+                "",
                 "Before Lunch",
                 "",
                 0,
@@ -495,7 +586,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 3,
                 "1_hr_after_lunch",
                 "65-140",
-                "01:30 PM",
+                "",
                 "1 Hour After Lunch",
                 "",
                 0,
@@ -508,7 +599,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 3,
                 "2_hr_after_lunch",
                 "65-120",
-                "02:30 PM",
+                "",
                 "2 Hour After Lunch",
                 "",
                 0,
@@ -522,7 +613,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 4,
                 "before_dinner",
                 "65-95",
-                "06:30 PM",
+                "",
                 "Before Diner",
                 "",
                 0,
@@ -535,7 +626,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 4,
                 "1_hr_after_dinner",
                 "65-140",
-                "07:30 PM",
+                "",
                 "1 Hour After Diner",
                 "",
                 0,
@@ -548,7 +639,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 4,
                 "2_hr_after_dinner",
                 "65-120",
-                "08:30 PM",
+                "",
                 "2 Hour After Diner",
                 "",
                 0,
@@ -562,7 +653,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 5,
                 "bedtime",
                 "65-95",
-                "10:30 PM",
+                "",
                 "Bedtime",
                 "",
                 0,
@@ -587,6 +678,7 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                 setPositiveButton("Yes") { _, _ ->
                     Coroutines.io{
                          AppDatabase(it).clearAllTables()
+                        prefs.cearAllSharedPref()
                         //deleteDatabaseFile(requireActivity(),"DiabetesDatabase.db")
                         activity?.let{
                             val intent = Intent(it, MainActivity::class.java).also {
