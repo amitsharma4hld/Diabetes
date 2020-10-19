@@ -17,7 +17,9 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.auth.ClinicalActivity"></activity>
+        <activity android:name=".ui.auth.AdminActivity"></activity>
+        <activity android:name=".ui.auth.DashboardActivity" />
+        <activity android:name=".ui.auth.ClinicalActivity" />
         <activity android:name=".ui.auth.ForgetPassActivity" />
         <activity
             android:name=".ui.home.HomeActivity"

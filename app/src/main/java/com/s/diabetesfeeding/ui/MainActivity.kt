@@ -10,10 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.Data
-import com.s.diabetesfeeding.ui.auth.AuthListener
-import com.s.diabetesfeeding.ui.auth.AuthViewModel
-import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
-import com.s.diabetesfeeding.ui.auth.LoginActivity
+import com.s.diabetesfeeding.prefs
+import com.s.diabetesfeeding.ui.auth.*
 import com.s.diabetesfeeding.ui.home.HomeActivity
 import com.s.diabetesfeeding.util.setFullScreen
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,14 +31,32 @@ class MainActivity : AppCompatActivity(), AuthListener, KodeinAware {
         AndroidThreeTen.init(this)
         val viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         viewModel.authListener = this
+
         viewModel.getLoggedInUser().observe(this, Observer { data ->
             if (data != null){
-                Intent(this, HomeActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(it)
+                if (prefs.getSavedDoctorId().isNullOrEmpty()) {
+                    if (data.role == "Patient" ) {
+                        Intent(this, HomeActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                    }
+                    if (data.role == "Administrator") {
+                        Intent(this, AdminActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                    }
+                }
+                else {
+                    Intent(this, ClinicalActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(it)
+                    }
                 }
             }
         })
+
         login_circleone.setOnClickListener {
             wholeView.setBackgroundColor(Color.parseColor("#427182"))
             imageView.setImageDrawable(resources.getDrawable(R.drawable.db_br_login));

@@ -176,6 +176,9 @@
     <string name="clinical">clinical</string>
     <string name="your_patients">Your Patients</string>
     <string name="dashboard">dashboard</string>
+    <string name="view">View</string>
+    <string name="users">Users</string>
+
 
 
 </resources>

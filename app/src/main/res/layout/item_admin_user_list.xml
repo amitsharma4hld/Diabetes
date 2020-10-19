@@ -5,60 +5,60 @@
     android:padding="4dp"
     >
 
-<ImageView
-    android:id="@+id/iv_image"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
-    android:src="@drawable/ic_baseline_account_circle_24"
-    android:layout_alignParentStart="true"
-    android:layout_centerVertical="true"
-    />
+    <ImageView
+        android:id="@+id/iv_image_user"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_baseline_account_circle_24"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        />
     <View
         android:id="@+id/view_rv_divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_alignBottom="@id/iv_image"
+        android:layout_alignBottom="@id/iv_image_user"
         android:layout_toEndOf="@+id/iv_image"
         android:background="@color/color_recycle_divider_parent"
         />
-<TextView
-    android:id="@+id/tv_view_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/view"
-    android:textSize="18sp"
-    android:fontFamily="@font/avenir_next_regular"
-    android:textColor="@color/colorTitleText"
-    android:layout_alignParentEnd="true"
-    android:layout_centerVertical="true"
-    android:padding="12dp"
-    />
+    <TextView
+        android:id="@+id/tv_view_role_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/role"
+        android:textSize="16sp"
+        android:fontFamily="@font/avenir_next_regular"
+        android:textColor="@color/colorTitleText"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:padding="12dp"
+        />
     <LinearLayout
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/tv_view_button"
-        android:layout_toEndOf="@+id/iv_image"
+        android:layout_toStartOf="@+id/tv_view_role_button"
+        android:layout_toEndOf="@+id/iv_image_user"
         android:layout_above="@+id/view_rv_divider"
         android:orientation="vertical"
         android:layout_centerVertical="true"
         >
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Patient Name"
+            android:text="User Name"
             android:textSize="18sp"
             android:fontFamily="@font/avenir_next_bold"
             android:textColor="@color/colorTitleText"
             android:padding="2dp"
             />
         <TextView
-            android:id="@+id/tv_weeks"
+            android:id="@+id/tv_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-8dp"
-            android:text="12 Weeks"
+            android:text="Role Name"
             android:textSize="16sp"
             android:fontFamily="@font/avenir_next_regular"
             android:textColor="@color/colorTitleText"

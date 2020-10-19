@@ -21,6 +21,8 @@ data class Data(
     var appointment: String? = null,
     var key: String? = null,
     var user_registered: String? = null,
+    var user_activation_key:String? = null,
+    var role:String?=null,
     var deviceType: String? = null
     ){
     @PrimaryKey(autoGenerate = false)

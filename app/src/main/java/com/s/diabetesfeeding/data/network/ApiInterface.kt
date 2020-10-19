@@ -1,5 +1,6 @@
 package com.s.diabetesfeeding.data.network
 
+import com.s.diabetesfeeding.data.db.entities.auth.PatientsResponse
 import com.s.diabetesfeeding.data.network.responses.AuthResponse
 import com.s.diabetesfeeding.data.network.responses.MonitorbloodGlucoseResponse
 import okhttp3.OkHttpClient
@@ -50,8 +51,27 @@ interface ApiInterface {
         @Field("password") password: String
     ): Response<AuthResponse>
 
+    @FormUrlEncoded
+    @PUT("get-patients")
+    suspend fun getPatients(
+        @Field("doctor_id") doctor_id: String
+    ): Response<PatientsResponse>
+
+    @FormUrlEncoded
+    @PUT("get-all-users")
+    suspend fun getAllUser(
+        @Field("page") page: String
+    ): Response<PatientsResponse>
+
     @GET("get-fields")
     suspend fun getMonitorbloodGlucose() :Response<MonitorbloodGlucoseResponse>
+
+    @FormUrlEncoded
+    @PUT("update-role")
+    suspend fun updateRole(
+        @Field("user_id") userId: String,
+        @Field("role") code: String
+    ): Response<AuthResponse>
 
     companion object{
         operator fun invoke(

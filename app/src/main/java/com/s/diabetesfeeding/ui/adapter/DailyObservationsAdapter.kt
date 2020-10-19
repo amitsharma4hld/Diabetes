@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.item_daily_observations_layout.view.*
 import org.threeten.bp.OffsetDateTime
 
 
-class DailyObservationsAdapter (private val context: Context, val observations : List<ObservationBreastFeed>) : RecyclerView.Adapter<DailyObservationsAdapter.ObservationsViewHolder>(){
+class DailyObservationsAdapter (private val context: Context, private val observations : List<ObservationBreastFeed>) : RecyclerView.Adapter<DailyObservationsAdapter.ObservationsViewHolder>(){
 
     var isSelected: Boolean = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ObservationsViewHolder {

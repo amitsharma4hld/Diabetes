@@ -3,6 +3,7 @@ package com.s.diabetesfeeding
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.s.diabetesfeeding.data.db.AppDatabase
+import com.s.diabetesfeeding.data.db.entities.auth.PatientListModelFactory
 import com.s.diabetesfeeding.data.network.ApiInterface
 import com.s.diabetesfeeding.data.network.NetworkConnectionInterceptor
 import com.s.diabetesfeeding.data.preferences.PreferenceProvider
@@ -10,6 +11,7 @@ import com.s.diabetesfeeding.data.repositories.MonitorbloodGlucoseRepository
 import com.s.diabetesfeeding.data.repositories.UserRepository
 import com.s.diabetesfeeding.ui.auth.AuthViewModelFactory
 import com.s.diabetesfeeding.ui.auth.ForgotPassModelFactory
+import com.s.diabetesfeeding.ui.auth.UserListFactory
 import com.s.diabetesfeeding.ui.home.HomeViewModelFactory
 import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
 import com.s.diabetesfeeding.ui.home.fragment.diabetes.ProgressBloodGlucoseModelFactory
@@ -40,6 +42,8 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { ForgotPassModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
+        bind() from provider { PatientListModelFactory(instance()) }
+        bind() from provider { UserListFactory(instance()) }
         bind() from provider{ MonitorBloodGlucoseViewModelFactory(instance())}
         bind() from provider{ ProgressBloodGlucoseModelFactory(instance())}
         bind() from provider{ ProgressBloodGlucoseRepository(instance())}

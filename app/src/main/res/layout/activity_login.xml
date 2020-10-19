@@ -584,10 +584,11 @@
                         app:cardCornerRadius="15dp"
                         app:strokeColor="#00ae99"
                         android:layout_margin="2dp"
-                        android:visibility="@{viewmodel.isLoginSelected() ? View.VISIBLE : View.GONE}"
+                        android:visibility="invisible"
                         app:cardForegroundColor="@android:color/transparent"
                         >
                         <TextView
+                            android:id="@+id/tv_clinical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/roboto_light"
@@ -607,7 +608,7 @@
                     android:layout_margin="2dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="30dp"
-                    android:visibility="@{viewmodel.isLoginSelected() ? View.VISIBLE : View.GONE}"
+                    android:visibility="invisible"
                     app:cardForegroundColor="@android:color/transparent"
                     >
                     <TextView
@@ -628,6 +629,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:visibility="invisible" />
-
+        <TextView
+            android:id="@+id/tv_no_data_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="No data found"
+            android:visibility="gone"
+            android:fontFamily="@font/avenir_next_regular"
+            android:textColor="@color/color_describe"
+            android:textSize="32sp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -3,8 +3,10 @@ package com.s.diabetesfeeding.ui.home.fragment.obgyn
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.text.Html
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,7 @@ import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.et_digit_two
 import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.mcv_weight_done
 import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.username
 import kotlinx.android.synthetic.main.fragment_weight.*
+import kotlinx.android.synthetic.main.item_monitor_blood_glucose_child.view.*
 import org.threeten.bp.OffsetDateTime
 
 
@@ -37,6 +40,7 @@ class PrentalInputFragment : Fragment() {
 
     var prentalVisitRecord : PrentalVisitRecord? = null
     val prentalInputScore:Int = 5
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -202,7 +206,55 @@ class PrentalInputFragment : Fragment() {
 
 
         }
-        et_digit_one.requestFocus()
+        et_digit_one.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun afterTextChanged(editable: Editable) {
+                if (prentalVisitRecord?.measurementOf == "Blood Pressure"){
+                    if(editable.toString().length == 3)
+                    {
+                        et_digit_one.clearFocus()
+                        et_digit_two.requestFocus()
+                        et_digit_two.isCursorVisible = true
+                    }
+                }else{
+                    if(editable.toString().length == 1)
+                    {
+                        et_digit_one.clearFocus()
+                        et_digit_two.requestFocus()
+                        et_digit_two.isCursorVisible = true
+                    }
+                }
+
+            }
+        })
+        et_digit_two.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun afterTextChanged(editable: Editable) {
+                if (prentalVisitRecord?.measurementOf == "Blood Pressure"){
+                    if(editable.toString().length == 3)
+                    {
+                        et_digit_two.clearFocus()
+                        et_digit_three.requestFocus()
+                        et_digit_three.isCursorVisible = true
+                    }
+                }else{
+                    if(editable.toString().length == 1)
+                    {
+                        et_digit_two.clearFocus()
+                        et_digit_three.requestFocus()
+                        et_digit_three.isCursorVisible = true
+                    }
+                }
+
+            }
+        })
+        //et_digit_one.requestFocus()
         // show the keyboard if has focus
         //showSoftKeyboard(et_digit_one)
     }

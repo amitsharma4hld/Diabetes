@@ -13,6 +13,11 @@ private const val LEY_SAVED_IS_LOGGED_IN = "key_saved_is_login"
 private const val KEY_SAVED_ISPREVIOUSDATE = "key_saved_ispreviousdate"
 private const val KEY_SAVED_PRE_PREGNANCY_WEIGHT = "key_saved_pre_pregnancy_weight"
 private const val KEY_SAVED_HEIGHT = "key_saved_height"
+private const val KEY_SAVED_ADMIN_ID = "key_saved_admin_id"
+private const val KEY_SAVED_DOCTOR_ID = "key_saved_doctor_id"
+private const val KEY_SAVED_IS_PATIENT_SELECTED = "key_saved_is_patient_selected"
+
+
 
 
 
@@ -99,6 +104,36 @@ class PreferenceProvider(
     }
     fun getSavedHeight(): String? {
         return preference.getString(KEY_SAVED_HEIGHT, "")
+    }
+
+    fun saveDoctorId(id: String) {
+        preference.edit().putString(
+            KEY_SAVED_DOCTOR_ID,
+            id
+        ).apply()
+    }
+    fun getSavedDoctorId(): String? {
+        return preference.getString(KEY_SAVED_DOCTOR_ID, "")
+    }
+
+    fun saveAdminId(id: String) {
+        preference.edit().putString(
+            KEY_SAVED_ADMIN_ID,
+            id
+        ).apply()
+    }
+    fun getSaveAdminId(): String? {
+        return preference.getString(KEY_SAVED_ADMIN_ID, "")
+    }
+
+    fun saveIsPatientSelected(isSelected: Boolean) {
+        preference.edit().putBoolean(
+            KEY_SAVED_IS_PATIENT_SELECTED,
+            isSelected
+        ).apply()
+    }
+    fun getSavedIsPatientSelected(): Boolean {
+        return preference.getBoolean(KEY_SAVED_IS_PATIENT_SELECTED, false)
     }
 
     // To Clear All SharedPref on logout

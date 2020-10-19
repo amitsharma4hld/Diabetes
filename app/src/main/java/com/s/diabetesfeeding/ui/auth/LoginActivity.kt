@@ -16,6 +16,7 @@ import com.google.android.material.card.MaterialCardView
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.Data
 import com.s.diabetesfeeding.databinding.ActivityLoginBinding
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.home.HomeActivity
 import com.s.diabetesfeeding.util.alertDialog
 import com.s.diabetesfeeding.util.hide
@@ -40,19 +41,41 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val binding : ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-             viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.authListener = this
 
         viewModel.getLoggedInUser().observe(this, Observer { data ->
             if (data != null){
-                Intent(this, HomeActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(it)
+                when (data.role) {
+                    "patient" -> {
+                        Intent(this, HomeActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                    }
+                    "administrator" -> {
+                        prefs.saveAdminId(data.ID.toString())
+                        Intent(this, AdminActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                    }
+                    else -> {
+                        prefs.saveDoctorId(data.ID.toString())
+                        Intent(this, ClinicalActivity::class.java).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                        }
+                    }
                 }
+
             }
         })
-
+        tv_clinical.setOnClickListener {
+            val itn = Intent(this@LoginActivity, ClinicalActivity::class.java)
+            startActivity(itn)
+        }
         tv_forgetpass.setOnClickListener {
             val itn = Intent(this@LoginActivity, ForgetPassActivity::class.java)
             startActivity(itn)

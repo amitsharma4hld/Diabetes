@@ -51,7 +51,7 @@ class AuthViewModel(
                                 repository.saveData(it)
                                 return@main
                             }else{
-                                authListener?.onFailure("Please verify the user and try again.")
+                                authListener?.onFailure("Something went wrong")
                             }
                         }
                     }else{
@@ -117,7 +117,7 @@ class AuthViewModel(
                 return
             }
             isStudyGroupSelect.set(true)
-            //isSignUpDone.set(true)
+            // isSignUpDone.set(true)
             authListener?.onFailure("Please continue")
         }
 

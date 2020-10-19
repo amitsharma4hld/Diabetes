@@ -70,7 +70,7 @@ class DailyObservationFragment : Fragment() {
 
     fun updateScore() {
         Coroutines.io {
-            context?.let {
+            context?.let  {
                 val currentDate = OffsetDateTime.now()
                 AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 13, dailyObsevartion, currentDate))
                 Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
