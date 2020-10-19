@@ -12,10 +12,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.entities.auth.Data
+import com.s.diabetesfeeding.ui.auth.OnRoleUpdateListener
+import com.s.diabetesfeeding.util.shortToast
 import kotlinx.android.synthetic.main.clinical_patient_list_item.view.*
 import kotlinx.android.synthetic.main.item_admin_user_list.view.*
 
 class AdminAdapter (private val context: Context,
+                    private val onRoleUpdateListener: OnRoleUpdateListener,
                     private val patientsDataList : List<com.s.diabetesfeeding.data.db.entities.auth.Data>
 ) : RecyclerView.Adapter<AdminAdapter.UsersDataListViewHolder>() {
 
@@ -69,39 +72,48 @@ class AdminAdapter (private val context: Context,
         val mBtn = dialog.findViewById(R.id.tv_close_button) as TextView
 
         endocrinologist.setOnClickListener {
-            data.role = endocrinologist.text.toString()
+            data.role = "endocrinologist"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         obstetricsGynecology.setOnClickListener {
-            data.role = obstetricsGynecology.text.toString()
+            data.role = "obstetricsGynecology"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         neo.setOnClickListener {
-            data.role = neo.text.toString()
+            data.role = "neo"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         lactationSpecialist.setOnClickListener {
-            data.role = lactationSpecialist.text.toString()
+            data.role = "lactationSpecialist"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         socialWorker.setOnClickListener {
-            data.role = socialWorker.text.toString()
+            data.role = "socialWorker"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         clinicalAssistant.setOnClickListener {
-            data.role = clinicalAssistant.text.toString()
+            data.role = "clinicalAssistant"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         dayCareProvider.setOnClickListener {
-            data.role = dayCareProvider.text.toString()
+            data.role = "dayCareProvider"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         patient.setOnClickListener {
-            data.role = patient.text.toString()
+            data.role = "patient"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
         administrator.setOnClickListener {
-            data.role = administrator.text.toString()
+            data.role = "administrator"
+            updateRole(data.ID,data.role)
             dialog.dismiss()
         }
 
@@ -112,7 +124,12 @@ class AdminAdapter (private val context: Context,
         dialog.show()
     }
 
-    fun updateRole(){
-
+    private fun updateRole(id:String, role:String){
+        if (id.isNotEmpty() && role.isNotEmpty()){
+            onRoleUpdateListener.onRoleUpdateCall(id,role)
+            notifyDataSetChanged()
+        }else{
+            context.shortToast("Invalid User or Role")
+        }
     }
 }

@@ -20,6 +20,7 @@ import com.s.diabetesfeeding.ui.adapter.AdminAdapter
 import com.s.diabetesfeeding.ui.adapter.ClinicianAdapter
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.hide
+import com.s.diabetesfeeding.util.shortToast
 import com.s.diabetesfeeding.util.show
 import kotlinx.android.synthetic.main.activity_admin.*
 import kotlinx.android.synthetic.main.activity_clinical.*
@@ -27,7 +28,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AdminActivity : AppCompatActivity(), KodeinAware,PatientsDataListner {
+class AdminActivity : AppCompatActivity(), KodeinAware,PatientsDataListner, OnRoleUpdateListener {
     override val kodein by kodein()
     private lateinit var viewModel:UsersListModel
     private val factory : UserListFactory by instance()
@@ -67,7 +68,7 @@ class AdminActivity : AppCompatActivity(), KodeinAware,PatientsDataListner {
         progress_bar_admin.hide()
         if (data.isNotEmpty()){
             rv_admin_patient_list.layoutManager = LinearLayoutManager(this)
-            rv_admin_patient_list.adapter = AdminAdapter(this, data)
+            rv_admin_patient_list.adapter = AdminAdapter(this, this,data)
         } else{
             rv_admin_patient_list.visibility = View.GONE
             tv_no_data_found_admin.visibility = View.VISIBLE
@@ -76,7 +77,19 @@ class AdminActivity : AppCompatActivity(), KodeinAware,PatientsDataListner {
 
     override fun onFailure(message: String) {
         progress_bar_admin.hide()
-        rv_admin_patient_list.visibility = View.GONE
-        tv_no_data_found_admin.visibility = View.VISIBLE
+        if (message == "Role updated successfully"){
+            this.shortToast("Role is updated")
+            if (!prefs.getSaveAdminId().isNullOrEmpty()){
+                viewModel.getAllUsersList()
+            }
+        }else{
+            rv_admin_patient_list.visibility = View.GONE
+            tv_no_data_found_admin.visibility = View.VISIBLE
+        }
+
+    }
+
+    override fun onRoleUpdateCall(id: String, role: String) {
+        viewModel.updateUserRole(id,role)
     }
 }

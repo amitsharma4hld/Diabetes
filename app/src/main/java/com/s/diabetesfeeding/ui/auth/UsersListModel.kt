@@ -36,4 +36,25 @@ class UsersListModel (
             }
         }
     }
+    fun updateUserRole(id:String,role:String){
+        authListener?.onStarted()
+        Coroutines.main {
+            try {
+                val authResponse = repository.updateRole(id,role)
+                if(authResponse.success=="true") {
+                    authResponse.data?.let {
+                        authListener?.onFailure(it.msg!!)
+                        return@main
+                    }
+                }else{
+                    authListener?.onFailure(authResponse.data?.msg!!)
+                }
+            }catch (e: ApiException){
+                authListener?.onFailure(e.message!!)
+            }
+            catch (e: NoInternetException){
+                authListener?.onFailure(e.message!!)
+            }
+        }
+    }
 }

@@ -35,13 +35,13 @@ class MainActivity : AppCompatActivity(), AuthListener, KodeinAware {
         viewModel.getLoggedInUser().observe(this, Observer { data ->
             if (data != null){
                 if (prefs.getSavedDoctorId().isNullOrEmpty()) {
-                    if (data.role == "Patient" ) {
+                    if (data.role == "patient" ) {
                         Intent(this, HomeActivity::class.java).also {
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                         }
                     }
-                    if (data.role == "Administrator") {
+                    if (data.role == "administrator") {
                         Intent(this, AdminActivity::class.java).also {
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
