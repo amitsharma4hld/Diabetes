@@ -26,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.s.diabetesfeeding.BuildConfig
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.logger.Log.setLogNode
 import com.s.diabetesfeeding.util.logger.LogWrapper
 import com.s.diabetesfeeding.util.logger.MessageOnlyLogFilter
@@ -60,8 +61,10 @@ class HomeActivity : AppCompatActivity() {
 
         bottom_navigation.getOrCreateBadge(R.id.action_homeScreenFragment_to_scoreBoardFragment).verticalOffset = 20
 
-        initializeLogging()
-        checkPermissionsAndRun(FitActionRequestCode.SUBSCRIBE)
+        if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+            initializeLogging()
+            checkPermissionsAndRun(FitActionRequestCode.SUBSCRIBE)
+        }
 
     }
 

@@ -151,61 +151,75 @@ class PrentalInputFragment : Fragment() {
             requireActivity().onBackPressed()
         }
         mcv_weight_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-                return@setOnClickListener
-            }else{
-                if (!prentalVisitRecord?.value.isNullOrEmpty()){
-                    it.snackbar("Data is already saved")
-                    (context as Activity).onBackPressed()
-                }else {
-                    if (et_text_digit_one.text.isNotBlank()){
-                        prentalVisitRecord?.value = et_text_digit_one.text.toString()
-                        prentalVisitRecord.let {
-                            update(prentalVisitRecord!!)
-                            updateProgressData(prentalVisitRecord!!)
-                            updateScore()
-                        }
-                    }else
-                    if (et_digit_one.text.isNotBlank() && et_digit_two.text.isNotBlank() && et_digit_three.text.isNotBlank()) {
-                        prentalVisitRecord?.value = et_digit_one.text.toString() + et_digit_two.text.toString()+ et_digit_three.text.toString()
-                        if (prentalVisitRecord?.measurementOf == "Pre-pregnancy weight") {
-                            if (prefs.getSavedPrePregnancyWeight().isNullOrEmpty()){
-                                prentalVisitRecord?.value?.let { it1 -> prefs.savePrePregnancyWeight(it1) }
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    return@setOnClickListener
+                } else {
+                    if (!prentalVisitRecord?.value.isNullOrEmpty()) {
+                        it.snackbar("Data is already saved")
+                        (context as Activity).onBackPressed()
+                    } else {
+                        if (et_text_digit_one.text.isNotBlank()) {
+                            prentalVisitRecord?.value = et_text_digit_one.text.toString()
+                            prentalVisitRecord.let {
                                 update(prentalVisitRecord!!)
                                 updateProgressData(prentalVisitRecord!!)
                                 updateScore()
-                            }else{
-                                it.snackbar("Pre-pregnancy weight can not be edited")
                             }
-                        }else{
-                            if (prentalVisitRecord?.measurementOf == "Height") {
-                                if (prefs.getSavedHeight().isNullOrEmpty()){
-                                    prentalVisitRecord?.value?.let { it1 -> prefs.saveHeight(it1) }
-                                    update(prentalVisitRecord!!)
-                                    updateProgressData(prentalVisitRecord!!)
-                                    updateScore()
-                                }else{
-                                    it.snackbar("Height can not be edited")
+                        } else
+                            if (et_digit_one.text.isNotBlank() && et_digit_two.text.isNotBlank() && et_digit_three.text.isNotBlank()) {
+                                prentalVisitRecord?.value =
+                                    et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
+                                if (prentalVisitRecord?.measurementOf == "Pre-pregnancy weight") {
+                                    if (prefs.getSavedPrePregnancyWeight().isNullOrEmpty()) {
+                                        prentalVisitRecord?.value?.let { it1 ->
+                                            prefs.savePrePregnancyWeight(
+                                                it1
+                                            )
+                                        }
+                                        update(prentalVisitRecord!!)
+                                        updateProgressData(prentalVisitRecord!!)
+                                        updateScore()
+                                    } else {
+                                        it.snackbar("Pre-pregnancy weight can not be edited")
+                                    }
+                                } else {
+                                    if (prentalVisitRecord?.measurementOf == "Height") {
+                                        if (prefs.getSavedHeight().isNullOrEmpty()) {
+                                            prentalVisitRecord?.value?.let { it1 ->
+                                                prefs.saveHeight(
+                                                    it1
+                                                )
+                                            }
+                                            update(prentalVisitRecord!!)
+                                            updateProgressData(prentalVisitRecord!!)
+                                            updateScore()
+                                        } else {
+                                            it.snackbar("Height can not be edited")
+                                        }
+                                    } else {
+                                        prentalVisitRecord.let {
+                                            update(prentalVisitRecord!!)
+                                            updateProgressData(prentalVisitRecord!!)
+                                            updateScore()
+                                        }
+                                    }
                                 }
-                            }
-                            else{
-                                prentalVisitRecord.let {
-                                    update(prentalVisitRecord!!)
-                                    updateProgressData(prentalVisitRecord!!)
-                                    updateScore()
-                                }
-                            }
-                        }
 
-                    }else {
-                        mcv_weight_done.snackbar("Fields can not be empty")
+                            } else {
+                                mcv_weight_done.snackbar("Fields can not be empty")
+                            }
                     }
                 }
             }
-
+            else {
+                it.snackbar("Can not edit patient details")
+                requireActivity().onBackPressed()
+            }
 
         }
+
         et_digit_one.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
             }

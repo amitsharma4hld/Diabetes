@@ -3,6 +3,9 @@ package com.s.diabetesfeeding.ui.home.fragment.diabetes
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,7 +22,12 @@ import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_insulin.*
+import kotlinx.android.synthetic.main.fragment_pre_pregnancy_input.*
 import kotlinx.android.synthetic.main.fragment_weight.*
+import kotlinx.android.synthetic.main.fragment_weight.et_digit_one
+import kotlinx.android.synthetic.main.fragment_weight.et_digit_three
+import kotlinx.android.synthetic.main.fragment_weight.et_digit_two
+import kotlinx.android.synthetic.main.fragment_weight.mcv_weight_done
 import kotlinx.coroutines.launch
 import org.threeten.bp.OffsetDateTime
 import java.text.SimpleDateFormat
@@ -67,38 +75,80 @@ class WeightFragment : Fragment() {
         }
 
         mcv_weight_done.setOnClickListener { it ->
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not edit")
-            } else {
-                val view: View = it
-                if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()) {
-                    weightCalculated =
-                        et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        context?.let {
-                            val currentDate = OffsetDateTime.now()
-                            if (!isWeightCalculated) {
-                                AppDatabase(it).getMonitorBloodGlucoseCatDao()
-                                    .saveTodaysWeight(
-                                        WeightToday(
-                                            0,
-                                            weightCalculated!!,
-                                            weightScore,
-                                            currentDate
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not edit")
+                } else {
+                    val view: View = it
+                    if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()) {
+                        weightCalculated =
+                            et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            context?.let {
+                                val currentDate = OffsetDateTime.now()
+                                if (!isWeightCalculated) {
+                                    AppDatabase(it).getMonitorBloodGlucoseCatDao()
+                                        .saveTodaysWeight(
+                                            WeightToday(
+                                                0,
+                                                weightCalculated!!,
+                                                weightScore,
+                                                currentDate
+                                            )
                                         )
-                                    )
-                                updateScore()
-                                requireActivity().shortToast("Score Updated")
-                            } else {
-                                view.snackbar("Already Saved For Today")
-                                requireActivity().onBackPressed()
+                                    updateScore()
+                                    requireActivity().shortToast("Score Updated")
+                                } else {
+                                    view.snackbar("Already Saved For Today")
+                                    requireActivity().onBackPressed()
+                                }
                             }
                         }
+                    } else {
+                        it.snackbar("All field are required")
                     }
-                } else {
-                    it.snackbar("All field are required")
                 }
+            }else{
+                it.snackbar("Can not edit patient detail")
             }
+        }
+        et_digit_one.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun afterTextChanged(editable: Editable) {
+                    if(editable.toString().length == 1)
+                    {
+                        et_digit_one.clearFocus()
+                        et_digit_two.requestFocus()
+                        et_digit_two.isCursorVisible = true
+                    }
+            }
+        })
+
+        et_digit_two.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun afterTextChanged(editable: Editable) {
+                    if(editable.toString().length == 1)
+                    {
+                        et_digit_two.clearFocus()
+                        et_digit_three.requestFocus()
+                        et_digit_three.isCursorVisible = true
+                    }
+            }
+        })
+
+        if (prefs.getSavedDoctorId()?.isNotBlank()!!){
+            et_digit_one.inputType = InputType.TYPE_NULL
+            et_digit_two.inputType = InputType.TYPE_NULL
+            et_digit_three.inputType = InputType.TYPE_NULL
+            et_digit_one.isFocusable = false
+            et_digit_two.isFocusable = false
+            et_digit_three.isFocusable = false
         }
     }
     fun updateScore() {

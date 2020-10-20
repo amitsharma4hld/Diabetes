@@ -3,6 +3,7 @@ package com.s.diabetesfeeding.ui.adapter
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,45 +46,57 @@ class TrimesterTwoAdapter(val context: Context, val trimesterTopics : List<Trime
         holder.view.cb_trimester.isChecked = topics.isChecked
         holder.view.tv_date.text = topics.date
         holder.view.tv_date.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-                return@setOnClickListener
-            }else
-            calendar = Calendar.getInstance()
-            day = calendar.get(Calendar.DAY_OF_MONTH)
-            month = calendar.get(Calendar.MONTH)
-            year = calendar.get(Calendar.YEAR)
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    return@setOnClickListener
+                } else
+                    calendar = Calendar.getInstance()
+                day = calendar.get(Calendar.DAY_OF_MONTH)
+                month = calendar.get(Calendar.MONTH)
+                year = calendar.get(Calendar.YEAR)
 
-            val mDateSetListener =
-                OnDateSetListener { it, year, monthOfYear, day ->
-                    //val date: String = year.toString() + "-" + (monthOfYear + 1).toString() + "-" + day.toString()
-                    val selectedDate = formatDate(year,monthOfYear,day)
-                    holder.view.tv_date.text =  getStandardFormattedDateForAllScreen(selectedDate)
-                    topics.date = getStandardFormattedDateForAllScreen(selectedDate)
-                }
-            val datePickerDialog = DatePickerDialog(context,mDateSetListener, year, month,day)
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
-            datePickerDialog.show()
-
+                val mDateSetListener =
+                    OnDateSetListener { it, year, monthOfYear, day ->
+                        //val date: String = year.toString() + "-" + (monthOfYear + 1).toString() + "-" + day.toString()
+                        val selectedDate = formatDate(year, monthOfYear, day)
+                        holder.view.tv_date.text =
+                            getStandardFormattedDateForAllScreen(selectedDate)
+                        topics.date = getStandardFormattedDateForAllScreen(selectedDate)
+                    }
+                val datePickerDialog = DatePickerDialog(context, mDateSetListener, year, month, day)
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+                datePickerDialog.show()
+            }
+            else {
+                it.snackbar("Can not edit patient details")
+            }
         }
         holder.view.cb_trimester.setOnClickListener(View.OnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    if (holder.view.cb_trimester.isChecked) {
+                        holder.view.cb_trimester.isChecked = false
+                    }
+                } else {
+                    if (holder.view.cb_trimester.isChecked) {
+                        topics.isChecked = true
+                        topics.comment = holder.view.et_coment.text.toString()
+                        update(topics)
+                    } else {
+                        topics.isChecked = false
+                        topics.comment = holder.view.et_coment.text.toString()
+                        update(topics)
+                    }
+                }
+            }   else{
+                it.snackbar("Can not edit patient details")
                 if (holder.view.cb_trimester.isChecked) {
                     holder.view.cb_trimester.isChecked = false
-                }
-            }else{
-                if (holder.view.cb_trimester.isChecked) {
-                    topics.isChecked=true
-                    topics.comment = holder.view.et_coment.text.toString()
-                    update(topics)
-                } else {
-                    topics.isChecked=false
-                    topics.comment = holder.view.et_coment.text.toString()
-                    update(topics)
+                    Log.d("selected index:",position.toString())
                 }
             }
-
         })
     }
     private fun formatDate(year:Int, month:Int, day:Int):String{

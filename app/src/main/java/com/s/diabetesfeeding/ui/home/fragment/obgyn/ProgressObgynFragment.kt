@@ -105,11 +105,17 @@ class ProgressObgynFragment : Fragment() {
         }
 
         mcv_progress_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-                return@setOnClickListener
-            }else
-                updateScore()
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    return@setOnClickListener
+                } else
+                    updateScore()
+            }
+            else{
+                it.snackbar("Can not edit patient details")
+
+            }
         }
 
     }

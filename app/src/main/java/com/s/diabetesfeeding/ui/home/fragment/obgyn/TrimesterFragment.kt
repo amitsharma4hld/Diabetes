@@ -90,16 +90,21 @@ class TrimesterFragment : Fragment() {
         }
 
         mcv_trimester_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-            }else{
-                if (!isCounselingScore){
-                    updateScore()
-                    requireActivity().shortToast("Score Updated")
-                }else{
-                    view?.snackbar("Already Saved For Today")
-                    requireActivity().onBackPressed()
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                } else {
+                    if (!isCounselingScore) {
+                        updateScore()
+                        requireActivity().shortToast("Score Updated")
+                    } else {
+                        view?.snackbar("Already Saved For Today")
+                        requireActivity().onBackPressed()
+                    }
                 }
+            }else{
+                it.snackbar("Can not edit patient details")
+                requireActivity().onBackPressed()
             }
 
         }

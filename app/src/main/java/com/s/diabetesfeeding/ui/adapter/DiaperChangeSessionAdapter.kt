@@ -73,14 +73,18 @@ class DiaperChangeSessionAdapter(val sessions : List<BabyPoopData>, private val 
             if (position==0){
                 holder.view.iv_session_time_blank.setImageResource(R.drawable.ic_session_add)
                 holder.view.iv_session_time_blank.setOnClickListener {
-                    if (prefs.getSavedIsPreviousDate()) {
-                        it.snackbar("Previous data can not be edited")
-                    }else{
-                        val action = BreastfeedingFragmentDirections.actionBreastfeedingFragmentToDiaperChangeFragment()
-                        action.babyPoopData = session
-                        Navigation.findNavController(it).navigate(action)
+                    if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                        if (prefs.getSavedIsPreviousDate()) {
+                            it.snackbar("Previous data can not be edited")
+                        } else {
+                            val action =
+                                BreastfeedingFragmentDirections.actionBreastfeedingFragmentToDiaperChangeFragment()
+                            action.babyPoopData = session
+                            Navigation.findNavController(it).navigate(action)
+                        }
+                    }else {
+                        it.snackbar("Can not edit patient details")
                     }
-
                 }
             }else{
                 holder.view.tv_session_value.visibility = View.GONE

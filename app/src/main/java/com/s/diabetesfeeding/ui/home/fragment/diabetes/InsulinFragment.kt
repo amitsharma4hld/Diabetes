@@ -2,6 +2,7 @@ package com.s.diabetesfeeding.ui.home.fragment.diabetes
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -84,41 +85,60 @@ class InsulinFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 context?.let {
                     val current_date = OffsetDateTime.now()
-                    if (!isInsulinCalculated){
-                        AppDatabase(it).getMonitorBloodGlucoseCatDao()
-                            .saveTodaysInsulin(InsulinToday(0, unitCalculated.toDouble(), InsulinScore, current_date))
-                        updateScore()
-                        it.shortToast("Score Updated")
+                    if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                        if (!isInsulinCalculated){
+                            AppDatabase(it).getMonitorBloodGlucoseCatDao()
+                                .saveTodaysInsulin(InsulinToday(0, unitCalculated.toDouble(), InsulinScore, current_date))
+                            updateScore()
+                            it.shortToast("Score Updated")
+                        }else{
+                            view.snackbar("Already Saved For Today")
+                            requireActivity().onBackPressed()
+                        }
                     }else{
-                        view.snackbar("Already Saved For Today")
+                        view.snackbar("You can not edit patient details.")
                         requireActivity().onBackPressed()
                     }
+
                 }
             }
         }
       //  isf = getISF(tddInputValue)
         mcv_calculate.setOnClickListener{
-            getSelectedInsulinType()
-            if (prefs.getSavedIsPreviousDate()){
-                it.snackbar("Previous data can not edit")
-            }else{
-                if (!et_tdd.text.isNullOrEmpty() || !et_total_carb.text.isNullOrEmpty() || !et_current_blood_glucose.text.isNullOrEmpty())
-                {
-                    tddInputValue = et_tdd.text.toString().toDouble()
-                    val currentbloodvalue = et_current_blood_glucose.text.toString().toDouble()
-                    cir = getCIR(tddInputValue.toFloat())
-                    val totalCarb = et_total_carb.text.toString().toDouble()
-                    mib = totalCarb.toFloat()/ cir
-                    // Calculation of Correction Dose
-                    isf = getISF(tddInputValue.toFloat())
-                    //  Correction dose =  // (Current blood sugar -Target blood sugar) / ISF  =  (160-90)/ 34  =   2.1 units
-                    val correctionDoseValue = (currentbloodvalue - targetbloodValue ) / isf
-                    unitCalculated = mib + correctionDoseValue.toFloat()
-                    displayUnit(unitCalculated.toDouble())
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                getSelectedInsulinType()
+                if (prefs.getSavedIsPreviousDate()){
+                    it.snackbar("Previous data can not edit")
                 }else{
-                    it.snackbar("All the details required")
+                    if (!et_tdd.text.isNullOrEmpty() || !et_total_carb.text.isNullOrEmpty() || !et_current_blood_glucose.text.isNullOrEmpty())
+                    {
+                        tddInputValue = et_tdd.text.toString().toDouble()
+                        val currentbloodvalue = et_current_blood_glucose.text.toString().toDouble()
+                        cir = getCIR(tddInputValue.toFloat())
+                        val totalCarb = et_total_carb.text.toString().toDouble()
+                        mib = totalCarb.toFloat()/ cir
+                        // Calculation of Correction Dose
+                        isf = getISF(tddInputValue.toFloat())
+                        //  Correction dose =  // (Current blood sugar -Target blood sugar) / ISF  =  (160-90)/ 34  =   2.1 units
+                        val correctionDoseValue = (currentbloodvalue - targetbloodValue ) / isf
+                        unitCalculated = mib + correctionDoseValue.toFloat()
+                        displayUnit(unitCalculated.toDouble())
+                    }else{
+                        it.snackbar("All the details required")
+                    }
                 }
+            }else{
+                it.snackbar("Can not edit patient details")
             }
+
+        }
+        if (prefs.getSavedDoctorId()?.isNotBlank()!!){
+            et_tdd.inputType = InputType.TYPE_NULL
+            et_total_carb.inputType = InputType.TYPE_NULL
+            et_current_blood_glucose.inputType = InputType.TYPE_NULL
+            et_tdd.isFocusable = false
+            et_total_carb.isFocusable = false
+            et_current_blood_glucose.isFocusable = false
         }
     }
     fun updateScore() {

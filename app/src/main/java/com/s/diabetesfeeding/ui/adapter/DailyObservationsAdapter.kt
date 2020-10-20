@@ -41,31 +41,47 @@ class DailyObservationsAdapter (private val context: Context, private val observ
         holder.view.tv_observation_title.text = observations.title
         holder.view.et_observation_value.setText(observations.value)
 
-        if (observations.title == "Sleep Hours"){
-            holder.view.et_observation_value.hint = "4-10"
-        }else if(observations.title == "Rate your fatigue") {
-            holder.view.et_observation_value.hint = "1-10"
-        }else if(observations.title == "Glass of water per day") {
-            holder.view.et_observation_value.hint = "4-10"
-        }else if(observations.title == "Meals per day") {
-            holder.view.et_observation_value.hint = "1-5"
-        }else if(observations.title == "Helps with chores") {
-            holder.view.et_observation_value.filters = arrayOf(InputFilter.LengthFilter(3))
-            holder.view.et_observation_value.hint = "YES"
-        }else if(observations.title == "Glass of alcohol per day?") {
-            holder.view.et_observation_value.hint = "0-10"
-        }else if(observations.title == "Smoking") {
-            holder.view.et_observation_value.filters = arrayOf(InputFilter.LengthFilter(3))
-            holder.view.et_observation_value.hint = "NO"
-        }else if(observations.title == "Rate your stress") {
-            holder.view.et_observation_value.hint = "0-10"
+        when (observations.title) {
+            "Sleep Hours" -> {
+                holder.view.et_observation_value.hint = "4-10"
+            }
+            "Rate your fatigue" -> {
+                holder.view.et_observation_value.hint = "1-10"
+            }
+            "Glass of water per day" -> {
+                holder.view.et_observation_value.hint = "4-10"
+            }
+            "Meals per day" -> {
+                holder.view.et_observation_value.hint = "1-5"
+            }
+            "Helps with chores" -> {
+                holder.view.et_observation_value.filters = arrayOf(InputFilter.LengthFilter(3))
+                holder.view.et_observation_value.hint = "YES"
+            }
+            "Glass of alcohol per day?" -> {
+                holder.view.et_observation_value.hint = "0-10"
+            }
+            "Smoking" -> {
+                holder.view.et_observation_value.filters = arrayOf(InputFilter.LengthFilter(3))
+                holder.view.et_observation_value.hint = "NO"
+            }
+            "Rate your stress" -> {
+                holder.view.et_observation_value.hint = "0-10"
+            }
         }
-
-        if (prefs.getSavedIsPreviousDate()) {
+        if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+            if (prefs.getSavedIsPreviousDate()) {
+                holder.view.et_observation_value.setOnClickListener {
+                    it.snackbar("Previous data can not be edited")
+                }
+                holder.view.et_observation_value.isFocusable = false
+            }
+        }else {
             holder.view.et_observation_value.setOnClickListener {
-                it.snackbar("Previous data can not be edited")
+                it.snackbar("Can not edit patient details")
             }
             holder.view.et_observation_value.isFocusable = false
+            holder.view.et_observation_value.isFocusableInTouchMode = false
         }
 
         if (observations.isBoolean){
@@ -74,19 +90,23 @@ class DailyObservationsAdapter (private val context: Context, private val observ
             }
             holder.view.et_observation_value.inputType = InputType.TYPE_NULL
             holder.view.et_observation_value.setOnClickListener {
-                if (prefs.getSavedIsPreviousDate()) {
-                    it.snackbar("Previous data can not be edited")
-                }else
-                if (isSelected){
-                    holder.view.et_observation_value.setText("No")
-                    observations.value = "No"
-                    isSelected= false
-                    update(observations)
-                }else if(!isSelected){
-                    holder.view.et_observation_value.setText("Yes")
-                    observations.value = "Yes"
-                    isSelected= true
-                    update(observations)
+                if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                    if (prefs.getSavedIsPreviousDate()) {
+                        it.snackbar("Previous data can not be edited")
+                    } else
+                        if (isSelected) {
+                            holder.view.et_observation_value.setText("No")
+                            observations.value = "No"
+                            isSelected = false
+                            update(observations)
+                        } else if (!isSelected) {
+                            holder.view.et_observation_value.setText("Yes")
+                            observations.value = "Yes"
+                            isSelected = true
+                            update(observations)
+                        }
+                }else {
+                    it.snackbar("Can not edit patient details")
                 }
             }
         }

@@ -50,12 +50,16 @@ class DailyObservationFragment : Fragment() {
             showObservations(observationList)
         }
         mcv_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-                (context as Activity).onBackPressed()
-            }else
-            updateScore()
-           //requireActivity().onBackPressed()
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    (context as Activity).onBackPressed()
+                } else
+                    updateScore()
+            }else{
+                it.snackbar("Can not edit patient details")
+                requireActivity().onBackPressed()
+            }
         }
     }
 

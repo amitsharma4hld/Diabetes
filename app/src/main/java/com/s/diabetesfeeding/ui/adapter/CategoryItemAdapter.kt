@@ -272,6 +272,12 @@ class CategoryItemAdapter(
                 }
             }
         }
+        if (prefs.getSavedDoctorId()?.isNotBlank()!!){
+            holder.view.mcv_input.isEnabled = false
+            holder.view.mc_done.isEnabled = false
+            holder.view.mcv_second_done.isEnabled = false
+            holder.view.et_value.inputType = InputType.TYPE_NULL
+        }
 
     }
 

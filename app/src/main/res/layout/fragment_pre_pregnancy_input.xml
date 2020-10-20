@@ -264,7 +264,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/done_plus_two"
+                    android:text="@string/done_plus_five"
                     android:textColor="#fff"
                     android:textSize="20sp" />
             </com.google.android.material.card.MaterialCardView>

@@ -74,17 +74,23 @@ class ObservationFragment : Fragment() {
 
         }
         mcv_observation_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-            }else{
-                if (!isObservationScored){
-                    updateScore()
-                    requireActivity().shortToast("Score Updated")
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
                 }else{
-                    view?.snackbar("Already Saved For Today")
-                    requireActivity().onBackPressed()
+                    if (!isObservationScored){
+                        updateScore()
+                        requireActivity().shortToast("Score Updated")
+                    }else{
+                        view?.snackbar("Already Saved For Today")
+                        requireActivity().onBackPressed()
+                    }
                 }
+            }else{
+                it.snackbar("Can not edit patient details")
+                requireActivity().onBackPressed()
             }
+
         }
     }
 

@@ -13,6 +13,7 @@ import com.s.diabetesfeeding.data.db.entities.obgynentities.Observation
 import com.s.diabetesfeeding.data.db.entities.obgynentities.ProgressObservation
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.Coroutines
+import com.s.diabetesfeeding.util.showComentDialog
 import com.s.diabetesfeeding.util.showObservationComentDialog
 import com.s.diabetesfeeding.util.snackbar
 import kotlinx.android.synthetic.main.item_observation_list.view.*
@@ -37,26 +38,38 @@ class ObeservationAdapter (val context: Context, val observation : List<Observat
             holder.view.mc_describe.visibility = View.VISIBLE
         }
         holder.view.cb_observation.setOnClickListener(View.OnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    if (holder.view.cb_observation.isChecked) {
+                        holder.view.cb_observation.isChecked = false
+                    }
+                }else {
+                    if (holder.view.cb_observation.isChecked) {
+                        observe.isChecked=true
+                        update(observe)
+                    } else {
+                        observe.isChecked=false
+                        update(observe)
+                    }
+                }
+            }else{
+                it.snackbar("Can not edit patient details")
                 if (holder.view.cb_observation.isChecked) {
                     holder.view.cb_observation.isChecked = false
-                }
-            }else {
-                if (holder.view.cb_observation.isChecked) {
-                    observe.isChecked=true
-                    update(observe)
-                } else {
-                    observe.isChecked=false
-                    update(observe)
+                    Log.d("selected index:",position.toString())
                 }
             }
+
         })
         holder.view.mc_describe.setOnClickListener {
             if (prefs.getSavedIsPreviousDate()) {
                 it.snackbar("Previous data can not be edited")
             }else {
-                context.showObservationComentDialog(observe)
+                if (observe.isChecked){
+                    context.showObservationComentDialog(observe)
+                }
+
             }
         }
     }

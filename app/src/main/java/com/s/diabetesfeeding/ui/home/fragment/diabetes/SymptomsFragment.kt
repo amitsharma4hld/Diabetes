@@ -50,17 +50,22 @@ class SymptomsFragment : Fragment() {
         }
 
         mcv_symptoms_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-            }else{
-                if (!isSymptomsScoreSaved){
-                    updateScore()
-                    requireActivity().shortToast("Score Updated")
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
                 }else{
-                    view?.snackbar("Already Saved For Today")
-                    requireActivity().onBackPressed()
+                    if (!isSymptomsScoreSaved){
+                        updateScore()
+                        requireActivity().shortToast("Score Updated")
+                    }else{
+                        view?.snackbar("Already Saved For Today")
+                        requireActivity().onBackPressed()
+                    }
                 }
+            }else{
+                it.snackbar("Can not edit patient details")
             }
+
         }
 
         tv_what_can_you_do.setOnClickListener {

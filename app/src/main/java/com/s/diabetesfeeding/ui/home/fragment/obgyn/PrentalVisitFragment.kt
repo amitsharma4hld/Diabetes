@@ -58,12 +58,17 @@ class PrentalVisitFragment : Fragment(), KodeinAware,CellClickListener {
             tv_date.text= value
         }
         mcv_prental_done.setOnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
-                return@setOnClickListener
-            }else
-            updateScore()
-            //requireActivity().onBackPressed()
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    return@setOnClickListener
+                } else
+                    updateScore()
+            }
+            else {
+                it.snackbar("Can not edit patient details")
+                requireActivity().onBackPressed()
+            }
         }
         authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { data ->
             if (data != null) {

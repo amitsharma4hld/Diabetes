@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.monitor_blood_glucose_fragment.*
 import org.threeten.bp.OffsetDateTime
 
 
-class DiabetesFragment : Fragment() {
+class  DiabetesFragment : Fragment() {
 
     val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
         java.util.Date())

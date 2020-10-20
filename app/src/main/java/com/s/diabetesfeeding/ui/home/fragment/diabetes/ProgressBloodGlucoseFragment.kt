@@ -102,11 +102,16 @@ class ProgressBloodGlucoseFragment : Fragment(),KodeinAware {
         }
 
         mcv_progress_done.setOnClickListener {
-            if (!isProgressScored){
-                updateScore()
-                requireActivity().shortToast("Score Updated")
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (!isProgressScored) {
+                    updateScore()
+                    requireActivity().shortToast("Score Updated")
+                } else {
+                    view?.snackbar("Already Saved For Today")
+                    requireActivity().onBackPressed()
+                }
             }else{
-                view?.snackbar("Already Saved For Today")
+                it.snackbar("Can not edit patient details")
                 requireActivity().onBackPressed()
             }
         }

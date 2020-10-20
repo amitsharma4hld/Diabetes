@@ -145,22 +145,31 @@ class SymptomsAdapter(
         }
 
         holder.view.cb_symptom.setOnClickListener(View.OnClickListener {
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not be edited")
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not be edited")
+                    if (holder.view.cb_symptom.isChecked) {
+                        holder.view.cb_symptom.isChecked = false
+                        Log.d("selected index:",position.toString())
+                    }
+                }else{
+                    if (holder.view.cb_symptom.isChecked) {
+                        Log.d("selected index:",position.toString())
+                        symptom.isChecked=true
+                        update(symptom)
+                    } else {
+                        symptom.isChecked=false
+                        update(symptom)
+                    }
+                }
+            }else{
+                it.snackbar("Can not edit patient details")
                 if (holder.view.cb_symptom.isChecked) {
                     holder.view.cb_symptom.isChecked = false
                     Log.d("selected index:",position.toString())
                 }
-            }else{
-                if (holder.view.cb_symptom.isChecked) {
-                    Log.d("selected index:",position.toString())
-                    symptom.isChecked=true
-                    update(symptom)
-                } else {
-                    symptom.isChecked=false
-                    update(symptom)
-                }
             }
+
 
         })
 

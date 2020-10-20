@@ -2,6 +2,8 @@ package com.s.diabetesfeeding.ui.home.fragment.breastfeeding
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -65,38 +67,71 @@ class BabyWeightFragment : Fragment() {
             }
         }
         done.setOnClickListener { it ->
-            if (prefs.getSavedIsPreviousDate()) {
-                it.snackbar("Previous data can not edit")
-            } else {
-                val view: View = it
-                if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()) {
-                    weightCalculated =
-                        et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        context?.let {
-                            val currentDate = OffsetDateTime.now()
-                            if (!isWeightCalculated) {
-                                AppDatabase(it).getBreastFeedingDao()
-                                    .saveBabyWeight(
-                                        BabyWeight(
-                                            0,
-                                            weightCalculated!!,
-                                            weightScore,
-                                            currentDate
+            if (!prefs.getSavedDoctorId()?.isNotBlank()!!) {
+                if (prefs.getSavedIsPreviousDate()) {
+                    it.snackbar("Previous data can not edit")
+                } else {
+                    val view: View = it
+                    if (et_digit_one.text.isNotEmpty() && et_digit_two.text.isNotEmpty() && et_digit_three.text.isNotEmpty()) {
+                        weightCalculated =
+                            et_digit_one.text.toString() + et_digit_two.text.toString() + et_digit_three.text.toString()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            context?.let {
+                                val currentDate = OffsetDateTime.now()
+                                if (!isWeightCalculated) {
+                                    AppDatabase(it).getBreastFeedingDao()
+                                        .saveBabyWeight(
+                                            BabyWeight(
+                                                0,
+                                                weightCalculated!!,
+                                                weightScore,
+                                                currentDate
+                                            )
                                         )
-                                    )
-                                updateScore()
-                                //requireActivity().onBackPressed()
-                            } else {
-                                view.snackbar("Already Saved For Today")
+                                    updateScore()
+                                } else {
+                                    view.snackbar("Already Saved For Today")
+                                }
                             }
                         }
+                    } else {
+                        it.snackbar("All field are required")
                     }
-                } else {
-                    it.snackbar("All field are required")
                 }
+            }else {
+                it.snackbar("Can not edit patient details")
+                requireActivity().onBackPressed()
             }
         }
+        et_digit_one.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun afterTextChanged(editable: Editable) {
+                if(editable.toString().length == 1)
+                {
+                    et_digit_one.clearFocus()
+                    et_digit_two.requestFocus()
+                    et_digit_two.isCursorVisible = true
+                }
+            }
+        })
+
+        et_digit_two.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+            override fun afterTextChanged(editable: Editable) {
+                if(editable.toString().length == 1)
+                {
+                    et_digit_two.clearFocus()
+                    et_digit_three.requestFocus()
+                    et_digit_three.isCursorVisible = true
+                }
+            }
+        })
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

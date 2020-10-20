@@ -351,7 +351,11 @@ class HomeScreenFragment : Fragment(), KodeinAware {
 
         savedataAllCategory()
         saveAllCategoryItems()
-        readData()
+
+        if (!prefs.getSavedDoctorId()?.isNotBlank()!!){
+            readData()
+        }
+
 
         // If DB is null load data
         viewLifecycleOwner.lifecycleScope.launch {
