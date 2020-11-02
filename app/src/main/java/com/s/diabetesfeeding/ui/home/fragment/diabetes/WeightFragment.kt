@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.s.diabetesfeeding.R
 import com.s.diabetesfeeding.data.db.AppDatabase
@@ -19,6 +20,8 @@ import com.s.diabetesfeeding.data.db.entities.InsulinToday
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.data.db.entities.WeightToday
 import com.s.diabetesfeeding.prefs
+import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModel
+import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
 import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_insulin.*
@@ -29,12 +32,19 @@ import kotlinx.android.synthetic.main.fragment_weight.et_digit_three
 import kotlinx.android.synthetic.main.fragment_weight.et_digit_two
 import kotlinx.android.synthetic.main.fragment_weight.mcv_weight_done
 import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import org.threeten.bp.OffsetDateTime
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class WeightFragment : Fragment() {
+class WeightFragment : Fragment(), KodeinAware, MonitorGlucoseResponseListner {
+
+    private lateinit var viewModel : MonitorBloodGlucoseViewModel
+    override val kodein by kodein()
+    private val factory: MonitorBloodGlucoseViewModelFactory by instance()
 
     private var isWeightCalculated = false
     private var weightCalculated :String? = null
@@ -47,6 +57,10 @@ class WeightFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProvider(this,factory).get(MonitorBloodGlucoseViewModel::class.java)
+        viewModel.monitorGlucoseResponseListner = this
+
         et_digit_one.requestFocus()
         // show the keyboard if has focus
         // showSoftKeyboard(et_digit_one)
@@ -157,7 +171,8 @@ class WeightFragment : Fragment() {
                 val currentDate = OffsetDateTime.now()
                 AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 3, weightScore, currentDate))
             }
-            (context as Activity).onBackPressed()
+            viewModel.saveBloodGlucoseWeightDataToServer(prefs.getSavedUserId().toString(),"body-weight",weightCalculated.toString())
+
         }
     }
     private fun showSoftKeyboard(view: View) {
@@ -187,6 +202,21 @@ class WeightFragment : Fragment() {
         et_digit_one.setText(numbers[0].toString())
         et_digit_two.setText(numbers[1].toString())
         et_digit_three.setText(numbers[2].toString())
+    }
+
+
+    override fun onStarted() {
+        requireActivity().shortToast("Syncing to server")
+    }
+
+    override fun onSuccess(message: String) {
+        requireActivity().shortToast(message)
+        requireActivity().onBackPressed()
+    }
+
+    override fun onFailure(message: String) {
+        requireActivity().shortToast(message)
+        requireActivity().onBackPressed()
     }
 
 }

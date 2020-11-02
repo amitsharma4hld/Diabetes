@@ -49,9 +49,9 @@ class BreastFeedingSessionAdapter(val sessions : List<BreastFeedingSessionData>,
                 holder.view.iv_session_time_blank.visibility = View.GONE
                 holder.view.cv_breastfeeding_blank.visibility = View.GONE
                 holder.view.cv_breastfeeding.visibility = View.VISIBLE
-                if(session.breastfeedingType == "Breastfeed"){
+                if(session.breastfeedingType == "Breastfeed") {
                     holder.view.tv_session_type.text = "Breast"
-                }else{
+                } else {
                     holder.view.tv_session_type.text = "Suppl."
                 }
                 holder.view.tv_session_time_value.text = session.breastfeedingTime + "\n" +session.breastfeedingTimerCount

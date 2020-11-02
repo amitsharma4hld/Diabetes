@@ -6,6 +6,7 @@ import com.s.diabetesfeeding.data.db.entities.auth.PatientsResponse
 import com.s.diabetesfeeding.data.network.ApiInterface
 import com.s.diabetesfeeding.data.network.SafeApiRequest
 import com.s.diabetesfeeding.data.network.responses.AuthResponse
+import com.s.diabetesfeeding.data.network.responses.MonitorbloodGlucoseResponse
 
 class UserRepository(
     private  val api: ApiInterface,
@@ -34,6 +35,10 @@ class UserRepository(
     suspend fun updateRole(userId:String,role:String) : AuthResponse {
         return apiRequest { api.updateRole(userId,role) }
     }
+    suspend fun saveStepCountToSeverRepo(userId:String,step:String) : AuthResponse {
+        return apiRequest { api.saveStepCountToServer(userId,step) }
+    }
+
     suspend fun saveData(data: Data) = db.getUserDao().upsert(data)
     fun getData() = db.getUserDao().getuser()
 

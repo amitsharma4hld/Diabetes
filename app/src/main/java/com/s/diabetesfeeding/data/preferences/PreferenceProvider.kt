@@ -13,10 +13,10 @@ private const val LEY_SAVED_IS_LOGGED_IN = "key_saved_is_login"
 private const val KEY_SAVED_ISPREVIOUSDATE = "key_saved_ispreviousdate"
 private const val KEY_SAVED_PRE_PREGNANCY_WEIGHT = "key_saved_pre_pregnancy_weight"
 private const val KEY_SAVED_HEIGHT = "key_saved_height"
+private const val KEY_SAVED_USER_ID = "key_saved_user_id"
 private const val KEY_SAVED_ADMIN_ID = "key_saved_admin_id"
 private const val KEY_SAVED_DOCTOR_ID = "key_saved_doctor_id"
 private const val KEY_SAVED_IS_PATIENT_SELECTED = "key_saved_is_patient_selected"
-
 
 
 
@@ -114,6 +114,16 @@ class PreferenceProvider(
     }
     fun getSavedDoctorId(): String? {
         return preference.getString(KEY_SAVED_DOCTOR_ID, "")
+    }
+
+    fun saveUserId(id: String) {
+        preference.edit().putString(
+            KEY_SAVED_USER_ID,
+            id
+        ).apply()
+    }
+    fun getSavedUserId(): String? {
+        return preference.getString(KEY_SAVED_USER_ID, "")
     }
 
     fun saveAdminId(id: String) {

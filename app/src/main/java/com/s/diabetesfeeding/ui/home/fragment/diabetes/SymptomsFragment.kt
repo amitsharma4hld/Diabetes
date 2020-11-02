@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
@@ -17,21 +18,27 @@ import com.s.diabetesfeeding.data.db.entities.ProgressSymptoms
 import com.s.diabetesfeeding.data.db.entities.ScoreTable
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.ui.adapter.SymptomsAdapter
+import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModel
+import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
 import com.s.diabetesfeeding.util.*
 import kotlinx.android.synthetic.main.fragment_symptoms.*
-import kotlinx.android.synthetic.main.item_symptoms_list.view.*
 import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import org.threeten.bp.OffsetDateTime
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SymptomsFragment : Fragment() {
+class SymptomsFragment : Fragment(), KodeinAware, MonitorGlucoseResponseListner {
     val currentDate: String = java.text.SimpleDateFormat("MMM dd, yyyy", java.util.Locale.getDefault()).format(
         Date()
     )
-
+    private lateinit var viewModel : MonitorBloodGlucoseViewModel
+    override val kodein by kodein()
+    private val factory: MonitorBloodGlucoseViewModelFactory by instance()
     var symptomsList: List<SymptomsData> = ArrayList()
     private val SymptomsScore: Int = 5
     var isSymptomsScoreSaved : Boolean = false
@@ -43,6 +50,8 @@ class SymptomsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         recyclerViewMonitorBloodGlucose.isNestedScrollingEnabled = false
+        viewModel = ViewModelProvider(this,factory).get(MonitorBloodGlucoseViewModel::class.java)
+        viewModel.monitorGlucoseResponseListner = this
         if (prefs.getSavedFormattedDate().isNullOrEmpty()){
             tv_today_date_symptoms.text=currentDate
         }else{
@@ -108,7 +117,20 @@ class SymptomsFragment : Fragment() {
                 AppDatabase(it).getHomeMenusDao().saveScores(ScoreTable(0, 0, 4, SymptomsScore, currentDate))
                 Log.d("AppDatabase : ", "Scores Saved ${AppDatabase(it).getHomeMenusDao().getAllScores().size} added")
             }
-            (context as Activity).onBackPressed()
+            context?.let {
+                val symptoms: MutableList<String> = ArrayList()
+                var data:String = ""
+                for (i in symptomsList.indices) {
+                    if (symptomsList[i].isChecked){
+                        symptoms.add(symptomsList[i].Symptom.replace(" ", "-",  true).toLowerCase())
+                    }
+                     data = android.text.TextUtils.join(",", symptoms)
+                }
+                viewModel.saveSymptomsDataToServer(prefs.getSavedUserId().toString(),
+                    "symptoms",data,symptomsList[20].comment,SymptomsScore.toString())
+
+            }
+           // (context as Activity).onBackPressed()
         }
     }
 
@@ -252,5 +274,19 @@ class SymptomsFragment : Fragment() {
                 AppDatabase(requireActivity()).getSymptomsDao().saveProgressData(progressData)
             }
         }
+    }
+
+    override fun onStarted() {
+        requireActivity().shortToast("Syncing to server")
+    }
+
+    override fun onSuccess(message: String) {
+        requireActivity().shortToast(message)
+        requireActivity().onBackPressed()
+    }
+
+    override fun onFailure(message: String) {
+        requireActivity().shortToast(message)
+        requireActivity().onBackPressed()
     }
 }

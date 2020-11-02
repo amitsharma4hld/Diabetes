@@ -507,6 +507,9 @@ class HomeScreenFragment : Fragment(), KodeinAware {
                                 )
                         }
                     }
+                    context.let {
+                        viewModel.saveStepCountToServer( viewModel.user.value?.ID.toString(),total.toString())
+                    }
                 }
 
             }

@@ -20,6 +20,7 @@ import com.s.diabetesfeeding.ui.home.MonitorBloodGlucoseViewModelFactory
 import com.s.diabetesfeeding.ui.home.fragment.HomeScreenFragmentDirections
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.getDateFromOffsetDateTime
+import com.s.diabetesfeeding.util.shortToast
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_symptoms.*
@@ -31,7 +32,7 @@ import org.kodein.di.generic.instance
 import org.threeten.bp.OffsetDateTime
 
 
-class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
+class MonitorBloodGlucoseFragment : Fragment(), KodeinAware, MonitorGlucoseResponseListner {
 
     private lateinit var viewModel : MonitorBloodGlucoseViewModel
     override val kodein by kodein()
@@ -40,6 +41,7 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
         java.util.Date())
 
     var CategoryWithItems: List<CategoryWithItems> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,15 +64,61 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
 
         }
         viewModel = ViewModelProvider(this,factory).get(MonitorBloodGlucoseViewModel::class.java)
-        // buildUI()
-
+        viewModel.monitorGlucoseResponseListner = this
         viewLifecycleOwner.lifecycleScope.launch {
             CategoryWithItems =  AppDatabase(requireActivity().applicationContext).getMonitorBloodGlucoseCatDao().getItemsAndCategory()
             showMonitorBloodGlucoseMain(CategoryWithItems)
         }
 
         mcv_done.setOnClickListener {
-            requireActivity().onBackPressed()
+            if (!prefs.getSavedIsPreviousDate()) {
+                if (CategoryWithItems.isNotEmpty()) {
+                    val wakeupData = CategoryWithItems[0].bloodGlucoseCategoryItems
+                    val breakFastData = CategoryWithItems[1].bloodGlucoseCategoryItems
+                    val lunchData = CategoryWithItems[2].bloodGlucoseCategoryItems
+                    val dinnerData = CategoryWithItems[3].bloodGlucoseCategoryItems
+                    val bedTimeData = CategoryWithItems[4].bloodGlucoseCategoryItems
+
+                    viewModel.saveBloodGlucoseDataToServer(
+                        prefs.getSavedUserId()!!,
+                        "blood-glucose",
+                        wakeupData[0].value,
+                        wakeupData[0].time,
+                        wakeupData[0].score.toString(),
+                        breakFastData[0].value,
+                        breakFastData[0].time,
+                        breakFastData[0].score.toString(),
+                        breakFastData[1].value,
+                        breakFastData[1].time,
+                        breakFastData[1].score.toString(),
+                        breakFastData[2].value,
+                        breakFastData[2].time,
+                        breakFastData[2].score.toString(),
+                        lunchData[0].value,
+                        lunchData[0].time,
+                        lunchData[0].score.toString(),
+                        lunchData[1].value,
+                        lunchData[1].time,
+                        lunchData[1].score.toString(),
+                        lunchData[2].value,
+                        lunchData[2].time,
+                        lunchData[2].score.toString(),
+                        dinnerData[0].value,
+                        dinnerData[0].time,
+                        dinnerData[0].score.toString(),
+                        dinnerData[1].value,
+                        dinnerData[1].time,
+                        dinnerData[1].score.toString(),
+                        dinnerData[2].value,
+                        dinnerData[2].time,
+                        dinnerData[2].score.toString(),
+                        bedTimeData[0].value,
+                        bedTimeData[0].time,
+                        bedTimeData[0].score.toString()
+                    )
+                }
+            }
+
         }
 
     }
@@ -78,12 +126,12 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
         recyclerViewMonitorBloodGlucoses.layoutManager = LinearLayoutManager(activity)
         recyclerViewMonitorBloodGlucoses.adapter = MonitorBloodGlucoseMainAdapter(requireActivity(),category)
     }
-    private fun buildUI() = Coroutines.main {
+    /*private fun buildUI() = Coroutines.main {
         viewModel.monitorbloodGlucose.await().observe(viewLifecycleOwner, Observer {
            // initRecycleView(it.toMonitorBloodGlucoseItem())
             // context?.longToast(it.toString() + " NULL")
         })
-    }
+    }*/
 
     private fun initRecycleView(MonitorBloodGlucoseItem: List<MonitorBloodGlucoseChildItem>) {
         val mAdapter = GroupAdapter<ViewHolder>().apply {
@@ -102,5 +150,19 @@ class MonitorBloodGlucoseFragment : Fragment(), KodeinAware {
                 it
             )
         }
+    }
+
+    override fun onStarted() {
+        requireActivity().shortToast("Syncing to server")
+    }
+
+    override fun onSuccess(message: String) {
+        requireActivity().shortToast(message)
+        requireActivity().onBackPressed()
+    }
+
+    override fun onFailure(message: String) {
+        requireActivity().shortToast(message)
+        requireActivity().onBackPressed()
     }
 }

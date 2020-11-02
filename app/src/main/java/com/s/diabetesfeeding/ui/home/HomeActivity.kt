@@ -1,4 +1,4 @@
-package com.s.diabetesfeeding.ui.home
+ package com.s.diabetesfeeding.ui.home
 
 import android.Manifest
 import android.content.Intent
@@ -26,6 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.s.diabetesfeeding.BuildConfig
 import com.s.diabetesfeeding.R
+import com.s.diabetesfeeding.data.repositories.UserRepository
 import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.logger.Log.setLogNode
 import com.s.diabetesfeeding.util.logger.LogWrapper

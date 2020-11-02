@@ -281,8 +281,6 @@ class CategoryItemAdapter(
 
     }
 
-    // if things are enabled and disabled we will grayish the filed
-
     private fun updateData(categoryItems: BloodGlucoseCategoryItem) {
         Coroutines.io {
             context.let {
@@ -310,6 +308,10 @@ class CategoryItemAdapter(
             }
             (context as Activity).onBackPressed()
         }
+    }
+
+    fun saveDataToServer(categoryItems: BloodGlucoseCategoryItem){
+
     }
 
 }

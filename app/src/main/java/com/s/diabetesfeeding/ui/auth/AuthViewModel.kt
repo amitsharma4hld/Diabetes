@@ -4,6 +4,7 @@ import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.ViewModel
 import com.s.diabetesfeeding.data.repositories.UserRepository
+import com.s.diabetesfeeding.prefs
 import com.s.diabetesfeeding.util.ApiException
 import com.s.diabetesfeeding.util.Coroutines
 import com.s.diabetesfeeding.util.NoInternetException
@@ -49,6 +50,7 @@ class AuthViewModel(
                             if (it.user_status != "0"){
                                 authListener?.onSuccess(it)
                                 repository.saveData(it)
+                                prefs.saveUserId(it.ID.toString())
                                 return@main
                             }else{
                                 authListener?.onFailure("Something went wrong")
@@ -137,6 +139,7 @@ class AuthViewModel(
                             if (it.user_status != "0"){
                                 authListener?.onSuccess(it)
                                 repository.saveData(it)
+                                prefs.saveUserId(it.ID.toString())
                                 return@main
                             }else{
                                 if (authResponse.data.msg.isNullOrBlank()){
